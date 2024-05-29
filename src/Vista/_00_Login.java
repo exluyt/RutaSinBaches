@@ -316,6 +316,7 @@ public class _00_Login extends JFrame implements Vista {
 		this.miModelo = miModelo;
 	}
 
+	
 	public String getNick() {
 		return txtUsuario.getText();
 	}

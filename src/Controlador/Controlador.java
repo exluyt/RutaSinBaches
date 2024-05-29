@@ -14,7 +14,7 @@ public class Controlador extends JFrame {
 	private Modelo miModelo; // Model reference
 	private Vista[] misVistas; // Array of views
 	private String[] datosRegistro = new String[3]; // Array to hold registration data
-	private String nick; // Variable to hold the username for password recovery
+	private String nick; // Variable to hold the username for password recovery.
 
 	/**
 	 * Sets the model reference.
