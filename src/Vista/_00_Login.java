@@ -289,15 +289,11 @@ public class _00_Login extends JFrame implements Vista {
 		if (username.isEmpty() || password.isEmpty() || username.equals("Nombre de Usuario")
 				|| password.equals("Contraseña")) {
 			lblVacio.setText("Rellene todos los campos");
-		} else if (miModelo.comprobarUsuario(username, password)) {
-			miControlador.setNick(username);
-			System.out.println("Usuario encontrado");
 		} else {
-			lblVacio.setText("Error en los datos introducidos");
+			miControlador.comprobarUsuario();
+			System.out.println("Usuario encontrado");
 		}
 	}
-	
-	
 
 	/**
 	 *
@@ -319,7 +315,13 @@ public class _00_Login extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
-	
-	
+
+	public String getNick() {
+		return txtUsuario.getText();
+	}
+
+	public String getPassword() {
+		return txtPwd.getText();
+	}
 
 }

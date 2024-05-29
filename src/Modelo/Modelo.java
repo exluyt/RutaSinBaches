@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import Controlador.Controlador;
 import Vista.*;
 
 /**
@@ -21,6 +23,8 @@ public class Modelo {
 	private String pwd; // Database password
 	private String url; // Database URL
 	private Connection conexion; // Database connection
+
+	private Controlador miControlador;
 
 	/**
 	 * Sets the views for the model.
@@ -94,6 +98,11 @@ public class Modelo {
 			rs = ctmt.getInt(9);
 			if (rs == 1) {
 				System.out.println("Usuario registrado con éxito.");
+				if (admin.equalsIgnoreCase("si")) {
+					miControlador.cambiarPantalla(3, 0);
+				} else {
+					miControlador.cambiarPantalla(2, 0);
+				}
 				return true;
 			} else {
 				System.out.println("Error al registrar usuario.");
@@ -128,11 +137,9 @@ public class Modelo {
 				System.out.println("Usuario ya registrado.");
 				if (rsAd.next()) {
 					if (rsAd.getString("admin").equalsIgnoreCase("si")) {
-						misVistas[7].setVisible(true);
-						misVistas[0].setVisible(false);
+						miControlador.cambiarPantalla(0, 7);
 					} else {
-						misVistas[6].setVisible(true);
-						misVistas[0].setVisible(false);
+						miControlador.cambiarPantalla(0, 6);
 					}
 				}
 				return true;
