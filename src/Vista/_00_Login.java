@@ -291,7 +291,6 @@ public class _00_Login extends JFrame implements Vista {
 			lblVacio.setText("Rellene todos los campos");
 		} else {
 			miControlador.comprobarUsuario();
-			System.out.println("Usuario encontrado");
 		}
 	}
 

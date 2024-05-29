@@ -143,7 +143,7 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (miModelo.comprobarUsuarioAdmin(miControlador.getNick())) {
+				if (miModelo.comprobarUsuarioRecuperar(miControlador.getNick())) {
 					miControlador.cambiarPantalla(8, 7);
 				} else {
 					miControlador.cambiarPantalla(8, 6);

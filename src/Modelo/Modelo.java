@@ -91,18 +91,13 @@ public class Modelo {
 			ctmt.setString(4, pwd);
 			ctmt.setInt(5, cp);
 			ctmt.setString(6, admin);
-			ctmt.setInt(7, preguntaCodigo);
+			ctmt.setInt(7, preguntaCodigo + 1);
 			ctmt.setString(8, respuesta);
 			ctmt.registerOutParameter(9, java.sql.Types.INTEGER);
 			ctmt.execute();
 			rs = ctmt.getInt(9);
 			if (rs == 1) {
 				System.out.println("Usuario registrado con éxito.");
-				if (admin.equalsIgnoreCase("si")) {
-					miControlador.cambiarPantalla(3, 0);
-				} else {
-					miControlador.cambiarPantalla(2, 0);
-				}
 				return true;
 			} else {
 				System.out.println("Error al registrar usuario.");
@@ -121,7 +116,7 @@ public class Modelo {
 	 * @param pwd  the user's password
 	 * @return true if the user exists and the password is correct, false otherwise
 	 */
-	public boolean comprobarUsuario(String nick, String pwd) {
+	public String comprobarUsuario(String nick, String pwd) {
 		String query = "SELECT * FROM `usuario` WHERE nick = ? AND pwd = ?;";
 		String queryAdmin = "SELECT * FROM `usuario` WHERE nick = ?;";
 		try {
@@ -137,20 +132,18 @@ public class Modelo {
 				System.out.println("Usuario ya registrado.");
 				if (rsAd.next()) {
 					if (rsAd.getString("admin").equalsIgnoreCase("si")) {
-						miControlador.cambiarPantalla(0, 7);
+						return "trueAdm";
 					} else {
-						miControlador.cambiarPantalla(0, 6);
+						return "trueUsr";
 					}
 				}
-				return true;
+				return "falso";
 			} else {
-				System.out.println("Usuario no encontrado o contraseña incorrecta.");
-				incrementarFallos();
-				return false;
+				return "falso";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return "falso";
 		}
 	}
 
@@ -160,7 +153,7 @@ public class Modelo {
 	 * Increments the number of failed login attempts and exits the program if there
 	 * are too many.
 	 */
-	private void incrementarFallos() {
+	public void incrementarFallos() {
 		fallos++;
 		if (fallos >= 3) {
 			System.out.println("Demasiados intentos fallidos.");
@@ -188,32 +181,6 @@ public class Modelo {
 				System.out.println("Usuario.");
 				return false;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
-	 * Checks if the provided nickname is an admin user.
-	 * 
-	 * @param nick
-	 * @return
-	 */
-	public boolean comprobarUsuarioAdmin(String nick) {
-		String query = "SELECT * FROM `usuario` WHERE nick = ?;";
-		try {
-			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setString(1, nick);
-			ResultSet rs = pstmt.executeQuery();
-
-			// Verify if the ResultSet has any results
-			if (rs.next()) {
-				if (rs.getString("admin").equalsIgnoreCase("si")) {
-					return true;
-				}
-			}
-			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

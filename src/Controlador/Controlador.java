@@ -46,10 +46,23 @@ public class Controlador extends JFrame {
 	}
 
 	public void comprobarUsuario() {
-		_00_Login loginView = (_00_Login) misVistas[0];
-		String nick = loginView.getNick();
-		String password = loginView.getPassword();
-		miModelo.comprobarUsuario(nick, password);
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		String password = ((_00_Login) misVistas[0]).getPassword();
+		String resultado = miModelo.comprobarUsuario(nick, password);
+		switch (resultado) {
+		case "trueAdm":
+			cambiarPantalla(0, 7);
+			break;
+		case "trueUsr":
+			cambiarPantalla(0, 6);
+			break;
+		case "falso":
+				System.out.println("Usuario no encontrado o contraseña incorrecta.");
+				miModelo.incrementarFallos();
+			break;
+		}
+		
+	
 	}
 
 	/**
@@ -96,16 +109,17 @@ public class Controlador extends JFrame {
 	}
 
 	public boolean agregarUsuario() {
-		_02_Registro2 registroView = (_02_Registro2) misVistas[0];
-		String usuario = registroView.getUsuario();
+		String usuario = ((_02_Registro2) misVistas[2]).getUsuario();
 		String nombre = datosRegistro[0];
 		String apellidos = datosRegistro[1];
 		String cp = datosRegistro[2];
-		String pwd = registroView.getPwd();
-		int pregunta = registroView.getPregunta();
-		String admin = registroView.getAdmin();
-		String respuesta = registroView.getRespuesta();
-		miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta);
+		String pwd = ((_02_Registro2) misVistas[2]).getPwd();
+		int pregunta = ((_02_Registro2) misVistas[2]).getPregunta();
+		String admin = ((_02_Registro2) misVistas[2]).getAdmin();
+		String respuesta = ((_02_Registro2) misVistas[2]).getRespuesta();
+		if (miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta)) {
+			cambiarPantalla(2, 0);
+		}
 		return false;
 	}
 }
