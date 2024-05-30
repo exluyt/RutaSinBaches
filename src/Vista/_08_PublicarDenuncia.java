@@ -265,6 +265,7 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		contentPane.add(lblFotoPerfil_1);
 		
 		lblVacio = new JLabel("");
+		lblVacio.setForeground(new Color(255, 0, 0));
 		lblVacio.setBounds(666, 190, 253, 14);
 		contentPane.add(lblVacio);
 
