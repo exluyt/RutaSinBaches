@@ -33,6 +33,9 @@ import Controlador.*;
 import Modelo.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.UIManager;
 
 /**
@@ -92,11 +95,24 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon imageMontana = new ImageIcon(getClass().getResource("img/montana2.png"));
 		ImageIcon imageUpload = new ImageIcon(getClass().getResource("img/Drawing.png"));
 		
-		// PREGUNTAAAAAAAAAAAAAR A PEDROOOOOOOOOOOOOOOOOOOO holahenry
-		lblNick = new JLabel(""/*miControlador.getNick()*/);
+		addWindowListener(new WindowAdapter() {
+            public void windowActivated(WindowEvent evt) {
+                miControlador.obtenerDatosUsuario();
+                lblNick.setText(miModelo.getNick());
+                txtNombre.setText(miModelo.getNombre());
+                txtApellidos.setText(miModelo.getApellido());
+                txtCP.setText(String.valueOf(miModelo.getCp()));
+                passwordField.setText(miModelo.getPass());
+                comboBoxSeguridad.setSelectedIndex(miModelo.getPregunta() - 1);
+                txtRespuesta.setText(miModelo.getRespuesta());
+                
+            }
+        });
+		
+		lblNick = new JLabel("");
 		lblNick.setForeground(Color.BLACK);
 		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNick.setBounds(884, 327, 50, 37);
+		lblNick.setBounds(866, 327, 180, 37);
 		contentPane.add(lblNick);
 
 		lblUpload = new JLabel("");
@@ -149,17 +165,18 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 
 		lblLogo = new JLabel("");
 		lblLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				miControlador.comprobarUsuarioPaginaInfo();
-			}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		miControlador.comprobarUsuarioPaginaInfo();
+	}
 
-			@Override
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	@Override
 			public void mouseExited(MouseEvent e) {
 				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
@@ -180,13 +197,13 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblArrobaPerfil = new JLabel("@");
 		lblArrobaPerfil.setForeground(new Color(58, 182, 98));
 		lblArrobaPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblArrobaPerfil.setBounds(863, 327, 26, 37);
+		lblArrobaPerfil.setBounds(845, 327, 26, 37);
 		contentPane.add(lblArrobaPerfil);
 
 		lblNombreapellido = new JLabel("Hola");
 		lblNombreapellido.setForeground(Color.BLACK);
 		lblNombreapellido.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNombreapellido.setBounds(816, 327, 50, 37);
+		lblNombreapellido.setBounds(798, 327, 50, 37);
 		contentPane.add(lblNombreapellido);
 
 		panel_1 = new JPanel();
@@ -296,9 +313,6 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 
 	}
 
-		
-	
-
 	/**
 	 * This method sets the controller for the view.
 	 * 
@@ -336,7 +350,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	public int getPregunta() {
 		return comboBoxSeguridad.getSelectedIndex() + 1;
 	}
-	
+
 	public String getRespuesta() {
 		return txtRespuesta.getText();
 	}
