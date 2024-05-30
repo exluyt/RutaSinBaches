@@ -325,13 +325,17 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		String calle = getCalle();
 		String descripcion = getDescripcion();
 		if (cp.isEmpty() || provincia.isEmpty() || ciudad.isEmpty() || calle.isEmpty()
-				|| descripcion.equals("Usuario")) {
+				|| descripcion.isEmpty()) {
 			lblVacio.setText("Rellena todos los campos");
 		} else {
 			try {
+				if(5 == cp.length()) {
 				Integer.parseInt(cp);
 				lblVacio.setText("");
 				miControlador.agregarPublicacion();
+				} else {
+					lblVacio.setText("Introduzca un codigo postal valido");
+				}
 			} catch (NumberFormatException e) {
 				System.out.print("Los datos no son validos");
 				lblVacio.setText("Los datos no son validos");
