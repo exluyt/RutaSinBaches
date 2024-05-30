@@ -47,14 +47,16 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblLogo, lblRSB, lblFotoPerfil, lblInfo, lblCdigoPostal, lblContrasea, lblPreguntasDeSeguridad;
-	private JTextField textNombre, textUsuario, textApellidos, textCP;
+	private JTextField txtProvincia, txtCp, txtCiudad, txtCalle;
 	private Component frame;
 	private Controlador miControlador;
 	private Modelo miModelo;
-	private JTextArea textArea;
+	private JTextArea txtDescripcion;
 	private JLabel lblUpload;
 	private JLabel lblCamino;
 	private JLabel lblPersona;
+	private JComboBox comboBox;
+	private JLabel lblVacio;
 
 	/**
 	 * Constructor for the _08_PublicarDenuncia class. Initializes the form and its
@@ -195,29 +197,31 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		lblPreguntasDeSeguridad.setBounds(476, 461, 158, 37);
 		contentPane.add(lblPreguntasDeSeguridad);
 
-		textNombre = new JTextField();
-		textNombre.setBounds(666, 266, 253, 28);
-		contentPane.add(textNombre);
-		textNombre.setColumns(10);
+		txtProvincia = new JTextField();
+		txtProvincia.setBounds(666, 266, 253, 28);
+		contentPane.add(txtProvincia);
+		txtProvincia.setColumns(10);
 
-		textUsuario = new JTextField();
-		textUsuario.setColumns(10);
-		textUsuario.setBounds(666, 219, 253, 28);
-		contentPane.add(textUsuario);
+		txtCp = new JTextField();
+		txtCp.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtCp.setColumns(10);
+		txtCp.setBounds(666, 219, 253, 28);
+		contentPane.add(txtCp);
 
-		textApellidos = new JTextField();
-		textApellidos.setColumns(10);
-		textApellidos.setBounds(666, 312, 253, 28);
-		contentPane.add(textApellidos);
+		txtCiudad = new JTextField();
+		txtCiudad.setColumns(10);
+		txtCiudad.setBounds(666, 312, 253, 28);
+		contentPane.add(txtCiudad);
 
-		textCP = new JTextField();
-		textCP.setColumns(10);
-		textCP.setBounds(666, 360, 253, 28);
-		contentPane.add(textCP);
+		txtCalle = new JTextField();
+		txtCalle.setColumns(10);
+		txtCalle.setBounds(666, 360, 253, 28);
+		contentPane.add(txtCalle);
 
 		JButton btnPublicar = new JButton("Publicar denuncia");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*
 				int response = JOptionPane.showConfirmDialog(frame,
 						"Se ha encontrado una denuncia parecida. ¿Desea publicarla igualemente?",
 						"Coincidencia encontrada", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -230,6 +234,8 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 					// Logic for when "No" is clicked (optional)
 					System.out.println("No button clicked");
 				}
+				*/
+				camposVacios();
 			}
 		});
 		btnPublicar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -240,10 +246,10 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		scrollPane.setBounds(666, 461, 253, 69);
 		contentPane.add(scrollPane);
 
-		textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
+		txtDescripcion = new JTextArea();
+		scrollPane.setViewportView(txtDescripcion);
 
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Iluminacion", "Alumbrado", "..." }));
 		comboBox.setBounds(666, 407, 253, 28);
 		contentPane.add(comboBox);
@@ -257,6 +263,10 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		JLabel lblFotoPerfil_1 = new JLabel("");
 		lblFotoPerfil_1.setBounds(52, 416, 253, 204);
 		contentPane.add(lblFotoPerfil_1);
+		
+		lblVacio = new JLabel("");
+		lblVacio.setBounds(666, 190, 253, 14);
+		contentPane.add(lblVacio);
 
 	}
 
@@ -277,4 +287,53 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
-}
+	
+	public String getCp() {
+		return txtCp.getText();
+	}
+	
+	public String getProvincia() {
+		return txtProvincia.getText();
+	}
+	
+	public String getCiudad() {
+		return txtCiudad.getText();
+	}
+	
+	public String getCalle() {
+		return txtCalle.getText();
+	}
+	
+	public int getCategoria() {
+		return comboBox.getSelectedIndex() + 1;
+	}
+	
+	public String getDescripcion() {
+		return txtDescripcion.getText();
+	}
+	
+	public void setError(String mensaje) {
+		lblVacio.setText(mensaje);
+	}
+	
+	public void camposVacios() {
+		String cp = getCp();
+		String provincia = getProvincia();
+		String ciudad = getCiudad();
+		String calle = getCalle();
+		String descripcion = getDescripcion();
+		if (cp.isEmpty() || provincia.isEmpty() || ciudad.isEmpty() || calle.isEmpty()
+				|| descripcion.equals("Usuario")) {
+			lblVacio.setText("Rellena todos los campos");
+		} else {
+			try {
+				Integer.parseInt(cp);
+				lblVacio.setText("");
+				miControlador.agregarPublicacion();
+			} catch(NumberFormatException e) {
+				System.out.print("Los datos no son validos");
+				lblVacio.setText("Los datos no son validos");
+			}
+		}
+	}
+}	

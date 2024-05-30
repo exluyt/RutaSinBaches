@@ -1,5 +1,8 @@
 package Controlador;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JFrame;
 import Modelo.*;
 import Vista.*;
@@ -44,9 +47,23 @@ public class Controlador extends JFrame {
 		misVistas[abrir].setVisible(true); // Make the new screen visible
 		misVistas[cerrar].setVisible(false); // Hide the current screen
 	}
+	
+	public boolean comprobarAdmin() {
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		String password = ((_00_Login) misVistas[0]).getPassword();
+		String resultado = miModelo.comprobarUsuario(nick, password);
+		switch (resultado) {
+		case "trueAdm":
+			return true;
+		case "trueUsr":
+			return false;
+		}
+		return false;
+	}
 
 	public void comprobarUsuario() {
 		String nick = ((_00_Login) misVistas[0]).getNick();
+		this.nick = nick;
 		String password = ((_00_Login) misVistas[0]).getPassword();
 		String resultado = miModelo.comprobarUsuario(nick, password);
 		switch (resultado) {
@@ -207,4 +224,23 @@ public class Controlador extends JFrame {
 		}
 	}
 
+	public void agregarPublicacion() {
+	 int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
+	 String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
+	 String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
+	 String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
+	 String direccion = String.join(", ", calle, provincia, ciudad);
+	 String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
+	 int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
+     int codigo = miModelo.ultimoCodigo() + 1;
+     if(miModelo.agregarDenuncia(direccion, codigo, null, nick, categoria, cp, descripcion)) {
+    	 if(comprobarAdmin()) {
+    		 cambiarPantalla(8, 7);
+    	 } else {
+    		 cambiarPantalla(8, 6);
+    	 }
+     } else {
+    	 ((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
+     }
+	}
 }

@@ -278,4 +278,46 @@ public class Modelo {
 			return false;
 		}
 	}
+
+	public int ultimoCodigo() {
+		String query = "SELECT * FROM `denuncia` ORDER BY codigo DESC LIMIT 1;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String valorColumna = rs.getString("codigo");
+				return Integer.parseInt(valorColumna);
+			} else {
+				throw new SQLException("Error.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public boolean agregarDenuncia(String direccion, int codigo, String img,
+			String nick, int categoria, int cp, String descripcion) {
+		String query = "{CALL agregarDenuncia(?, ?, ?, ?, ?, ?, ?)}";
+		try {
+			CallableStatement ctmt = conexion.prepareCall(query);
+			ctmt.setString(1, direccion);
+			ctmt.setInt(2, codigo);
+			ctmt.setString(3, img);
+			ctmt.setString(4, nick);
+			ctmt.setInt(5, categoria);
+			ctmt.setInt(6, cp);
+			ctmt.setString(7, descripcion);
+			boolean filasModificadas = ctmt.execute();
+			if (filasModificadas) {
+				System.out.println("Insertado correctamente");
+				return true;
+			} else {
+				throw new SQLException("Error");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
