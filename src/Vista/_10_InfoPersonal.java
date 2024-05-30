@@ -93,7 +93,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon imageUpload = new ImageIcon(getClass().getResource("img/Drawing.png"));
 		
 		// PREGUNTAAAAAAAAAAAAAR A PEDROOOOOOOOOOOOOOOOOOOO holahenry
-		lblNick = new JLabel(miControlador.getNick());
+		lblNick = new JLabel(""/*miControlador.getNick()*/);
 		lblNick.setForeground(Color.BLACK);
 		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNick.setBounds(884, 327, 50, 37);
@@ -288,7 +288,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblInfo.setForeground(new Color(58, 182, 98));
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
-		lblVacio = new JLabel("¡Datos actualizados correctamente!");
+		lblVacio = new JLabel("");
 		lblVacio.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblVacio.setForeground(new Color(58, 182, 98));
 		lblVacio.setBounds(101, 479, 228, 17);

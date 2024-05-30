@@ -45,23 +45,23 @@ public class Controlador extends JFrame {
 		misVistas[cerrar].setVisible(false); // Hide the current screen
 	}
 
-	public void comprobarUsuario() {
+	public 	boolean comprobarUsuario() {
 		String nick = ((_00_Login) misVistas[0]).getNick();
 		String password = ((_00_Login) misVistas[0]).getPassword();
 		String resultado = miModelo.comprobarUsuario(nick, password);
 		switch (resultado) {
 		case "trueAdm":
 			cambiarPantalla(0, 7);
-			break;
+			return true;
 		case "trueUsr":
 			cambiarPantalla(0, 6);
-			break;
+			return true;
 		case "falso":
 			System.out.println("Usuario no encontrado o contraseña incorrecta.");
 			miModelo.incrementarFallos();
-			break;
+			return false;
 		}
-
+		return false;
 	}
 
 	public void comprobarUsuarioPagina() {
@@ -185,12 +185,7 @@ public class Controlador extends JFrame {
 			System.out.println("Error al cambiar la contraseña");
 			return false;
 		}
-//	public boolean establecerPwd() {
-//		String pwd = ((_05_RecuperarPwd2) misVistas[5]).getPwd();
-//		String nick = ((_04_RecuperarPwd) misVistas[4]).getNick();
-//		miModelo.establecerPwd(nick, pwd);
-//		return false;
-//	}
+	}
 
 	public boolean actualizarDatosUsuario() {
 		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();

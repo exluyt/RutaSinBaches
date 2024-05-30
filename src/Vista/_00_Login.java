@@ -260,12 +260,14 @@ public class _00_Login extends JFrame implements Vista {
 	 */
 	public void camposVacios() {
 		String username = txtUsuario.getText().trim();
-		String password = txtPwd.getText().trim();
+		String password = new String(txtPwd.getPassword());
 		if (username.isEmpty() || password.isEmpty() || username.equals("Nombre de Usuario")
 				|| password.equals("Contraseña")) {
 			lblVacio.setText("Rellene todos los campos");
 		} else {
-			miControlador.comprobarUsuario();
+			if(!miControlador.comprobarUsuario()) {
+				lblVacio.setText("Datos incorrectos");
+			}
 		}
 	}
 

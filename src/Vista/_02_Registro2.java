@@ -414,6 +414,7 @@ public class _02_Registro2 extends JFrame implements Vista {
 		String respuesta = txtRespuesta.getText().trim();
 		String usuario = txtUsuario.getText().trim();
 		String admin = "no";
+		miControlador.getNick();
 		int pregunta = comboBoxPreguntas.getSelectedIndex() + 1;
 		if (pwd.equals(repetirPwd)) {
 			if (!miControlador.comprobarUsuarioRegistro()) {
