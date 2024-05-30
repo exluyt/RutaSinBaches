@@ -1,6 +1,11 @@
 package Controlador;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 import Modelo.*;
 import Vista.*;
 
@@ -225,6 +230,25 @@ public class Controlador extends JFrame {
 			((_03_RegistroAdmin) misVistas[3]).setError("Los datos son incorrectos");
 			System.out.println("Error al registrarse");
 		}
+	}
+	public void crearTablaFav(DefaultTableModel modeloTabla1) {
+		List<Object[]> tabla = miModelo.establecerTablasFav(recuperarUsuario());;
+        DefaultTableModel tableModel =  ((_06_PaginaPrincipal) misVistas[6]).getTableModel(modeloTabla1);
+        tableModel.setRowCount(0);
+        for (Object[] hola : tabla){
+        	tableModel.addRow(hola);
+        }
+	}
+	public void crearTablaFy() {
+
+		miModelo.establecerTablasFy(recuperarUsuario());
+	}
+	public void crearTablaMis() {
+		miModelo.establecerTablasMis(recuperarUsuario());
+	}
+	public String recuperarUsuario() {
+		String usuario = ((_00_Login) misVistas[0]).getNick();
+		return usuario;
 	}
 
 }

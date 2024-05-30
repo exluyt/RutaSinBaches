@@ -2,10 +2,15 @@ package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 
 import Controlador.Controlador;
 import Vista.*;
@@ -23,8 +28,6 @@ public class Modelo {
 	private String pwd; // Database password
 	private String url; // Database URL
 	private Connection conexion; // Database connection
-
-	private Controlador miControlador;
 
 	/**
 	 * Sets the views for the model.
@@ -299,6 +302,71 @@ public class Modelo {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	List<Object[]> tabla = new ArrayList <Object[]>();
+	public List<Object[]> establecerTablasFav(String usuario) {
+
+		String query ="SELECT " +
+                "    d.codigo, " +
+                "    d.usuario_nick, " +
+                "    d.estado, " +
+                "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, " +
+                "    d.fecha, " +
+                "    c.nombre AS categoria_nombre, " +
+                "    d.descripcion, " +
+                "    v.favorito " +
+                "FROM " +
+                "    denuncia d " +
+                "JOIN " +
+                "    categoria c ON d.categoria_codigo = c.codigo " +
+                "JOIN " +
+                "    votar v ON d.codigo = v.denuncia_codigo AND v.usuario_nick = ? " +
+                "ORDER BY " +
+                "    d.codigo ASC";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setString(1, usuario);
+			ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int codigo = resultSet.getInt("codigo");
+                String usr = resultSet.getString("usuario_nick");
+                String estado = resultSet.getString("estado");
+                String direccionCp = resultSet.getString("direccion_cp");
+                Date fecha = resultSet.getDate("fecha");
+                String categoriaNombre = resultSet.getString("categoria_nombre");
+                String descripcion = resultSet.getString("descripcion");
+                String favorito = resultSet.getString("favorito");
+                tabla.add(new Object[]{codigo, usr, estado, direccionCp, fecha, categoriaNombre, descripcion, favorito});
+            	}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tabla;
+	};
+	
+	
+	
+	
+	
+	
+	
+	public DefaultTableModel establecerTablasFy(String usuario) {
+		
+		String query ="SELECT d.codigo,d.usuario_nick,d.estado, CONCAT(d.direccion, ' ', d.cp) "
+				+ "AS direccion_cp,d.fecha, c.nombre AS categoria_nombre, d.descripcion FROM denuncia d JOIN "
+				+ "categoria c ON d.categoria_codigo = c.codigo ORDER BY d.codigo ASC;";
+		
+		return null;
+		
+	}
+	public DefaultTableModel establecerTablasMis(String usuario) {
+		
+		String query ="SELECT d.codigo,d.usuario_nick,d.estado, CONCAT(d.direccion, ' ', d.cp) "
+				+ "AS direccion_cp,d.fecha, c.nombre AS categoria_nombre, d.descripcion FROM denuncia d JOIN "
+				+ "categoria c ON d.categoria_codigo = c.codigo ORDER BY d.codigo ASC;";
+		return null;
+		
 	}
 
 }
