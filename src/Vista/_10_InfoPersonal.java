@@ -112,7 +112,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblNick = new JLabel("");
 		lblNick.setForeground(Color.BLACK);
 		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNick.setBounds(866, 327, 180, 37);
+		lblNick.setBounds(879, 327, 180, 37);
 		contentPane.add(lblNick);
 
 		lblUpload = new JLabel("");
@@ -168,6 +168,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		lblVacio.setText("");
 		miControlador.comprobarUsuarioPaginaInfo();
 	}
 
@@ -197,7 +198,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblArrobaPerfil = new JLabel("@");
 		lblArrobaPerfil.setForeground(new Color(58, 182, 98));
 		lblArrobaPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblArrobaPerfil.setBounds(845, 327, 26, 37);
+		lblArrobaPerfil.setBounds(858, 327, 26, 37);
 		contentPane.add(lblArrobaPerfil);
 
 		lblNombreapellido = new JLabel("Hola");
@@ -234,7 +235,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblRespuesta.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		txtRespuesta = new JTextField();
-		txtRespuesta.setBounds(219, 372, 182, 20);
+		txtRespuesta.setBounds(219, 372, 182, 25);
 		panel_1.add(txtRespuesta);
 		txtRespuesta.setColumns(10);
 
@@ -245,7 +246,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblPreguntasDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		comboBoxSeguridad = new JComboBox();
-		comboBoxSeguridad.setBounds(219, 322, 182, 22);
+		comboBoxSeguridad.setBounds(219, 322, 182, 25);
 		panel_1.add(comboBoxSeguridad);
 		comboBoxSeguridad.setModel(new DefaultComboBoxModel(new String[] { "¿Cuál tu nombre de pila?",
 				"¿Cuál es tu primera escuela?", "¿Cuál es tu primera mascota?" }));
@@ -257,7 +258,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(219, 265, 100, 20);
+		passwordField.setBounds(219, 265, 100, 25);
 		panel_1.add(passwordField);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
@@ -268,12 +269,12 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblCdigoPostal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		txtCP = new JTextField();
-		txtCP.setBounds(219, 217, 100, 20);
+		txtCP.setBounds(219, 217, 100, 25);
 		panel_1.add(txtCP);
 		txtCP.setColumns(10);
 
 		txtApellidos = new JTextField();
-		txtApellidos.setBounds(219, 168, 100, 20);
+		txtApellidos.setBounds(219, 168, 100, 25);
 		panel_1.add(txtApellidos);
 		txtApellidos.setColumns(10);
 
@@ -290,7 +291,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblUsuario_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		txtNombre = new JTextField();
-		txtNombre.setBounds(219, 120, 100, 20);
+		txtNombre.setBounds(219, 120, 100, 25);
 		panel_1.add(txtNombre);
 		txtNombre.setColumns(10);
 
