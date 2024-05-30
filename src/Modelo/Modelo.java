@@ -1,11 +1,18 @@
 package Modelo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import Controlador.Controlador;
 import Vista.*;
@@ -23,6 +30,11 @@ public class Modelo {
 	private String pwd; // Database password
 	private String url; // Database URL
 	private Connection conexion; // Database connection
+	private Properties datos;
+	private InputStream entrada;
+	private OutputStream salida;
+	private File miFichero;
+	private final String FILE = "Datos.txt";
 
 	private Controlador miControlador;
 
@@ -53,7 +65,20 @@ public class Modelo {
 			System.err.println("Error General: " + e.getMessage());
 			System.exit(2);
 		}
-		// agregarUsuario("jua123123", "juan1234", "gonzalez", "1234", 12345, "Si", 1);
+		
+		datos = new Properties();
+		try {
+			miFichero = new File(FILE);
+			if (miFichero.exists()) {
+				entrada = new FileInputStream(miFichero);
+				datos.load(entrada);
+			} else {
+				System.err.println("Fichero no encontrado");
+				System.exit(1);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -341,6 +366,30 @@ public class Modelo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	public void guardarUsuario(String nick) {
+		try {
+			datos.setProperty("User", nick);
+			salida = new FileOutputStream(miFichero);
+			datos.store(salida, "El nickname se ha guardado");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void borrarUsuario() {
+		if (!datos.containsKey("User")) {
+			 
+		} else {
+			datos.remove("User");
+			try {
+				salida = new FileOutputStream(miFichero);
+				datos.store(salida, "Ultima operacion: Borrado");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

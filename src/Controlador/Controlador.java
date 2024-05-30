@@ -1,7 +1,10 @@
 package Controlador;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import Modelo.*;
@@ -17,7 +20,7 @@ public class Controlador extends JFrame {
 	private Modelo miModelo; // Model reference
 	private Vista[] misVistas; // Array of views
 	private String[] datosRegistro = new String[3]; // Array to hold registration data
-	private String nick; // Variable to hold the username for password recovery
+	private Properties prop = new Properties();
 
 	/**
 	 * Sets the model reference.
@@ -63,14 +66,17 @@ public class Controlador extends JFrame {
 
 	public 	boolean comprobarUsuario() {
 		String nick = ((_00_Login) misVistas[0]).getNick();
-		this.nick = nick;
 		String password = ((_00_Login) misVistas[0]).getPassword();
 		String resultado = miModelo.comprobarUsuario(nick, password);
 		switch (resultado) {
 		case "trueAdm":
+			miModelo.borrarUsuario();
+			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 7);
 			return true;
 		case "trueUsr":
+			miModelo.borrarUsuario();
+			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 6);
 			return true;
 		case "falso":
@@ -156,21 +162,18 @@ public class Controlador extends JFrame {
 	}
 
 	/**
-	 * Sets the username for password recovery.
-	 * 
-	 * @param nick the username to be set
-	 */
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
-
-	/**
 	 * Gets the username for password recovery.
 	 * 
 	 * @return the username for password recovery
 	 */
 	public String getNick() {
-		return nick;
+		try (FileInputStream input = new FileInputStream("Datos.txt")) {
+            prop.load(input);
+            return prop.getProperty("User");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return null;
 	}
 
 	public boolean agregarUsuario() {
@@ -253,7 +256,7 @@ public class Controlador extends JFrame {
 	 String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
 	 int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
      int codigo = miModelo.ultimoCodigo() + 1;
-     if(miModelo.agregarDenuncia(direccion, codigo, null, nick, categoria, cp, descripcion)) {
+     if(miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, cp, descripcion)) {
     	 if(comprobarAdmin()) {
     		 cambiarPantalla(8, 7);
     	 } else {
