@@ -143,7 +143,7 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				miControlador.comprobarUsuarioPaginaInfo();
+				miControlador.comprobarUsuarioPagina();
 			}
 		});
 		lblLogo.setBounds(10, 11, 77, 78);

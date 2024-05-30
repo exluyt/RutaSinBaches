@@ -147,7 +147,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				miControlador.comprobarUsuarioPagina();
+				miControlador.comprobarUsuarioPaginaInfo();
 			}
 
 			@Override
