@@ -398,5 +398,4 @@ public class _01_Registro extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
-
 }

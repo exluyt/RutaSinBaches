@@ -57,12 +57,33 @@ public class Controlador extends JFrame {
 			cambiarPantalla(0, 6);
 			break;
 		case "falso":
-				System.out.println("Usuario no encontrado o contraseña incorrecta.");
-				miModelo.incrementarFallos();
+			System.out.println("Usuario no encontrado o contraseña incorrecta.");
+			miModelo.incrementarFallos();
 			break;
 		}
-		
+
+	}
 	
+	
+	public void comprobarUsuarioRegistro() {
+		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
+		if (miModelo.comprobarUsuarioRegistro(nick)){
+			cambiarPantalla(2, 0);
+        } else {
+            System.out.println("Usuario ya registrado.");
+        }
+	}
+
+	public void comprobarUsuarioRecuperar() {
+		String usuario = ((_04_RecuperarPwd) misVistas[4]).getNick();
+		String respuesta = ((_04_RecuperarPwd) misVistas[4]).getRespuesta();
+		int pregunta = ((_04_RecuperarPwd) misVistas[4]).getPregunta();
+		if (miModelo.comprobarRespuesta(respuesta, usuario, pregunta)) {
+			cambiarPantalla(4, 5);
+		} else {
+			
+			System.out.println("Datos incorrectos");
+		}
 	}
 
 	/**
@@ -118,8 +139,19 @@ public class Controlador extends JFrame {
 		String admin = ((_02_Registro2) misVistas[2]).getAdmin();
 		String respuesta = ((_02_Registro2) misVistas[2]).getRespuesta();
 		if (miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta)) {
+			System.out.println("Usuario registrado con éxito.");
 			cambiarPantalla(2, 0);
+			return true;
+		} else {
+			System.out.println("Error al registrar usuario");
+			return false;
 		}
+	}
+
+	public boolean establecerPwd() {
+		String pwd = ((_05_RecuperarPwd2) misVistas[5]).getPwd();
+		String nick = ((_04_RecuperarPwd) misVistas[4]).getNick();
+		miModelo.establecerPwd(nick, pwd);
 		return false;
 	}
 }

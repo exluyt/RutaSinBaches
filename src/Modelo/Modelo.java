@@ -97,10 +97,8 @@ public class Modelo {
 			ctmt.execute();
 			rs = ctmt.getInt(9);
 			if (rs == 1) {
-				System.out.println("Usuario registrado con éxito.");
 				return true;
 			} else {
-				System.out.println("Error al registrar usuario.");
 				return false;
 			}
 		} catch (SQLException e) {
@@ -180,6 +178,25 @@ public class Modelo {
 			} else {
 				System.out.println("Usuario.");
 				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
+	public boolean comprobarUsuarioRegistro(String nick) {
+		String query = "SELECT * FROM `usuario` WHERE nick = ?;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setString(1, nick);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+                throw new SQLException("Usuario ya registrado.");
+			} else {
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -421,11 +421,9 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		String admin = "si";
 		int pregunta = comboBoxPreguntas.getSelectedIndex() + 1;
 		if (pwd.equals(repetirPwd)) {
-			if (miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, Integer.parseInt(codigoPostal), admin,
-					pregunta, respuesta)) {
-				miControlador.cambiarPantalla(3, 0);
-				lblVacio1.setText("");
-			}
+			miControlador.agregarUsuario();
+			lblVacio1.setText("");
+
 		} else {
 			lblVacio1.setText("Las contraseñas no coinciden");
 		}
@@ -449,4 +447,24 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		this.miModelo = miModelo;
 	}
 
+	public String getUsuario() {
+		return txtUsuario.getText();
+	}
+
+	public String getPwd() {
+		return txtUsuario.getText();
+	}
+
+	public int getPregunta() {
+		return comboBoxPreguntas.getSelectedIndex();
+	}
+
+	public String getAdmin() {
+		return "si";
+	}
+
+	public String getRespuesta() {
+		return txtRespuesta.getText();
+	}
+	
 }

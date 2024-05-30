@@ -418,7 +418,7 @@ public class _02_Registro2 extends JFrame implements Vista {
 		String admin = "no";
 		int pregunta = comboBoxPreguntas.getSelectedIndex() + 1;
 		if (pwd.equals(repetirPwd)) {
-			miControlador.agregarUsuario();
+			miControlador.comprobarUsuarioRegistro();
 			lblVacio1.setText("");
 		} else {
 			lblVacio1.setText("Las contraseñas no coinciden");
@@ -461,6 +461,13 @@ public class _02_Registro2 extends JFrame implements Vista {
 
 	public String getRespuesta() {
 		return txtRespuesta.getText();
+	}
+	
+
+	
+
+	public void setlblVacio(String string) {
+		lblVacio.setText(string);
 	}
 
 }

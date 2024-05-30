@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
@@ -57,6 +59,7 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	private JTextField txtCodigoPostal;
 	private JComboBox comboBox_1, comboBox;
 	private JTabbedPane pestañas;
+	private boolean esCodigoPostalClicado = false;
 
 	private Controlador miControlador;
 	private Modelo miModelo;
@@ -117,6 +120,24 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "--Estado--", "En proceso", "Resuelto" }));
 
 		txtCodigoPostal = new JTextField();
+		txtCodigoPostal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!esCodigoPostalClicado) {
+					txtCodigoPostal.setText("");
+					esCodigoPostalClicado = true;
+				}
+			}
+		});
+		txtCodigoPostal.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (!esCodigoPostalClicado) {
+					txtCodigoPostal.setText("");
+					esCodigoPostalClicado = true;
+				}
+			}
+		});
 		txtCodigoPostal.setBounds(30, 182, 180, 28);
 		contentPane.add(txtCodigoPostal);
 		txtCodigoPostal.setText("Codigo Postal");

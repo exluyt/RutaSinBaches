@@ -35,6 +35,8 @@ import Controlador.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * This class represents the main page of the application. It extends JFrame and
@@ -56,6 +58,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 	private JTabbedPane pestañas;
 	private JButton btnResuelta;
 	private JButton btnNewButton_3;
+	private boolean esCodigoPostalClicado = false;
 
 	private Modelo miModelo;
 	private Controlador miControlador;
@@ -126,6 +129,26 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "--Estado--", "En proceso", "Resuelto" }));
 
 		txtCodigoPostal = new JTextField();
+		txtCodigoPostal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!esCodigoPostalClicado) {
+					txtCodigoPostal.setText("");
+					esCodigoPostalClicado = true;
+				}
+			}
+		});
+		txtCodigoPostal.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (!esCodigoPostalClicado) {
+					txtCodigoPostal.setText("");
+					esCodigoPostalClicado = true;
+				}
+			}
+		});
+		
+		
 		txtCodigoPostal.setBounds(30, 182, 180, 28);
 		contentPane.add(txtCodigoPostal);
 		txtCodigoPostal.setText("Codigo Postal");

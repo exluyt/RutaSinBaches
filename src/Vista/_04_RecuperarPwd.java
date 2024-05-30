@@ -229,8 +229,7 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 			// Mostrar un mensaje de error al usuario
 			lblVacio.setText("Rellene todos los campos");
 		} else {
-			if (miModelo.comprobarUsuarioRecuperar(getUsuario())
-					&& miModelo.comprobarRespuesta(respuesta, getUsuario(), getComboBox())) {
+				miControlador.comprobarUsuarioRecuperar();
 				miControlador.setNick(usuario);
 				miControlador.cambiarPantalla(4, 5);
 				lblVacio.setText("");
@@ -238,6 +237,7 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 				lblVacio.setText("Datos incorrectos");
 			}
 		}
+
 	}
 
 	/**
@@ -259,5 +259,18 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
+
+	public String getNick() {
+		return txtUsuario.getText();
+	}
+	
+	public int getPregunta() {
+		return comboBox.getSelectedIndex() + 1;
+	}
+	
+	public String getRespuesta() {
+		return txtRespuesta.getText();
+	}
+	
 
 }

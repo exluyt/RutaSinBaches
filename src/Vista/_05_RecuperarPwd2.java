@@ -190,7 +190,7 @@ public class _05_RecuperarPwd2 extends JFrame implements Vista {
 		String repetirPwd = txtRepetirPwd.getText().trim();
 		if (pwd.equals(repetirPwd)) {
 			lblVacio.setText("");
-			if (miModelo.establecerPwd(pwd, usuario)) {
+			if (miControlador.establecerPwd()) {
 				System.out.println("Cambio de contraseña correcto");
 				miControlador.cambiarPantalla(5, 0);
 			} else {
