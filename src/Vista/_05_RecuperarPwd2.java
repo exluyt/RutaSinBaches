@@ -185,20 +185,18 @@ public class _05_RecuperarPwd2 extends JFrame implements Vista {
 	 * error message.
 	 */
 	private void comprobarPwdIguales() {
-		String usuario = miControlador.getNick();
-		String pwd = txtPwd.getText().trim();
-		String repetirPwd = txtRepetirPwd.getText().trim();
-		if (pwd.equals(repetirPwd)) {
-			lblVacio.setText("");
-			if (miControlador.establecerPwd()) {
-				System.out.println("Cambio de contraseña correcto");
-				miControlador.cambiarPantalla(5, 0);
-			} else {
-				System.out.println("Cambio de contraseña incorrecto");
-			}
-		} else {
-			lblVacio.setText("Las contraseñas no coinciden");
-		}
+	    String pwd = txtPwd.getText().trim();
+	    String repetirPwd = txtRepetirPwd.getText().trim();
+	    if (pwd.equals(repetirPwd)) {
+	        lblVacio.setText("");
+	        if (miControlador.establecerPwd()) {
+	            System.out.println("Cambio de contraseña correcto");
+	        } else {
+	            System.out.println("Cambio de contraseña incorrecto");
+	        }
+	    } else {
+	        lblVacio.setText("Las contraseñas no coinciden");
+	    }
 	}
 
 	/**
@@ -219,5 +217,9 @@ public class _05_RecuperarPwd2 extends JFrame implements Vista {
 	@Override
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
+	}
+
+	public String getPwd() {
+		return txtPwd.getText();
 	}
 }

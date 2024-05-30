@@ -159,31 +159,7 @@ public class Modelo {
 		}
 	}
 
-	/**
-	 * Checks if a user exists in the database with the provided nickname.
-	 * 
-	 * @param nick the user's nickname
-	 * @return true if the user exists, false otherwise
-	 */
-	public boolean comprobarUsuarioRecuperar(String nick) {
-		String queryAdmin = "SELECT * FROM `usuario` WHERE nick = ?;";
-		try {
-			PreparedStatement pstmt = conexion.prepareStatement(queryAdmin);
-			pstmt.setString(1, nick);
-			ResultSet rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				System.out.println("Admin.");
-				return true;
-			} else {
-				System.out.println("Usuario.");
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
 	
 	
 	
@@ -243,20 +219,41 @@ public class Modelo {
 	 * @param nick the user's nickname
 	 * @return true if the password was updated successfully, false otherwise
 	 */
-	public boolean establecerPwd(String pwd, String nick) {
-		String query = "UPDATE usuario SET pwd = ? WHERE nick = ?;";
-		try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
-			pstmt.setString(1, pwd);
-			pstmt.setString(2, nick);
+	public boolean establecerPwd(String nick, String pwd) {
+	    String query = "UPDATE usuario SET pwd = ? WHERE nick = ?;";
+	    try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
+	        pstmt.setString(1, pwd);
+	        pstmt.setString(2, nick);
 
-			int rs = pstmt.executeUpdate();
+	        int rs = pstmt.executeUpdate();
 
-			// Verify if the number of updated rows is greater than zero
-			if (rs > 0) {
-				System.out.println("Contraseña cambiada.");
-				return true;
+	        // Verify if the number of updated rows is greater than zero
+	        if (rs > 0) {
+	            System.out.println("Contraseña cambiada.");
+	            return true;
+	        } else {
+	            System.out.println("No se ha cambiado la contraseña.");
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	public boolean comprobarUsuarioAdmin(String nick) {
+		String query = "SELECT * FROM `usuario` WHERE nick = ?;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setString(1, nick);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString("admin").equalsIgnoreCase("si")) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
-				System.out.println("No se ha cambiado la contraseña.");
 				return false;
 			}
 		} catch (SQLException e) {

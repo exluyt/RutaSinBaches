@@ -229,15 +229,9 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 			// Mostrar un mensaje de error al usuario
 			lblVacio.setText("Rellene todos los campos");
 		} else {
-				miControlador.comprobarUsuarioRecuperar();
-				miControlador.setNick(usuario);
-				miControlador.cambiarPantalla(4, 5);
-				lblVacio.setText("");
-			} else {
-				lblVacio.setText("Datos incorrectos");
-			}
+			miControlador.comprobarUsuarioRecuperar();
+			lblVacio.setText("");
 		}
-
 	}
 
 	/**
@@ -263,14 +257,13 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 	public String getNick() {
 		return txtUsuario.getText();
 	}
-	
+
 	public int getPregunta() {
 		return comboBox.getSelectedIndex() + 1;
 	}
-	
+
 	public String getRespuesta() {
 		return txtRespuesta.getText();
 	}
-	
 
 }

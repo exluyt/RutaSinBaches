@@ -63,15 +63,23 @@ public class Controlador extends JFrame {
 		}
 
 	}
-	
-	
+
+	public void comprobarUsuarioPagina() {
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		if (miModelo.comprobarUsuarioAdmin(nick)) {
+			cambiarPantalla(8, 7);
+		} else {
+			cambiarPantalla(8, 6);
+		}
+	}
+
 	public void comprobarUsuarioRegistro() {
 		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
-		if (miModelo.comprobarUsuarioRegistro(nick)){
+		if (miModelo.comprobarUsuarioRegistro(nick)) {
 			cambiarPantalla(2, 0);
-        } else {
-            System.out.println("Usuario ya registrado.");
-        }
+		} else {
+			System.out.println("Usuario ya registrado.");
+		}
 	}
 
 	public void comprobarUsuarioRecuperar() {
@@ -81,7 +89,6 @@ public class Controlador extends JFrame {
 		if (miModelo.comprobarRespuesta(respuesta, usuario, pregunta)) {
 			cambiarPantalla(4, 5);
 		} else {
-			
 			System.out.println("Datos incorrectos");
 		}
 	}
@@ -151,7 +158,12 @@ public class Controlador extends JFrame {
 	public boolean establecerPwd() {
 		String pwd = ((_05_RecuperarPwd2) misVistas[5]).getPwd();
 		String nick = ((_04_RecuperarPwd) misVistas[4]).getNick();
-		miModelo.establecerPwd(nick, pwd);
-		return false;
+		if (miModelo.establecerPwd(nick, pwd)) {
+			cambiarPantalla(5, 0);
+			return true;
+		} else {
+			System.out.println("Error al cambiar la contraseña");
+			return false;
+		}
 	}
 }
