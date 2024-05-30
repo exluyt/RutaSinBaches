@@ -185,6 +185,31 @@ public class Controlador extends JFrame {
 			System.out.println("Error al cambiar la contraseña");
 			return false;
 		}
+//	public boolean establecerPwd() {
+//		String pwd = ((_05_RecuperarPwd2) misVistas[5]).getPwd();
+//		String nick = ((_04_RecuperarPwd) misVistas[4]).getNick();
+//		miModelo.establecerPwd(nick, pwd);
+//		return false;
+//	}
+
+	public boolean actualizarDatosUsuario() {
+		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();
+		String apellidos = ((_10_InfoPersonal) misVistas[10]).getApellido();
+		int cp = ((_10_InfoPersonal) misVistas[10]).getCp();
+		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
+		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
+		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
+
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		
+		if (miModelo.actualizarDatosUsuario(nick, nombre, apellidos, cp, pass, pregunta, respuesta)) {
+			System.out.println("Datos actualizados con éxito.");
+			return true;
+		} else {
+			System.out.println("Error al actualizar los datos.");
+			return false;
+		}
+
 	}
 
 	public void agregarAdmin() {

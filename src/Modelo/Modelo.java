@@ -170,7 +170,7 @@ public class Modelo {
 			pstmt.setString(1, nick);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-                throw new SQLException("Usuario ya registrado.");
+				throw new SQLException("Usuario ya registrado.");
 			} else {
 				return true;
 			}
@@ -278,4 +278,27 @@ public class Modelo {
 			return false;
 		}
 	}
+
+	public boolean actualizarDatosUsuario(String nick, String nombre, String apellidos, int cp, String pass,
+			int pregunta, String respuesta) {
+		String query = "{CALL modificarUsuario(?, ?, ?, ?, ?, ?, ?)}";
+		try {
+			CallableStatement ctmt = conexion.prepareCall(query);
+			ctmt.setString(1, nick);
+			ctmt.setString(2, nombre);
+			ctmt.setString(3, apellidos);
+			ctmt.setString(4, pass);
+			ctmt.setInt(5, cp);
+			ctmt.setInt(6, pregunta);
+			ctmt.setString(7, respuesta);
+
+			ctmt.executeUpdate();
+			
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
