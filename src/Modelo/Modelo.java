@@ -25,6 +25,14 @@ public class Modelo {
 	private Connection conexion; // Database connection
 
 	private Controlador miControlador;
+	
+	private String nick;
+    private String nombre;
+    private String apellido;
+    private int cp;
+    private String pass;
+    private int pregunta;
+    private String respuesta;
 
 	/**
 	 * Sets the views for the model.
@@ -279,14 +287,35 @@ public class Modelo {
 		}
 	}
 
-	public boolean actualizarDatosUsuario(String nick, String nombre, String apellidos, int cp, String pass,
+	public void mostrarDatosUsuario(String nick) {
+		String query = "SELECT * FROM `usuario` WHERE nick = ?;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setString(1, nick);
+			ResultSet rs = pstmt.executeQuery();
+			 if (rs.next()) {
+	                this.nick = rs.getString("nick");
+	                this.nombre = rs.getString("nombre");
+	                this.apellido = rs.getString("apellido");
+	                this.cp = rs.getInt("cp");
+	                this.pass = rs.getString("pwd"); 
+	                this.pregunta = rs.getInt("pregunta_codigo"); 
+	                this.respuesta = rs.getString("respuesta_seguridad");
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+
+	public boolean actualizarDatosUsuario(String nick, String nombre, String apellido, int cp, String pass,
 			int pregunta, String respuesta) {
 		String query = "{CALL modificarUsuario(?, ?, ?, ?, ?, ?, ?)}";
 		try {
 			CallableStatement ctmt = conexion.prepareCall(query);
 			ctmt.setString(1, nick);
 			ctmt.setString(2, nombre);
-			ctmt.setString(3, apellidos);
+			ctmt.setString(3, apellido);
 			ctmt.setString(4, pass);
 			ctmt.setInt(5, cp);
 			ctmt.setInt(6, pregunta);
@@ -300,6 +329,36 @@ public class Modelo {
 			return false;
 		}
 	}
+	// Getters para acceder a los datos del usuario
+	public String getNick() {
+		return nick;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public String getApellido() {
+		return apellido;
+	}
+	
+	public int getCp() {
+		return cp;
+	}
+	
+	public String getPass() {
+		return pass;
+	}
+	
+	public int getPregunta() {
+		return pregunta;
+	}
+	
+	public String getRespuesta() {
+		return respuesta;
+	}
+	
+	
 
 
 	public int ultimoCodigo() {

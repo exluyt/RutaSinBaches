@@ -204,25 +204,6 @@ public class Controlador extends JFrame {
 		}
 	}
 
-	public boolean actualizarDatosUsuario() {
-		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();
-		String apellidos = ((_10_InfoPersonal) misVistas[10]).getApellido();
-		int cp = ((_10_InfoPersonal) misVistas[10]).getCp();
-		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
-		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
-		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
-
-		String nick = ((_00_Login) misVistas[0]).getNick();
-		
-		if (miModelo.actualizarDatosUsuario(nick, nombre, apellidos, cp, pass, pregunta, respuesta)) {
-			System.out.println("Datos actualizados con éxito.");
-			return true;
-		} else {
-			System.out.println("Error al actualizar los datos.");
-			return false;
-		}
-
-	}
 
 	public void agregarAdmin() {
 		String usuario = ((_03_RegistroAdmin) misVistas[3]).getUsuario();
@@ -242,6 +223,30 @@ public class Controlador extends JFrame {
 			((_03_RegistroAdmin) misVistas[3]).setError("Los datos son incorrectos");
 			System.out.println("Error al registrarse");
 		}
+	}
+	
+	public boolean actualizarDatosUsuario() {
+		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();
+		String apellido = ((_10_InfoPersonal) misVistas[10]).getApellido();
+		int cp = ((_10_InfoPersonal) misVistas[10]).getCp();
+		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
+		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
+		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
+		
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		
+		if (miModelo.actualizarDatosUsuario(nick, nombre, apellido, cp, pass, pregunta, respuesta)) {
+			System.out.println("Datos actualizados con éxito.");
+			return true;
+		} else {
+			System.out.println("Error al actualizar los datos.");
+			return false;
+		}
+		
+	}
+
+	public void obtenerDatosUsuario() {
+		miModelo.mostrarDatosUsuario(((_00_Login) misVistas[0]).getNick());
 	}
 
 	public void agregarPublicacion() {
