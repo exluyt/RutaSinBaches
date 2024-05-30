@@ -34,6 +34,9 @@ import Modelo.*;
 import Controlador.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ListSelectionModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -48,21 +51,18 @@ import java.awt.event.KeyEvent;
 public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
+	private JButton btnPublicarDenuncia, btnNewButton_1, btnNewButton_2, btnResuelta, btnNewButton_3;
 	private JPanel contentPane, paraTi, denunciasFavoritas, misDenuncias;
 	private JLabel lblLogo, lblRSB, lblFotoPerfil, lblNewLabel;
 	private JScrollPane scrollPane, scrollPane2, scrollPane3;
-	private JTable table, table2, table3;
-	private JButton btnPublicarDenuncia, btnNewButton_1, btnNewButton_2;
-	private JTextField txtCodigoPostal;
-	private JComboBox comboBox_1, comboBox;
-	private JTabbedPane pestañas;
-	private JButton btnResuelta;
-	private JButton btnNewButton_3;
 	private boolean esCodigoPostalClicado = false;
+	private JComboBox comboBox_1, comboBox;
+	private JTable table, table2, table3;
+	private JTextField txtCodigoPostal;
+	private JTabbedPane pestañas;
 
 	private Modelo miModelo;
 	private Controlador miControlador;
-
 	/**
 	 * Constructor for the _06_PaginaPrincipal class. Initializes the form and its
 	 * components.
@@ -82,6 +82,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		ImageIcon imageRSB = new ImageIcon(getClass().getResource("img/LogoGrande.png"));
 		ImageIcon imageFotoPerfil = new ImageIcon(getClass().getResource("img/fotoPerfil.png"));
 		ImageIcon imageBusquedaLupa = new ImageIcon(getClass().getResource("img/Busquedapng.png"));
+		
 
 		btnResuelta = new JButton("Resuelta");
 		btnResuelta.addActionListener(new ActionListener() {
@@ -250,37 +251,56 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, },
-				new String[] { "C\u00F3digo", "Estado", "Direcci\u00F3n", "Fecha de publicación", "Categoria",
-						"Descripción", "\u2605" }));
-		table.getColumnModel().getColumn(0).setMinWidth(75);
-		table.getColumnModel().getColumn(0).setMaxWidth(75);
-		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(100);
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);
-		table.getColumnModel().getColumn(2).setMinWidth(150);
-		table.getColumnModel().getColumn(2).setMaxWidth(150);
-		table.getColumnModel().getColumn(3).setPreferredWidth(125);
-		table.getColumnModel().getColumn(3).setMinWidth(125);
-		table.getColumnModel().getColumn(3).setMaxWidth(125);
-		table.getColumnModel().getColumn(4).setPreferredWidth(101);
-		table.getColumnModel().getColumn(6).setPreferredWidth(25);
-		table.getColumnModel().getColumn(6).setMinWidth(25);
-		table.getColumnModel().getColumn(6).setMaxWidth(25);
+				DefaultTableModel modeloTabla1= new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
+			}
+		);
+		table.setModel(modeloTabla1);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setMinWidth(50);
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
+		table.getColumnModel().getColumn(1).setMaxWidth(75);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(2).setMinWidth(100);
+		table.getColumnModel().getColumn(2).setMaxWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table.getColumnModel().getColumn(3).setMinWidth(150);
+		table.getColumnModel().getColumn(3).setMaxWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(125);
+		table.getColumnModel().getColumn(4).setMinWidth(125);
+		table.getColumnModel().getColumn(4).setMaxWidth(125);
+		table.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table.getColumnModel().getColumn(7).setPreferredWidth(25);
+		table.getColumnModel().getColumn(7).setMinWidth(25);
+		table.getColumnModel().getColumn(7).setMaxWidth(25);
+		
 		scrollPane.setViewportView(table);
 
 		paraTi = new JPanel();
@@ -294,37 +314,55 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 		table2 = new JTable();
 		table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table2.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, },
-				new String[] { "C\u00F3digo", "Estado", "Direcci\u00F3n", "Fecha de publicación", "Categoria",
-						"Descripción", "\u2605" }));
-		table2.getColumnModel().getColumn(0).setMinWidth(75);
-		table2.getColumnModel().getColumn(0).setMaxWidth(75);
-		table2.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table2.getColumnModel().getColumn(1).setMinWidth(100);
-		table2.getColumnModel().getColumn(1).setMaxWidth(100);
-		table2.getColumnModel().getColumn(2).setPreferredWidth(150);
-		table2.getColumnModel().getColumn(2).setMinWidth(150);
-		table2.getColumnModel().getColumn(2).setMaxWidth(150);
-		table2.getColumnModel().getColumn(3).setPreferredWidth(125);
-		table2.getColumnModel().getColumn(3).setMinWidth(125);
-		table2.getColumnModel().getColumn(3).setMaxWidth(125);
-		table2.getColumnModel().getColumn(4).setPreferredWidth(101);
-		table2.getColumnModel().getColumn(6).setPreferredWidth(25);
-		table2.getColumnModel().getColumn(6).setMinWidth(25);
-		table2.getColumnModel().getColumn(6).setMaxWidth(25);
+		DefaultTableModel modeloTabla2= new DefaultTableModel(
+	new Object[][] {
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+	},
+	new String[] {
+		"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
+	}
+);
+		table2.setModel(modeloTabla2);
+		table2.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table2.getColumnModel().getColumn(0).setMinWidth(50);
+		table2.getColumnModel().getColumn(0).setMaxWidth(50);
+		table2.getColumnModel().getColumn(1).setMaxWidth(75);
+		table2.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table2.getColumnModel().getColumn(2).setMinWidth(100);
+		table2.getColumnModel().getColumn(2).setMaxWidth(100);
+		table2.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table2.getColumnModel().getColumn(3).setMinWidth(150);
+		table2.getColumnModel().getColumn(3).setMaxWidth(150);
+		table2.getColumnModel().getColumn(4).setPreferredWidth(125);
+		table2.getColumnModel().getColumn(4).setMinWidth(125);
+		table2.getColumnModel().getColumn(4).setMaxWidth(125);
+		table2.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table2.getColumnModel().getColumn(7).setPreferredWidth(25);
+		table2.getColumnModel().getColumn(7).setMinWidth(25);
+		table2.getColumnModel().getColumn(7).setMaxWidth(25);
 		scrollPane2.setViewportView(table2);
 
 		misDenuncias = new JPanel();
@@ -338,37 +376,55 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 		table3 = new JTable();
 		table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table3.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, },
-				new String[] { "C\u00F3digo", "Estado", "Direcci\u00F3n", "Fecha de publicación", "Categoria",
-						"Descripción", "\u2605" }));
-		table3.getColumnModel().getColumn(0).setMinWidth(75);
-		table3.getColumnModel().getColumn(0).setMaxWidth(75);
-		table3.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table3.getColumnModel().getColumn(1).setMinWidth(100);
-		table3.getColumnModel().getColumn(1).setMaxWidth(100);
-		table3.getColumnModel().getColumn(2).setPreferredWidth(150);
-		table3.getColumnModel().getColumn(2).setMinWidth(150);
-		table3.getColumnModel().getColumn(2).setMaxWidth(150);
-		table3.getColumnModel().getColumn(3).setPreferredWidth(125);
-		table3.getColumnModel().getColumn(3).setMinWidth(125);
-		table3.getColumnModel().getColumn(3).setMaxWidth(125);
-		table3.getColumnModel().getColumn(4).setPreferredWidth(101);
-		table3.getColumnModel().getColumn(6).setPreferredWidth(25);
-		table3.getColumnModel().getColumn(6).setMinWidth(25);
-		table3.getColumnModel().getColumn(6).setMaxWidth(25);
+		DefaultTableModel modeloTabla3= new DefaultTableModel(
+	new Object[][] {
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+	},
+	new String[] {
+		"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
+	}
+);
+		table3.setModel(modeloTabla3);
+		table3.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table3.getColumnModel().getColumn(0).setMinWidth(50);
+		table3.getColumnModel().getColumn(0).setMaxWidth(50);
+		table3.getColumnModel().getColumn(1).setMaxWidth(75);
+		table3.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table3.getColumnModel().getColumn(2).setMinWidth(100);
+		table3.getColumnModel().getColumn(2).setMaxWidth(100);
+		table3.getColumnModel().getColumn(3).setPreferredWidth(150);
+		table3.getColumnModel().getColumn(3).setMinWidth(150);
+		table3.getColumnModel().getColumn(3).setMaxWidth(150);
+		table3.getColumnModel().getColumn(4).setPreferredWidth(125);
+		table3.getColumnModel().getColumn(4).setMinWidth(125);
+		table3.getColumnModel().getColumn(4).setMaxWidth(125);
+		table3.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table3.getColumnModel().getColumn(7).setPreferredWidth(25);
+		table3.getColumnModel().getColumn(7).setMinWidth(25);
+		table3.getColumnModel().getColumn(7).setMaxWidth(25);
 		scrollPane3.setViewportView(table3);
 
 		btnNewButton_1 = new JButton("Eliminar denuncia");
@@ -383,6 +439,13 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		misDenuncias.add(btnNewButton_1);
 
 		getContentPane().add(pestañas);
+		addWindowListener(new WindowAdapter() {
+			public void windowActivated(WindowEvent evt) {
+				table.setModel(miControlador.crearTablaFav(modeloTabla1,1));
+				table2.setModel(miControlador.crearTablaFav(modeloTabla2,2));
+				table3.setModel(miControlador.crearTablaFav(modeloTabla3,3));
+			}
+		});
 	}
 
 	/**
@@ -402,4 +465,10 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
+	
+	public DefaultTableModel getTableModel(DefaultTableModel dtm) {
+		return dtm ;
+		
+	};
+	
 }

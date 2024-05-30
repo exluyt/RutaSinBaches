@@ -2,10 +2,15 @@ package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 
 import Controlador.Controlador;
 import Vista.*;
@@ -358,6 +363,129 @@ public class Modelo {
 		return respuesta;
 	}
 	
+	
+	public List<Object[]> establecerTablas(String usuario, int fav) {
+		List<Object[]> tabla = new ArrayList <Object[]>();
+		String query = null;
+		switch (fav) {
+		case 1: 
+			 query ="SELECT \r\n"
+			 		+ "    d.codigo, \r\n"
+			 		+ "    d.usuario_nick, \r\n"
+			 		+ "    d.estado, \r\n"
+			 		+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+			 		+ "    d.fecha, \r\n"
+			 		+ "    c.nombre AS categoria_nombre, \r\n"
+			 		+ "    d.descripcion, \r\n"
+			 		+ "    v.favorito\r\n"
+			 		+ "FROM \r\n"
+			 		+ "    denuncia d\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    votar v ON d.codigo = v.denuncia_codigo\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+			 		+ "WHERE \r\n"
+			 		+ "    v.usuario_nick = ? AND v.favorito = 'Y'\r\n"
+			 		+ "ORDER BY \r\n"
+			 		+ "    d.fecha DESC;\r\n";
+			 break;
+		case 2:
+			 query ="SELECT \r\n"
+					+ "    d.codigo, \r\n"
+					+ "    d.usuario_nick, \r\n"
+					+ "    d.estado, \r\n"
+					+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+					+ "    d.fecha, \r\n"
+					+ "    c.nombre AS categoria_nombre, \r\n"
+					+ "    d.descripcion, \r\n"
+					+ "    COALESCE((SELECT v.favorito FROM votar v WHERE v.denuncia_codigo = d.codigo AND v.usuario_nick = ? AND v.favorito = 'Y'), 'N') AS favorito\r\n"
+					+ "FROM \r\n"
+					+ "    denuncia d \r\n"
+					+ "JOIN \r\n"
+					+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+					+ "ORDER BY \r\n"
+					+ "    d.fecha DESC;\r\n";
+			 break;
+		case 3:
+			 query ="SELECT \r\n"
+			 		+ "    d.codigo, \r\n"
+			 		+ "    d.usuario_nick, \r\n"
+			 		+ "    d.estado, \r\n"
+			 		+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+			 		+ "    d.fecha, \r\n"
+			 		+ "    c.nombre AS categoria_nombre, \r\n"
+			 		+ "    d.descripcion, \r\n"
+			 		+ "    COALESCE(\r\n"
+			 		+ "        (SELECT v.favorito FROM votar v WHERE v.usuario_nick = ? AND d.codigo = v.denuncia_codigo), \r\n"
+			 		+ "        'N'\r\n"
+			 		+ "    ) AS favorito\r\n"
+			 		+ "FROM \r\n"
+			 		+ "    denuncia d\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+			 		+ "WHERE \r\n"
+			 		+ "    d.usuario_nick = ? \r\n"
+			 		+ "ORDER BY \r\n"
+			 		+ "    d.fecha DESC;";
+			break;
+		case 4:
+			 query ="SELECT \r\n"
+						+ "    d.codigo, \r\n"
+						+ "    d.usuario_nick, \r\n"
+						+ "    d.estado, \r\n"
+						+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+						+ "    d.fecha, \r\n"
+						+ "    c.nombre AS categoria_nombre, \r\n"
+						+ "    d.descripcion, \r\n"
+						+ "    COALESCE((SELECT v.favorito FROM votar v WHERE v.denuncia_codigo = d.codigo AND v.usuario_nick = ? AND v.favorito = 'Y'), 'N') AS favorito\r\n"
+						+ "FROM \r\n"
+						+ "    denuncia d \r\n"
+						+ "JOIN \r\n"
+						+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+						+ "ORDER BY \r\n"
+						+ "    d.codigo DESC;\r\n";
+			break;
+		
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + fav);
+		}
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			switch (fav) {
+			case 1: 
+				pstmt.setString(1, usuario);
+				break;		
+			case 2:
+				pstmt.setString(1, usuario);
+				break;
+			case 3:
+				pstmt.setString(1, usuario);
+				pstmt.setString(2, usuario);
+				break;
+			case 4:
+				pstmt.setString(1, usuario);
+				break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + fav);
+			}
+			ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                int codigo = resultSet.getInt("codigo");
+                String usr = resultSet.getString("usuario_nick");
+                String estado = resultSet.getString("estado");
+                String direccionCp = resultSet.getString("direccion_cp");
+                Date fecha = resultSet.getDate("fecha");
+                String categoriaNombre = resultSet.getString("categoria_nombre");
+                String descripcion = resultSet.getString("descripcion");
+                String favorito = resultSet.getString("favorito");
+                tabla.add(new Object[]{codigo, usr, estado, direccionCp, fecha, categoriaNombre, descripcion, favorito});
+            	}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tabla;
+	};
 	
 
 

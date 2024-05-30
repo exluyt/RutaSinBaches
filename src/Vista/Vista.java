@@ -3,6 +3,8 @@
  */
 package Vista;
 
+import javax.swing.table.DefaultTableModel;
+
 import Controlador.*;
 import Modelo.*;
 
@@ -12,4 +14,5 @@ public interface Vista {
 	public void setModelo(Modelo miModelo);
 	
 	public void setVisible(boolean b);
+
 }

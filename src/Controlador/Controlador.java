@@ -3,7 +3,12 @@ package Controlador;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 import Modelo.*;
 import Vista.*;
 
@@ -244,6 +249,23 @@ public class Controlador extends JFrame {
 		}
 		
 	}
+	public DefaultTableModel crearTablaFav(DefaultTableModel modeloTabla, int fav) {
+		List<Object[]> tabla = miModelo.establecerTablas(recuperarUsuario(),fav);;
+        DefaultTableModel tableModel =  new DefaultTableModel();
+        tableModel=((_06_PaginaPrincipal) misVistas[6]).getTableModel(modeloTabla);
+        tableModel.setRowCount(0);
+        int fila = 0;
+        for (Object[] lista : tabla){
+        	tableModel.insertRow(fila, lista);
+        	fila++;
+        }
+        fila=0;
+        return tableModel;
+	}
+	public String recuperarUsuario() {
+		String usuario = ((_00_Login) misVistas[0]).getNick();
+		return usuario;
+	}
 
 	public void obtenerDatosUsuario() {
 		miModelo.mostrarDatosUsuario(((_00_Login) misVistas[0]).getNick());
@@ -269,3 +291,4 @@ public class Controlador extends JFrame {
      }
 	}
 }
+
