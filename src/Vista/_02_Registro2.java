@@ -74,6 +74,11 @@ public class _02_Registro2 extends JFrame implements Vista {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+				lblVacio = new JLabel("");
+				lblVacio.setForeground(Color.RED);
+				lblVacio.setBounds(166, 116, 152, 23);
+				contentPane.add(lblVacio);
 
 		lblAsterisco = new JLabel("");
 		lblAsterisco.setForeground(new Color(255, 0, 0));
@@ -368,11 +373,6 @@ public class _02_Registro2 extends JFrame implements Vista {
 		lblRobot.setIcon(sizeRobot);
 		contentPane.add(lblRobot);
 
-		lblVacio = new JLabel("");
-		lblVacio.setForeground(Color.RED);
-		lblVacio.setBounds(166, 121, 152, 14);
-		contentPane.add(lblVacio);
-
 		lblVacio1 = new JLabel("");
 		lblVacio1.setForeground(Color.RED);
 		lblVacio1.setBounds(166, 360, 198, 14);
@@ -395,10 +395,8 @@ public class _02_Registro2 extends JFrame implements Vista {
 			lblVacio.setText("Rellena todos los campos");
 		} else if (!chckbxRobot.isSelected()) {
 			lblAsterisco.setText("*");
-
 		} else {
 			comprobarPwdIguales();
-			lblVacio.setText("");
 		}
 	}
 
@@ -418,8 +416,9 @@ public class _02_Registro2 extends JFrame implements Vista {
 		String admin = "no";
 		int pregunta = comboBoxPreguntas.getSelectedIndex() + 1;
 		if (pwd.equals(repetirPwd)) {
-			miControlador.comprobarUsuarioRegistro();
-			lblVacio1.setText("");
+			if (!miControlador.comprobarUsuarioRegistro()) {
+				lblVacio.setText("Error en el registro");
+			}
 		} else {
 			lblVacio1.setText("Las contraseñas no coinciden");
 		}
@@ -462,9 +461,6 @@ public class _02_Registro2 extends JFrame implements Vista {
 	public String getRespuesta() {
 		return txtRespuesta.getText();
 	}
-	
-
-	
 
 	public void setlblVacio(String string) {
 		lblVacio.setText(string);

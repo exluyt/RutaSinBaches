@@ -82,12 +82,14 @@ public class Controlador extends JFrame {
 	}
 
 
-	public void comprobarUsuarioRegistro() {
+	public boolean comprobarUsuarioRegistro() {
 		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
 		if (miModelo.comprobarUsuarioRegistro(nick)) {
 			cambiarPantalla(2, 0);
+			return true;	
 		} else {
 			System.out.println("Usuario ya registrado.");
+			return false;
 		}
 	}
 
