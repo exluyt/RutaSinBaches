@@ -72,6 +72,7 @@ public class Controlador extends JFrame {
 			cambiarPantalla(8, 6);
 		}
 	}
+
 	public void comprobarUsuarioPaginaInfo() {
 		String nick = ((_00_Login) misVistas[0]).getNick();
 		if (miModelo.comprobarUsuarioAdmin(nick)) {
@@ -81,12 +82,11 @@ public class Controlador extends JFrame {
 		}
 	}
 
-
 	public boolean comprobarUsuarioRegistro() {
 		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
 		if (miModelo.comprobarUsuarioRegistro(nick)) {
 			cambiarPantalla(2, 0);
-			return true;	
+			return true;
 		} else {
 			System.out.println("Usuario ya registrado.");
 			return false;
@@ -103,14 +103,14 @@ public class Controlador extends JFrame {
 			System.out.println("Datos incorrectos");
 		}
 	}
-	
+
 	public void comprobarUsuarioRegistroAdmin() {
 		String nick = ((_03_RegistroAdmin) misVistas[3]).getUsuario();
-		if (miModelo.comprobarUsuarioRegistro(nick)){
+		if (miModelo.comprobarUsuarioRegistro(nick)) {
 			agregarAdmin();
-        } else {
-            System.out.println("Usuario ya registrado.");
-        }
+		} else {
+			System.out.println("Usuario ya registrado.");
+		}
 	}
 
 	/**
@@ -197,8 +197,8 @@ public class Controlador extends JFrame {
 		String admin = ((_03_RegistroAdmin) misVistas[3]).getAdmin();
 		String respuesta = ((_03_RegistroAdmin) misVistas[3]).getRespuesta();
 		String pwdAdmin = ((_03_RegistroAdmin) misVistas[3]).getPwdAdmin();
-		if (miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta) && 
-				miModelo.comprobarPwdAdmin(pwdAdmin)) {
+		if (miModelo.comprobarPwdAdmin(pwdAdmin)
+				&& miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta)) {
 			System.out.println("Admin registrado con éxito.");
 			cambiarPantalla(3, 0);
 		} else {
