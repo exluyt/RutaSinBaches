@@ -233,11 +233,7 @@ public class _04_RecuperarPwd extends JFrame implements Vista {
 				miControlador.setNick(usuario);
 				miControlador.cambiarPantalla(4, 5);
 				lblVacio.setText("");
-			} else {
-				lblVacio.setText("Datos incorrectos");
 			}
-		}
-
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	private JLabel lblLogo, lblRSB, lblFotoPerfil, lblCambia, lblInfo, lblCdigoPostal, lblContrasea,
 			lblPreguntasDeSeguridad;
 	private JPasswordField passwordField;
-	private JTextField textNombre, textUsuario, textApellidos, textCP, textRespuesta;
+	private JTextField txtNombre, txtApellidos, txtCP, txtRespuesta;
 	private JLabel lblMontana;
 	private JLabel lblCiudad;
 	private JLabel lblCamino;
@@ -58,9 +58,12 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JLabel lblUpload;
-	private JLabel lblUsuarioPerfil;
+	private JLabel lblArrobaPerfil;
 	private JLabel lblNombreapellido;
 	private JPanel panel_1;
+	private JComboBox comboBoxSeguridad;
+	private JLabel lblVacio;
+	private JLabel lblNick;
 
 	/**
 	 * Constructor for the _10_InfoPersonal class. Initializes the form and its
@@ -88,14 +91,15 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon imageCiudad = new ImageIcon(getClass().getResource("img/Ciudad.png"));
 		ImageIcon imageMontana = new ImageIcon(getClass().getResource("img/montana2.png"));
 		ImageIcon imageUpload = new ImageIcon(getClass().getResource("img/Drawing.png"));
+		
+		// PREGUNTAAAAAAAAAAAAAR A PEDROOOOOOOOOOOOOOOOOOOO holahenry
+		lblNick = new JLabel(miControlador.getNick());
+		lblNick.setForeground(Color.BLACK);
+		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNick.setBounds(884, 327, 50, 37);
+		contentPane.add(lblNick);
 
 		lblUpload = new JLabel("");
-		lblUpload.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-		});
 		lblUpload.setBounds(948, 266, 50, 50);
 		contentPane.add(lblUpload);
 		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
@@ -177,16 +181,16 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
 		lblFotoPerfil.setIcon(sizeFotoPerfil);
 
-		lblUsuarioPerfil = new JLabel("@Usuario");
-		lblUsuarioPerfil.setForeground(new Color(0, 0, 0));
-		lblUsuarioPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblUsuarioPerfil.setBounds(806, 369, 182, 37);
-		contentPane.add(lblUsuarioPerfil);
+		lblArrobaPerfil = new JLabel("@");
+		lblArrobaPerfil.setForeground(new Color(58, 182, 98));
+		lblArrobaPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblArrobaPerfil.setBounds(863, 327, 26, 37);
+		contentPane.add(lblArrobaPerfil);
 
-		lblNombreapellido = new JLabel("Pedro Camacho");
+		lblNombreapellido = new JLabel("Hola");
 		lblNombreapellido.setForeground(Color.BLACK);
 		lblNombreapellido.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNombreapellido.setBounds(806, 327, 182, 37);
+		lblNombreapellido.setBounds(816, 327, 50, 37);
 		contentPane.add(lblNombreapellido);
 
 		panel_1 = new JPanel();
@@ -195,88 +199,87 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		JButton btnModificarPreguntas = new JButton("Modificar");
-		btnModificarPreguntas.setBounds(139, 467, 141, 37);
-		panel_1.add(btnModificarPreguntas);
-		btnModificarPreguntas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JButton btnModificarUsuario = new JButton("Modificar");
+		btnModificarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (miControlador.actualizarDatosUsuario()){
+					lblVacio.setText("¡Datos actualizados correctamente!");
+				} else {
+					lblVacio.setText("Error al actualizar los datos");
+				}
+			}
+		});
+		
+		btnModificarUsuario.setBounds(139, 428, 141, 37);
+		panel_1.add(btnModificarUsuario);
+		btnModificarUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblRespuesta = new JLabel("Respuesta:");
-		lblRespuesta.setBounds(29, 390, 158, 37);
+		lblRespuesta.setBounds(29, 362, 158, 37);
 		panel_1.add(lblRespuesta);
 		lblRespuesta.setForeground(new Color(58, 182, 98));
 		lblRespuesta.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		textRespuesta = new JTextField();
-		textRespuesta.setBounds(219, 400, 182, 20);
-		panel_1.add(textRespuesta);
-		textRespuesta.setColumns(10);
+		txtRespuesta = new JTextField();
+		txtRespuesta.setBounds(219, 372, 182, 20);
+		panel_1.add(txtRespuesta);
+		txtRespuesta.setColumns(10);
 
 		lblPreguntasDeSeguridad = new JLabel("Pregunta de seguridad:");
-		lblPreguntasDeSeguridad.setBounds(29, 342, 193, 37);
+		lblPreguntasDeSeguridad.setBounds(29, 313, 193, 37);
 		panel_1.add(lblPreguntasDeSeguridad);
 		lblPreguntasDeSeguridad.setForeground(new Color(58, 182, 98));
 		lblPreguntasDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(219, 351, 182, 22);
-		panel_1.add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "¿Cuál tu nombre de pila?",
+		comboBoxSeguridad = new JComboBox();
+		comboBoxSeguridad.setBounds(219, 322, 182, 22);
+		panel_1.add(comboBoxSeguridad);
+		comboBoxSeguridad.setModel(new DefaultComboBoxModel(new String[] { "¿Cuál tu nombre de pila?",
 				"¿Cuál es tu primera escuela?", "¿Cuál es tu primera mascota?" }));
 
 		lblContrasea = new JLabel("Contraseña:");
-		lblContrasea.setBounds(29, 294, 87, 37);
+		lblContrasea.setBounds(29, 255, 87, 37);
 		panel_1.add(lblContrasea);
 		lblContrasea.setForeground(new Color(58, 182, 98));
 		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(219, 304, 100, 20);
+		passwordField.setBounds(219, 265, 100, 20);
 		panel_1.add(passwordField);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		lblCdigoPostal = new JLabel("Código postal:");
-		lblCdigoPostal.setBounds(29, 242, 100, 37);
+		lblCdigoPostal.setBounds(29, 207, 100, 37);
 		panel_1.add(lblCdigoPostal);
 		lblCdigoPostal.setForeground(new Color(58, 182, 98));
 		lblCdigoPostal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		textCP = new JTextField();
-		textCP.setBounds(219, 252, 100, 20);
-		panel_1.add(textCP);
-		textCP.setColumns(10);
+		txtCP = new JTextField();
+		txtCP.setBounds(219, 217, 100, 20);
+		panel_1.add(txtCP);
+		txtCP.setColumns(10);
 
-		textApellidos = new JTextField();
-		textApellidos.setBounds(219, 204, 100, 20);
-		panel_1.add(textApellidos);
-		textApellidos.setColumns(10);
+		txtApellidos = new JTextField();
+		txtApellidos.setBounds(219, 168, 100, 20);
+		panel_1.add(txtApellidos);
+		txtApellidos.setColumns(10);
 
 		JLabel lblUsuario_2 = new JLabel("Apellidos:");
-		lblUsuario_2.setBounds(29, 194, 69, 37);
+		lblUsuario_2.setBounds(29, 158, 69, 37);
 		panel_1.add(lblUsuario_2);
 		lblUsuario_2.setForeground(new Color(58, 182, 98));
 		lblUsuario_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblUsuario_1 = new JLabel("Nombre:");
-		lblUsuario_1.setBounds(29, 149, 64, 37);
+		lblUsuario_1.setBounds(29, 110, 64, 37);
 		panel_1.add(lblUsuario_1);
 		lblUsuario_1.setForeground(new Color(58, 182, 98));
 		lblUsuario_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		textNombre = new JTextField();
-		textNombre.setBounds(219, 159, 100, 20);
-		panel_1.add(textNombre);
-		textNombre.setColumns(10);
-
-		textUsuario = new JTextField();
-		textUsuario.setBounds(219, 111, 100, 20);
-		panel_1.add(textUsuario);
-		textUsuario.setColumns(10);
-
-		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(29, 101, 64, 37);
-		panel_1.add(lblUsuario);
-		lblUsuario.setForeground(new Color(58, 182, 98));
-		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtNombre = new JTextField();
+		txtNombre.setBounds(219, 120, 100, 20);
+		panel_1.add(txtNombre);
+		txtNombre.setColumns(10);
 
 		lblCambia = new JLabel("Cambia tu");
 		lblCambia.setBounds(10, 37, 175, 37);
@@ -288,8 +291,17 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		panel_1.add(lblInfo);
 		lblInfo.setForeground(new Color(58, 182, 98));
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		
+		lblVacio = new JLabel("¡Datos actualizados correctamente!");
+		lblVacio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblVacio.setForeground(new Color(58, 182, 98));
+		lblVacio.setBounds(101, 479, 228, 17);
+		panel_1.add(lblVacio);
 
 	}
+
+		
+	
 
 	/**
 	 * This method sets the controller for the view.
@@ -307,5 +319,29 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	 */
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
+	}
+
+	public String getNombre() {
+		return txtNombre.getText();
+	}
+
+	public String getApellido() {
+		return txtApellidos.getText();
+	}
+
+	public int getCp() {
+		return Integer.parseInt(txtCP.getText());
+	}
+
+	public String getPwd() {
+		return new String(passwordField.getPassword());
+	}
+
+	public int getPregunta() {
+		return comboBoxSeguridad.getSelectedIndex() + 1;
+	}
+	
+	public String getRespuesta() {
+		return txtRespuesta.getText();
 	}
 }
