@@ -70,12 +70,10 @@ public class Controlador extends JFrame {
 		String resultado = miModelo.comprobarUsuario(nick, password);
 		switch (resultado) {
 		case "trueAdm":
-			miModelo.borrarUsuario();
 			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 7);
 			return true;
 		case "trueUsr":
-			miModelo.borrarUsuario();
 			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 6);
 			return true;
@@ -175,6 +173,20 @@ public class Controlador extends JFrame {
         }
 		return null;
 	}
+	
+	public int getCp() {
+		try (FileInputStream input = new FileInputStream("Datos.txt")) {
+            prop.load(input);
+            return Integer.parseInt(prop.getProperty("Cp"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return -1;
+	}
+	
+	public void setCp(String cp) {
+		miModelo.guardarCp(cp);
+	}
 
 	public boolean agregarUsuario() {
 		String usuario = ((_02_Registro2) misVistas[2]).getUsuario();
@@ -214,9 +226,7 @@ public class Controlador extends JFrame {
 		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
 		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
 		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
-
 		String nick = ((_00_Login) misVistas[0]).getNick();
-		
 		if (miModelo.actualizarDatosUsuario(nick, nombre, apellidos, cp, pass, pregunta, respuesta)) {
 			System.out.println("Datos actualizados con éxito.");
 			return true;
@@ -248,15 +258,15 @@ public class Controlador extends JFrame {
 	}
 
 	public void agregarPublicacion() {
-	 int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
 	 String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
 	 String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
 	 String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
 	 String direccion = String.join(", ", calle, provincia, ciudad);
 	 String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
+	 int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
 	 int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
      int codigo = miModelo.ultimoCodigo() + 1;
-     if(miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, cp, descripcion)) {
+     if(miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, getCp(), descripcion)) {
     	 if(comprobarAdmin()) {
     		 cambiarPantalla(8, 7);
     	 } else {
@@ -265,5 +275,16 @@ public class Controlador extends JFrame {
      } else {
     	 ((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
      }
+	}
+
+	public boolean comprobarDenunciaSimilar() {
+		setCp(((_08_PublicarDenuncia) misVistas[8]).getCp());
+		int cp = getCp();
+		int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
+		if(miModelo.comprobarSimulitud(cp,categoria)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

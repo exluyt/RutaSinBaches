@@ -25,16 +25,14 @@ import Vista.*;
 public class Modelo {
 	private Vista[] misVistas; // Array of views
 
-	private String bd; // Database name
-	private String login; // Database login
-	private String pwd; // Database password
-	private String url; // Database URL
 	private Connection conexion; // Database connection
 	private Properties datos;
 	private InputStream entrada;
 	private OutputStream salida;
 	private File miFichero;
 	private final String FILE = "Datos.txt";
+	private final String BBDD = "Conexion_BBDD.txt";
+	private Properties prop = new Properties();
 
 	private Controlador miControlador;
 
@@ -46,15 +44,44 @@ public class Modelo {
 	public void setControlador(Vista[] misVistas) {
 		this.misVistas = misVistas;
 	}
+	
+	public String getUrl() {
+		try (FileInputStream input = new FileInputStream(BBDD)) {
+            prop.load(input);
+            return prop.getProperty("url");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return null;
+	}
+	
+	public String getLogin() {
+		try (FileInputStream input = new FileInputStream(BBDD)) {
+            prop.load(input);
+            return prop.getProperty("login");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return null;
+	}
+	
+	public String getPwd() {
+		try (FileInputStream input = new FileInputStream(BBDD)) {
+            prop.load(input);
+            return prop.getProperty("pwd");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return null;
+	}
 
 	/**
 	 * Constructor of the Modelo class that establishes the connection to the
 	 * database.
 	 */
 	public Modelo() {
-		conexionSQL();
 		try {
-			conexion = DriverManager.getConnection(url, login, pwd);
+			conexion = DriverManager.getConnection(getUrl(), getLogin(), getPwd());
 			if (conexion != null) {
 				System.out.println("¡Conexión exitosa a la base de datos!");
 			}
@@ -79,15 +106,6 @@ public class Modelo {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	/**
-	 * Sets the database connection parameters.
-	 */
-	public void conexionSQL() {
-		url = "jdbc:mysql://52.47.208.71/ruta_sin_baches";
-		login = "root";
-		pwd = "root.!";
 	}
 
 	/**
@@ -378,18 +396,32 @@ public class Modelo {
 			e.printStackTrace();
 		}
 	}
-	
-	public void borrarUsuario() {
-		if (!datos.containsKey("User")) {
-			 
-		} else {
-			datos.remove("User");
-			try {
-				salida = new FileOutputStream(miFichero);
-				datos.store(salida, "Ultima operacion: Borrado");
-			} catch (Exception e) {
-				e.printStackTrace();
+
+	public boolean comprobarSimulitud(int cp, int categoria) {
+		String query = "SELECT * FROM `denuncia` WHERE cp = ? AND categoria_codigo = ?;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setInt(1, cp);
+			pstmt.setInt(2, categoria);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				throw new SQLException("Error.");
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void guardarCp(String cp) {
+		try {
+			datos.setProperty("Cp", cp);
+			salida = new FileOutputStream(miFichero);
+			datos.store(salida, "El codigo postal se ha guardado");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
