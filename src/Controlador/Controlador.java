@@ -231,20 +231,19 @@ public class Controlador extends JFrame {
 			System.out.println("Error al registrarse");
 		}
 	}
-	public void crearTablaFav(DefaultTableModel modeloTabla1) {
-		List<Object[]> tabla = miModelo.establecerTablasFav(recuperarUsuario());;
-        DefaultTableModel tableModel =  ((_06_PaginaPrincipal) misVistas[6]).getTableModel(modeloTabla1);
-        tableModel.setRowCount(0);
-        for (Object[] hola : tabla){
-        	tableModel.addRow(hola);
-        }
-	}
-	public void crearTablaFy() {
+	public DefaultTableModel crearTablaFav(DefaultTableModel modeloTabla, int fav) {
+		List<Object[]> tabla = miModelo.establecerTablas(recuperarUsuario(),fav);;
+        DefaultTableModel tableModel =  new DefaultTableModel();
 
-		miModelo.establecerTablasFy(recuperarUsuario());
-	}
-	public void crearTablaMis() {
-		miModelo.establecerTablasMis(recuperarUsuario());
+        tableModel=((_06_PaginaPrincipal) misVistas[6]).getTableModel(modeloTabla);
+        tableModel.setRowCount(0);
+        int fila = 0;
+        for (Object[] lista : tabla){
+        	tableModel.insertRow(fila, lista);
+        	fila++;
+        }
+        fila=0;
+        return tableModel;
 	}
 	public String recuperarUsuario() {
 		String usuario = ((_00_Login) misVistas[0]).getNick();

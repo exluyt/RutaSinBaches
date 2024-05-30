@@ -303,29 +303,111 @@ public class Modelo {
 			return false;
 		}
 	}
-	List<Object[]> tabla = new ArrayList <Object[]>();
-	public List<Object[]> establecerTablasFav(String usuario) {
-
-		String query ="SELECT " +
-                "    d.codigo, " +
-                "    d.usuario_nick, " +
-                "    d.estado, " +
-                "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, " +
-                "    d.fecha, " +
-                "    c.nombre AS categoria_nombre, " +
-                "    d.descripcion, " +
-                "    v.favorito " +
-                "FROM " +
-                "    denuncia d " +
-                "JOIN " +
-                "    categoria c ON d.categoria_codigo = c.codigo " +
-                "JOIN " +
-                "    votar v ON d.codigo = v.denuncia_codigo AND v.usuario_nick = ? " +
-                "ORDER BY " +
-                "    d.codigo ASC";
+	public List<Object[]> establecerTablas(String usuario, int fav) {
+		List<Object[]> tabla = new ArrayList <Object[]>();
+		String query = null;
+		switch (fav) {
+		case 1: 
+			 query ="SELECT \r\n"
+			 		+ "    d.codigo, \r\n"
+			 		+ "    d.usuario_nick, \r\n"
+			 		+ "    d.estado, \r\n"
+			 		+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+			 		+ "    d.fecha, \r\n"
+			 		+ "    c.nombre AS categoria_nombre, \r\n"
+			 		+ "    d.descripcion, \r\n"
+			 		+ "    v.favorito\r\n"
+			 		+ "FROM \r\n"
+			 		+ "    denuncia d\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    votar v ON d.codigo = v.denuncia_codigo\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+			 		+ "WHERE \r\n"
+			 		+ "    v.usuario_nick = ? AND v.favorito = 'Y'\r\n"
+			 		+ "ORDER BY \r\n"
+			 		+ "    d.fecha DESC;\r\n";
+			 break;
+		case 2:
+			 query ="SELECT \r\n"
+					+ "    d.codigo, \r\n"
+					+ "    d.usuario_nick, \r\n"
+					+ "    d.estado, \r\n"
+					+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+					+ "    d.fecha, \r\n"
+					+ "    c.nombre AS categoria_nombre, \r\n"
+					+ "    d.descripcion, \r\n"
+					+ "    COALESCE((SELECT v.favorito FROM votar v WHERE v.denuncia_codigo = d.codigo AND v.usuario_nick = ? AND v.favorito = 'Y'), 'N') AS favorito\r\n"
+					+ "FROM \r\n"
+					+ "    denuncia d \r\n"
+					+ "JOIN \r\n"
+					+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+					+ "ORDER BY \r\n"
+					+ "    d.fecha DESC;\r\n";
+			 break;
+		case 3:
+			 query ="SELECT \r\n"
+			 		+ "    d.codigo, \r\n"
+			 		+ "    d.usuario_nick, \r\n"
+			 		+ "    d.estado, \r\n"
+			 		+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+			 		+ "    d.fecha, \r\n"
+			 		+ "    c.nombre AS categoria_nombre, \r\n"
+			 		+ "    d.descripcion, \r\n"
+			 		+ "    COALESCE(\r\n"
+			 		+ "        (SELECT v.favorito FROM votar v WHERE v.usuario_nick = ? AND d.codigo = v.denuncia_codigo), \r\n"
+			 		+ "        'N'\r\n"
+			 		+ "    ) AS favorito\r\n"
+			 		+ "FROM \r\n"
+			 		+ "    denuncia d\r\n"
+			 		+ "JOIN \r\n"
+			 		+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+			 		+ "WHERE \r\n"
+			 		+ "    d.usuario_nick = ? \r\n"
+			 		+ "ORDER BY \r\n"
+			 		+ "    d.fecha DESC;";
+			break;
+		case 4:
+			 query ="SELECT \r\n"
+						+ "    d.codigo, \r\n"
+						+ "    d.usuario_nick, \r\n"
+						+ "    d.estado, \r\n"
+						+ "    CONCAT(d.direccion, ' ', d.cp) AS direccion_cp, \r\n"
+						+ "    d.fecha, \r\n"
+						+ "    c.nombre AS categoria_nombre, \r\n"
+						+ "    d.descripcion, \r\n"
+						+ "    COALESCE((SELECT v.favorito FROM votar v WHERE v.denuncia_codigo = d.codigo AND v.usuario_nick = ? AND v.favorito = 'Y'), 'N') AS favorito\r\n"
+						+ "FROM \r\n"
+						+ "    denuncia d \r\n"
+						+ "JOIN \r\n"
+						+ "    categoria c ON d.categoria_codigo = c.codigo \r\n"
+						+ "ORDER BY \r\n"
+						+ "    d.codigo DESC;\r\n";
+			break;
+		
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + fav);
+		}
 		try {
 			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setString(1, usuario);
+			switch (fav) {
+			case 1: 
+				pstmt.setString(1, usuario);
+				break;		
+			case 2:
+				pstmt.setString(1, usuario);
+				break;
+			case 3:
+				pstmt.setString(1, usuario);
+				pstmt.setString(2, usuario);
+				break;
+			case 4:
+				pstmt.setString(1, usuario);
+				break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + fav);
+			}
+
 			ResultSet resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 int codigo = resultSet.getInt("codigo");
@@ -345,28 +427,5 @@ public class Modelo {
 		return tabla;
 	};
 	
-	
-	
-	
-	
-	
-	
-	public DefaultTableModel establecerTablasFy(String usuario) {
-		
-		String query ="SELECT d.codigo,d.usuario_nick,d.estado, CONCAT(d.direccion, ' ', d.cp) "
-				+ "AS direccion_cp,d.fecha, c.nombre AS categoria_nombre, d.descripcion FROM denuncia d JOIN "
-				+ "categoria c ON d.categoria_codigo = c.codigo ORDER BY d.codigo ASC;";
-		
-		return null;
-		
-	}
-	public DefaultTableModel establecerTablasMis(String usuario) {
-		
-		String query ="SELECT d.codigo,d.usuario_nick,d.estado, CONCAT(d.direccion, ' ', d.cp) "
-				+ "AS direccion_cp,d.fecha, c.nombre AS categoria_nombre, d.descripcion FROM denuncia d JOIN "
-				+ "categoria c ON d.categoria_codigo = c.codigo ORDER BY d.codigo ASC;";
-		return null;
-		
-	}
 
 }

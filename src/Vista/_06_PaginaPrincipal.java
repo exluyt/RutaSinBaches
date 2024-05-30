@@ -282,7 +282,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 				"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
 			}
 		);
-				table.setModel(modeloTabla1);
+		table.setModel(modeloTabla1);
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setMinWidth(50);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -314,37 +314,38 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 		table2 = new JTable();
 		table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table2.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
-			}
-		));
+		DefaultTableModel modeloTabla2= new DefaultTableModel(
+	new Object[][] {
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+	},
+	new String[] {
+		"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
+	}
+);
+		table2.setModel(modeloTabla2);
 		table2.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table2.getColumnModel().getColumn(0).setMinWidth(50);
 		table2.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -375,37 +376,38 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 		table3 = new JTable();
 		table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table3.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
-			}
-		));
+		DefaultTableModel modeloTabla3= new DefaultTableModel(
+	new Object[][] {
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+		{null, null, null, null, null, null, null, null},
+	},
+	new String[] {
+		"C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n", "Categoria", "Descripci\u00F3n", "\u2605"
+	}
+);
+		table3.setModel(modeloTabla3);
 		table3.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table3.getColumnModel().getColumn(0).setMinWidth(50);
 		table3.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -439,9 +441,9 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		getContentPane().add(pestañas);
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent evt) {
-				miControlador.crearTablaFav(modeloTabla1);
-				miControlador.crearTablaFy();
-				miControlador.crearTablaMis();				
+				table.setModel(miControlador.crearTablaFav(modeloTabla1,1));
+				table2.setModel(miControlador.crearTablaFav(modeloTabla2,2));
+				table3.setModel(miControlador.crearTablaFav(modeloTabla3,3));
 			}
 		});
 	}
@@ -463,6 +465,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
+	
 	public DefaultTableModel getTableModel(DefaultTableModel dtm) {
 		return dtm ;
 		
