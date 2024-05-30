@@ -326,23 +326,37 @@ public class _01_Registro extends JFrame implements Vista {
 		String nombre = txtNombre.getText().trim();
 		String apellidos = txtApellidos.getText().trim();
 		String codigoPostal = txtCodigoPostal.getText().trim();
+
 		if (nombre.isEmpty() || apellidos.isEmpty() || codigoPostal.isEmpty() || nombre.equals("Nombre")
 				|| apellidos.equals("Apellidos") || codigoPostal.equals("Código Postal")) {
+
 			// Mostrar un mensaje de error al usuario
 			lblVacio.setText("Rellene todos los campos");
+
 		} else if (!chckbxTerminos.isSelected()) {
 			lblAsteriscoAcepto.setText("*");
+
 		} else if (!chckbxSoyMayorDe.isSelected()) {
 			lblAsteriscoMayor.setText("*");
+
 		} else {
-			if (chckbxAdmin.isSelected()) {
-				mandarDatos();
-				miControlador.cambiarPantalla(1, 3);
-				lblVacio.setText("");
-			} else {
-				mandarDatos();
-				miControlador.cambiarPantalla(1, 2);
-				lblVacio.setText("");
+			try {
+				// Intentar convertir el código postal a un entero
+				int cp = Integer.parseInt(codigoPostal);
+
+				// Si la conversión es exitosa, continuar con el proceso
+				if (chckbxAdmin.isSelected()) {
+					mandarDatos();
+					miControlador.cambiarPantalla(1, 3);
+					lblVacio.setText("");
+				} else {
+					mandarDatos();
+					miControlador.cambiarPantalla(1, 2);
+					lblVacio.setText("");
+				}
+			} catch (NumberFormatException e) {
+				// Si ocurre una excepción, mostrar un mensaje de error al usuario
+				lblVacio.setText("Error en los datos");
 			}
 		}
 	}

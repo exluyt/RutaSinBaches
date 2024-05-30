@@ -25,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JPasswordField;
 
 /**
  * This class represents the Login screen of the application. It extends JFrame
@@ -39,7 +40,7 @@ public class _00_Login extends JFrame implements Vista {
 	private JPanel contentPane;
 	private JLabel lblRegistrarse2, lblRegistrarse1, lblUsuario, lblPwd, lblhasOlvidadoTu, lblRecordar, lblLogo,
 			lblFondo, lblRSB;
-	private JTextField txtUsuario, txtPwd;
+	private JTextField txtUsuario;
 	private JCheckBox chckbxCredenciales;
 	private boolean esUsrClicado = false;
 	private boolean esPwdClicado = false;
@@ -47,6 +48,7 @@ public class _00_Login extends JFrame implements Vista {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JLabel lblVacio;
+	private JPasswordField txtPwd;
 
 	/**
 	 * Constructor for the Login screen. Initializes the components and sets up the
@@ -148,38 +150,6 @@ public class _00_Login extends JFrame implements Vista {
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 
-		/**
-		 * Event handler for the "Pwd" text field. When press a key or clicked, it
-		 * clears the text field.
-		 * 
-		 * @param e The key event.
-		 * @param e The mouse event.
-		 */
-		txtPwd = new JTextField();
-		txtPwd.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (!esPwdClicado) {
-					txtPwd.setText("");
-					esPwdClicado = true;
-				}
-			}
-		});
-		txtPwd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (!esPwdClicado) {
-					txtPwd.setText("");
-					esPwdClicado = true;
-				}
-			}
-		});
-		txtPwd.setFont(new Font("Dialog", Font.PLAIN, 15));
-		txtPwd.setText("Contraseña");
-		txtPwd.setColumns(10);
-		txtPwd.setBounds(677, 325, 226, 29);
-		contentPane.add(txtPwd);
-
 		chckbxCredenciales = new JCheckBox("Recordar credenciales");
 		chckbxCredenciales.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxCredenciales.setBounds(677, 361, 162, 23);
@@ -275,6 +245,12 @@ public class _00_Login extends JFrame implements Vista {
 		JCheckBox checkBox = new JCheckBox("New check box");
 		checkBox.setBounds(274, 443, 97, 23);
 		contentPane.add(checkBox);
+
+		txtPwd = new JPasswordField();
+		txtPwd.setToolTipText("");
+		txtPwd.setFont(new Font("Dialog", Font.PLAIN, 15));
+		txtPwd.setBounds(677, 318, 226, 29);
+		contentPane.add(txtPwd);
 	}
 
 	/**
@@ -285,7 +261,6 @@ public class _00_Login extends JFrame implements Vista {
 	public void camposVacios() {
 		String username = txtUsuario.getText().trim();
 		String password = txtPwd.getText().trim();
-
 		if (username.isEmpty() || password.isEmpty() || username.equals("Nombre de Usuario")
 				|| password.equals("Contraseña")) {
 			lblVacio.setText("Rellene todos los campos");
@@ -315,7 +290,6 @@ public class _00_Login extends JFrame implements Vista {
 		this.miModelo = miModelo;
 	}
 
-	
 	public String getNick() {
 		return txtUsuario.getText();
 	}
@@ -323,5 +297,4 @@ public class _00_Login extends JFrame implements Vista {
 	public String getPassword() {
 		return txtPwd.getText();
 	}
-
 }

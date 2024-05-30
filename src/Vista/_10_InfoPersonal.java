@@ -147,11 +147,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (miModelo.comprobarUsuarioRecuperar(miControlador.getNick())) {
-					miControlador.cambiarPantalla(10, 7);
-				} else {
-					miControlador.cambiarPantalla(10, 6);
-				}
+				miControlador.comprobarUsuarioPaginaInfo();
 			}
 
 			@Override
