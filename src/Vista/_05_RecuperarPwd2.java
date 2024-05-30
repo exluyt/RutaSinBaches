@@ -220,4 +220,8 @@ public class _05_RecuperarPwd2 extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
+
+	public String getPwd() {
+		return null;
+	}
 }
