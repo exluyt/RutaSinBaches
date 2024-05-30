@@ -48,17 +48,14 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 	private JTextField txtUsuario, txtPwd, txtRepetirPwd, txtRespuesta;
 	private JButton btnRegistro;
 	private JComboBox comboBoxPreguntas;
-	private boolean esUsuarioClicado = false;
-	private boolean esPwdClicado = false;
-	private boolean esRepetirPwdClicado = false;
-	private boolean esRespuestaClicado = false;
-
+	private boolean esUsuarioClicado, esPwdAdminClicado, esPwdClicado, esRepetirPwdClicado, esRespuestaClicado = false;
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JLabel lblVacio;
 	private JCheckBox chckbxRobot;
 	private JLabel lblAsterisco;
-	private JLabel lblVacio1;
+	private JTextField txtPwdAdmin;
+	private JLabel lblPwdAdmin;
 
 	/**
 	 * Constructor for the _03_RegistroAdmin class. Initializes the form and its
@@ -79,7 +76,7 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		lblAsterisco = new JLabel("");
 		lblAsterisco.setForeground(new Color(255, 0, 0));
 		lblAsterisco.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblAsterisco.setBounds(185, 503, 46, 14);
+		lblAsterisco.setBounds(176, 553, 46, 14);
 		contentPane.add(lblAsterisco);
 
 		lblInicioSesion1 = new JLabel("¿Ya tienes cuenta?");
@@ -123,7 +120,7 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		lblUsuario.setBounds(166, 134, 81, 23);
 		contentPane.add(lblUsuario);
 
-		lblPwd = new JLabel("Contraseña de admin:");
+		lblPwd = new JLabel("Contraseña:");
 		lblPwd.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPwd.setBounds(166, 220, 173, 23);
 		contentPane.add(lblPwd);
@@ -207,7 +204,7 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 			}
 		});
 		btnRegistro.setFont(new Font("Dialog", Font.PLAIN, 13));
-		btnRegistro.setBounds(166, 540, 147, 35);
+		btnRegistro.setBounds(166, 593, 147, 35);
 		contentPane.add(btnRegistro);
 		Font subrayadoInicio = lblInicioSesion2.getFont();
 		Map<TextAttribute, Object> attributesInicio = (Map<TextAttribute, Object>) subrayadoInicio.getAttributes();
@@ -354,16 +351,16 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 			}
 		});
 		btn1de2.setFont(new Font("Dialog", Font.PLAIN, 13));
-		btn1de2.setBounds(54, 540, 55, 35);
+		btn1de2.setBounds(56, 593, 55, 35);
 		contentPane.add(btn1de2);
 
 		chckbxRobot = new JCheckBox("  No soy un robot");
 		chckbxRobot.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		chckbxRobot.setBounds(166, 498, 137, 23);
+		chckbxRobot.setBounds(166, 553, 137, 23);
 		contentPane.add(chckbxRobot);
 
 		lblRobot = new JLabel("");
-		lblRobot.setBounds(309, 498, 30, 23);
+		lblRobot.setBounds(309, 553, 30, 23);
 		ImageIcon imageRobot = new ImageIcon(getClass().getResource("img/google.png"));
 		ImageIcon sizeRobot = new ImageIcon(
 				imageRobot.getImage().getScaledInstance(lblRobot.getWidth(), lblRobot.getHeight(), Image.SCALE_SMOOTH));
@@ -375,17 +372,32 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		lblVacio.setBounds(166, 121, 152, 14);
 		contentPane.add(lblVacio);
 
-		lblVacio1 = new JLabel("");
-		lblVacio1.setForeground(Color.RED);
-		lblVacio1.setBounds(166, 360, 198, 14);
-		contentPane.add(lblVacio1);
+		txtPwdAdmin = new JTextField();
+		txtPwdAdmin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!esPwdAdminClicado) {
+					txtPwdAdmin.setText("");
+					esPwdAdminClicado = true;
+				}
+			}
+		});
+		txtPwdAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtPwdAdmin.setText("Contraseña admin");
+		txtPwdAdmin.setBounds(166, 516, 237, 29);
+		contentPane.add(txtPwdAdmin);
+		txtPwdAdmin.setColumns(10);
+
+		lblPwdAdmin = new JLabel("Contraseña admin:");
+		lblPwdAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPwdAdmin.setBounds(166, 490, 237, 23);
+		contentPane.add(lblPwdAdmin);
 	}
 
 	/**
 	 * Checks if all the required fields are filled. If not, it displays an error
 	 * message. If all fields are filled, it checks if the passwords match.
 	 */
-
 	public void camposVacios() {
 		String usuario = txtUsuario.getText().trim();
 		String pwd = txtPwd.getText().trim();
@@ -421,11 +433,10 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 		String admin = "si";
 		int pregunta = comboBoxPreguntas.getSelectedIndex() + 1;
 		if (pwd.equals(repetirPwd)) {
-			miControlador.agregarUsuario();
-			lblVacio1.setText("");
-
+			miControlador.comprobarUsuarioRegistroAdmin();
+			lblVacio.setText("");
 		} else {
-			lblVacio1.setText("Las contraseñas no coinciden");
+			lblVacio.setText("Las contraseñas no coinciden");
 		}
 	}
 
@@ -452,19 +463,30 @@ public class _03_RegistroAdmin extends JFrame implements Vista {
 	}
 
 	public String getPwd() {
-		return txtUsuario.getText();
+		return txtPwd.getText();
+	}
+
+	public String getPwd2() {
+		return txtRepetirPwd.getText();
 	}
 
 	public int getPregunta() {
-		return comboBoxPreguntas.getSelectedIndex();
-	}
-
-	public String getAdmin() {
-		return "si";
+		return comboBoxPreguntas.getSelectedIndex() + 1;
 	}
 
 	public String getRespuesta() {
 		return txtRespuesta.getText();
 	}
-	
+
+	public String getPwdAdmin() {
+		return txtPwdAdmin.getText();
+	}
+
+	public void setError(String mensaje) {
+		lblVacio.setText(mensaje);
+	}
+
+	public String getAdmin() {
+		return "Si";
+	}
 }

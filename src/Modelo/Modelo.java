@@ -261,4 +261,21 @@ public class Modelo {
 			return false;
 		}
 	}
+
+	public boolean comprobarPwdAdmin(String pwd) {
+		String query = "SELECT * FROM `configuracion` WHERE valor = ?;";
+		try {
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			pstmt.setString(1, pwd);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				throw new SQLException("Los datos no coinciden.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

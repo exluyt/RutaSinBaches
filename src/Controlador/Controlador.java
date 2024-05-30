@@ -103,6 +103,15 @@ public class Controlador extends JFrame {
 			System.out.println("Datos incorrectos");
 		}
 	}
+	
+	public void comprobarUsuarioRegistroAdmin() {
+		String nick = ((_03_RegistroAdmin) misVistas[3]).getUsuario();
+		if (miModelo.comprobarUsuarioRegistro(nick)){
+			agregarAdmin();
+        } else {
+            System.out.println("Usuario ya registrado.");
+        }
+	}
 
 	/**
 	 * Sets registration data and prints it for debugging.
@@ -177,4 +186,25 @@ public class Controlador extends JFrame {
 			return false;
 		}
 	}
+
+	public void agregarAdmin() {
+		String usuario = ((_03_RegistroAdmin) misVistas[3]).getUsuario();
+		String nombre = datosRegistro[0];
+		String apellidos = datosRegistro[1];
+		String cp = datosRegistro[2];
+		String pwd = ((_03_RegistroAdmin) misVistas[3]).getPwd();
+		int pregunta = ((_03_RegistroAdmin) misVistas[3]).getPregunta();
+		String admin = ((_03_RegistroAdmin) misVistas[3]).getAdmin();
+		String respuesta = ((_03_RegistroAdmin) misVistas[3]).getRespuesta();
+		String pwdAdmin = ((_03_RegistroAdmin) misVistas[3]).getPwdAdmin();
+		if (miModelo.agregarUsuario(usuario, nombre, apellidos, pwd, pregunta, admin, pregunta, respuesta) && 
+				miModelo.comprobarPwdAdmin(pwdAdmin)) {
+			System.out.println("Admin registrado con éxito.");
+			cambiarPantalla(3, 0);
+		} else {
+			((_03_RegistroAdmin) misVistas[3]).setError("Los datos son incorrectos");
+			System.out.println("Error al registrarse");
+		}
+	}
+
 }
