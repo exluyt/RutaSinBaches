@@ -72,6 +72,15 @@ public class Controlador extends JFrame {
 			cambiarPantalla(8, 6);
 		}
 	}
+	public void comprobarUsuarioPaginaInfo() {
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		if (miModelo.comprobarUsuarioAdmin(nick)) {
+			cambiarPantalla(10, 7);
+		} else {
+			cambiarPantalla(10, 6);
+		}
+	}
+
 
 	public void comprobarUsuarioRegistro() {
 		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
