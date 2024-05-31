@@ -423,30 +423,30 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		return dtm;
 
 	};
-	
+
 	public void updateEliminar() {
-		if(table3.getSelectedRow() == -1) {
+		if (table3.getSelectedRow() == -1) {
 			btnEliminar.setEnabled(false);
 		} else {
 			btnEliminar.setEnabled(true);
 		}
 	}
-	
+
 	public void eliminarDenuncia() {
-int filaSeleccionada = table3.getSelectedRow();
-        
-        // Verificar si se ha seleccionado una fila
-        if (filaSeleccionada != -1) {
-            // Obtener el modelo de la tabla
-            DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
-            
-            // Obtener el dato de la columna 2 (índice 1) de la fila seleccionada
-            Object dato = modelo.getValueAt(filaSeleccionada, 0);
-            
-            // Hacer algo con el dato obtenido
-            miControlador.obtenerDenunciaEliminada(dato);
-        } else {
-            System.out.println("No se ha seleccionado ninguna fila.");
-        }
+		int filaSeleccionada = table3.getSelectedRow();
+
+		// Verificar si se ha seleccionado una fila
+		if (filaSeleccionada != -1) {
+			// Obtener el modelo de la tabla
+			DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+
+			// Obtener el dato de la columna 2 (índice 1) de la fila seleccionada
+			Object dato = modelo.getValueAt(filaSeleccionada, 0);
+
+			// Hacer algo con el dato obtenido
+			miControlador.obtenerDenunciaEliminada(dato);
+		} else {
+			System.out.println("No se ha seleccionado ninguna fila.");
+		}
 	}
 }

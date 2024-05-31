@@ -53,7 +53,7 @@ import javax.swing.ListSelectionModel;
 public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
-	private JButton btnPublicarDenuncia, btnNewButton_1, btnNewButton_10, btnNewButton_2, btnNewButton_3, btnModificar,
+	private JButton btnPublicarDenuncia, btnEliminar, btnNewButton_10, btnNewButton_2, btnNewButton_3, btnModificar,
 			btnNewButton_4;
 	private JPanel contentPane, paraTi, denunciasFavoritas, misDenuncias, GestionarDenuncias;
 	private JScrollPane scrollPane, scrollPane2, scrollPane3, scrollPane4;
@@ -329,6 +329,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		misDenuncias.add(scrollPane3);
 
 		table3 = new JTable();
+		table3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateEliminar();
+			}
+		});
 		table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultTableModel modeloTabla3 = new DefaultTableModel(new Object[][] {
 				{ null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null },
@@ -366,12 +372,17 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		table3.getColumnModel().getColumn(7).setMaxWidth(25);
 		scrollPane3.setViewportView(table3);
 
-		btnNewButton_1 = new JButton("Eliminar denuncia");
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.setForeground(Color.BLACK);
-		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setBounds(481, 420, 150, 32);
-		misDenuncias.add(btnNewButton_1);
+		btnEliminar = new JButton("Eliminar denuncia");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
+			}
+		});
+		btnEliminar.setEnabled(false);
+		btnEliminar.setForeground(Color.BLACK);
+		btnEliminar.setBackground(Color.WHITE);
+		btnEliminar.setBounds(481, 420, 150, 32);
+		misDenuncias.add(btnEliminar);
 
 		getContentPane().add(pestañas);
 
@@ -386,6 +397,11 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		GestionarDenuncias.add(scrollPane4);
 
 		btnNewButton_3 = new JButton("Eliminar denuncia");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
+			}
+		});
 		btnNewButton_3.setEnabled(false);
 		btnNewButton_3.setForeground(Color.BLACK);
 		btnNewButton_3.setBackground(Color.WHITE);
@@ -393,6 +409,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		GestionarDenuncias.add(btnNewButton_3);
 
 		table4 = new JTable();
+		table4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateEliminar();
+			}
+		});
 		table4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultTableModel modeloTabla4 = new DefaultTableModel(new Object[][] {
 				{ null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null },
@@ -485,6 +507,32 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	 */
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
+	}
+	
+	public void updateEliminar() {
+		if (table3.getSelectedRow() == -1) {
+			btnEliminar.setEnabled(false);
+		} else {
+			btnEliminar.setEnabled(true);
+		}
+	}
+	
+	public void eliminarDenuncia() {
+		int filaSeleccionada1 = table4.getSelectedRow();
+		int filaSeleccionada = table3.getSelectedRow();
+
+		// Verificar si se ha seleccionado una fila
+		if (filaSeleccionada != -1) {
+			DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+			Object dato = modelo.getValueAt(filaSeleccionada, 0);
+			miControlador.obtenerDenunciaEliminada(dato);
+		} else if (filaSeleccionada1 != 1) {
+			DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+			Object dato = modelo.getValueAt(filaSeleccionada1, 0);
+			miControlador.obtenerDenunciaEliminada(dato);
+		} else {
+			System.out.println("No se ha seleccionado ninguna fila.");
+		}
 	}
 
 }
