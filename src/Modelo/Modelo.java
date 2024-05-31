@@ -632,7 +632,7 @@ public class Modelo {
 	            pstmt.setString(3, favorito);
 	            pstmt.executeUpdate();
 	        } else {
-	            query = "UPDATE votar SET favorito = 'N' WHERE usuario_nick = ? AND denuncia_codigo = ?";
+	            query = "DELETE FROM votar WHERE usuario_nick = ? AND denuncia_codigo = ?";
 	            PreparedStatement pstmt = conexion.prepareStatement(query);
 	            pstmt.setString(1, nick);
 	            pstmt.setInt(2, codigo);

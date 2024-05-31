@@ -187,13 +187,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		contentPane.add(btnPublicarDenuncia);
 
 		btnFav = new JButton("Favorito");
-		btnFav.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				filaSelect();
-				
-			}
-		});
+
 		btnFav.setEnabled(false);
 		btnFav.setBackground(Color.WHITE);
 		btnFav.setForeground(Color.BLACK);
@@ -418,6 +412,16 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
 				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
 				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+			}
+		});
+		
+		btnFav.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filaSelect();
+				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
+				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+				
 			}
 		});
 	}

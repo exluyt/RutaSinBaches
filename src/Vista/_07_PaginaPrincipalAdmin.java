@@ -103,10 +103,6 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 			}
 		});
 		btnNewButton_10 = new JButton("Ver imagen");
-		btnNewButton_10.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnNewButton_10.setForeground(Color.BLACK);
 		btnNewButton_10.setEnabled(false);
 		btnNewButton_10.setBackground(Color.WHITE);
@@ -178,11 +174,7 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		contentPane.add(btnPublicarDenuncia);
 
 		btnFav = new JButton("Favorito");
-		btnFav.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				filaSelect();
-			}
-		});
+
 		btnFav.setEnabled(false);
 		btnFav.setBackground(Color.WHITE);
 		btnFav.setForeground(Color.BLACK);
@@ -499,6 +491,17 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				table4.setModel(miControlador.crearTablaFav(modeloTabla4, 4));
 			}
 		});
+		
+		btnFav.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filaSelect();
+				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
+				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+				table4.setModel(miControlador.crearTablaFav(modeloTabla4, 4));
+				
+			}
+		});
 	}
 
 	/**
@@ -523,6 +526,8 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	    int filaSeleccionadaT1 = table.getSelectedRow();
 	    int filaSeleccionadaT2 = table2.getSelectedRow();
 	    int filaSeleccionadaT3 = table3.getSelectedRow();
+	    int filaSeleccionadaT4 = table3.getSelectedRow();
+
 	    
 	    if (filaSeleccionadaT1 != -1) {
 	        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
@@ -538,6 +543,11 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	        DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
 	        Object dato = modelo.getValueAt(filaSeleccionadaT3, 0);
 	        Object dato1 = modelo.getValueAt(filaSeleccionadaT3, 7);
+	        miControlador.obtenerFav(dato, dato1);
+	    } else if (filaSeleccionadaT4 != -1) {
+	        DefaultTableModel modelo = (DefaultTableModel) table4.getModel();
+	        Object dato = modelo.getValueAt(filaSeleccionadaT4, 0);
+	        Object dato1 = modelo.getValueAt(filaSeleccionadaT4, 7);
 	        miControlador.obtenerFav(dato, dato1);
 	    } else {
 	        System.out.println("No se ha seleccionado ninguna fila en la tabla.");
