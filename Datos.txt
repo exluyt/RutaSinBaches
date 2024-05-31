@@ -1,7 +1,11 @@
 #El nickname se ha guardado
+<<<<<<< HEAD
 #Fri May 31 08:28:33 CEST 2024
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=origin/MarioRama6am
+=======
+#Fri May 31 07:21:09 CEST 2024
+>>>>>>> origin/Nacho
 Cp=12345
 User=mariooseoanee

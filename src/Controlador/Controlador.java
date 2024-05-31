@@ -380,6 +380,11 @@ public class Controlador extends JFrame {
 		return bytes;
 	}
 
+	public void obtenerDenunciaEliminada(Object codigo) {
+		int codigoInt = Integer.parseInt(codigo.toString());
+		miModelo.eliminarDenuncia(codigoInt);
+	}
+
 	public void obtenerFav(Object codigo, Object favorito) {
         int codigoInt = Integer.parseInt(codigo.toString());
         String fav = favorito.toString();

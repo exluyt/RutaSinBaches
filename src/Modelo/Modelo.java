@@ -819,4 +819,22 @@ public class Modelo {
         }
     }
 	
+	public boolean eliminarDenuncia(Object codigo) {
+		String query = "{CALL eliminarDenuncia(?)}";
+		try {
+			CallableStatement ctmt = conexion.prepareCall(query);
+			ctmt.setObject(1, codigo);
+			ctmt.executeUpdate();
+			int filasModificadas = ctmt.getUpdateCount();
+			if (filasModificadas < 0) {
+				System.out.println("Eliminada correctamente");
+				return true;
+			} else {
+				throw new SQLException("No se ha podido borrar correctamente");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
