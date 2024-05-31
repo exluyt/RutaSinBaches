@@ -111,7 +111,7 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 				lblUpload.getHeight(), Image.SCALE_SMOOTH));
 		lblUpload.setIcon(sizeUpload);
 		lblUpload.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
-		contentPane.add(lblUpload);
+		contentPane.add(lblUpload); 
 
 		lblInfo = new JLabel("Publicar una");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);

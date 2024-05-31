@@ -718,5 +718,81 @@ public class Modelo {
 		}
 		return tabla;
 	};
+	public void guardarUsuario(String nick) {
+        try {
+            datos.setProperty("User", nick);
+            salida = new FileOutputStream(miFichero);
+            datos.store(salida, "El nickname se ha guardado");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	public byte[] getImagen(String nick) {
+        byte[] imageData = null;
+        try {
+            String sql = "SELECT foto FROM usuario WHERE nick = ?";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setString(1, nick);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                // Obtener los datos de la imagen
+                Blob blob = resultSet.getBlob("foto");
+                if (blob != null) {
+                    imageData = blob.getBytes(1, (int) blob.length());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejar la excepción apropiadamente
+        }
+        return imageData;
+    }
+	public void guardarCp(String cp) {
+        try {
+            datos.setProperty("Cp", cp);
+            salida = new FileOutputStream(miFichero);
+            datos.store(salida, "El codigo postal se ha guardado");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	public boolean comprobarSimulitud(int cp, int categoria) {
+        String query = "SELECT * FROM denuncia WHERE cp = ? AND categoria_codigo = ?;";
+        try {
+            PreparedStatement pstmt = conexion.prepareStatement(query);
+            pstmt.setInt(1, cp);
+            pstmt.setInt(2, categoria);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else {
+                throw new SQLException("Error.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+	public void actualizarFotoPerfil(File ficheroActual, String nick2) {
+        ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
+        ((_10_InfoPersonal) misVistas[10]).actualizarFotoPerfil(imageIcon);
+    }
 
+    public void actualizarFotoDenuncia(File ficheroActual) {
+        ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
+        ((_08_PublicarDenuncia) misVistas[8]).actualizarFotoPerfil(imageIcon);
+    }
+
+    public void actualizarFotoPerfilBD(byte[] imageBytes, String nick) {
+        String sql = "UPDATE usuario SET foto = ? WHERE nick = ?";
+
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setBytes(1, imageBytes);
+            pstmt.setString(2, nick);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
 }
