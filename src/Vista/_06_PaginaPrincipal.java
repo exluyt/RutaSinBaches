@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
@@ -51,7 +52,7 @@ import java.awt.event.KeyEvent;
 public class _06_PaginaPrincipal extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
-	private JButton btnPublicarDenuncia, btnNewButton_1, btnNewButton_2, btnResuelta, btnNewButton_3;
+	private JButton btnPublicarDenuncia, btnEliminar, btnNewButton_2, btnResuelta, btnNewButton_3;
 	private JPanel contentPane, paraTi, denunciasFavoritas, misDenuncias;
 	private JLabel lblLogo, lblRSB, lblFotoPerfil, lblNewLabel;
 	private JScrollPane scrollPane, scrollPane2, scrollPane3;
@@ -103,10 +104,6 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		});
 
 		btnNewButton_3 = new JButton("Ver imagen");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnNewButton_3.setForeground(Color.BLACK);
 		btnNewButton_3.setEnabled(false);
 		btnNewButton_3.setBackground(Color.WHITE);
@@ -338,6 +335,13 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		misDenuncias.add(scrollPane3);
 
 		table3 = new JTable();
+		table3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int fila = table3.getSelectedRow();
+				updateEliminar();
+			}
+		});
 		table3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultTableModel modeloTabla3 = new DefaultTableModel(new Object[][] {
 				{ null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null },
@@ -375,16 +379,17 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		table3.getColumnModel().getColumn(7).setMaxWidth(25);
 		scrollPane3.setViewportView(table3);
 
-		btnNewButton_1 = new JButton("Eliminar denuncia");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnEliminar = new JButton("Eliminar denuncia");
+		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
 			}
 		});
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.setForeground(Color.BLACK);
-		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setBounds(369, 420, 150, 32);
-		misDenuncias.add(btnNewButton_1);
+		btnEliminar.setEnabled(false);
+		btnEliminar.setForeground(Color.BLACK);
+		btnEliminar.setBackground(Color.WHITE);
+		btnEliminar.setBounds(369, 420, 150, 32);
+		misDenuncias.add(btnEliminar);
 
 		getContentPane().add(pestañas);
 		addWindowListener(new WindowAdapter() {
@@ -418,5 +423,30 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		return dtm;
 
 	};
-
+	
+	public void updateEliminar() {
+		if(table3.getSelectedRow() == -1) {
+			btnEliminar.setEnabled(false);
+		} else {
+			btnEliminar.setEnabled(true);
+		}
+	}
+	
+	public void eliminarDenuncia() {
+int filaSeleccionada = table3.getSelectedRow();
+        
+        // Verificar si se ha seleccionado una fila
+        if (filaSeleccionada != -1) {
+            // Obtener el modelo de la tabla
+            DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+            
+            // Obtener el dato de la columna 2 (índice 1) de la fila seleccionada
+            Object dato = modelo.getValueAt(filaSeleccionada, 0);
+            
+            // Hacer algo con el dato obtenido
+            miControlador.obtenerDenunciaEliminada(dato);
+        } else {
+            System.out.println("No se ha seleccionado ninguna fila.");
+        }
+	}
 }

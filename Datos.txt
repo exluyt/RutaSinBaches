@@ -1,4 +1,4 @@
-#El codigo postal se ha guardado
-#Fri May 31 03:10:54 CEST 2024
+#El nickname se ha guardado
+#Fri May 31 05:48:33 CEST 2024
 Cp=12345
 User=hola

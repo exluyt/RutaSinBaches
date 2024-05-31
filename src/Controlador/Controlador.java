@@ -377,4 +377,9 @@ public class Controlador extends JFrame {
 		fis.close();
 		return bytes;
 	}
+
+	public void obtenerDenunciaEliminada(Object codigo) {
+		int codigoInt = Integer.parseInt(codigo.toString());
+		miModelo.eliminarDenuncia(codigoInt);
+	}
 }
