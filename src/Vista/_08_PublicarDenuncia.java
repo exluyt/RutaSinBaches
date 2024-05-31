@@ -96,6 +96,12 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		lblPersona.setIcon(sizePersona);
 
 		lblUpload = new JLabel("");
+		lblUpload.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				miControlador.abrirActualizarFotoDenuncia();
+			}
+		});
 		lblUpload.setBounds(32, 308, 50, 43);
 		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
 				lblUpload.getHeight(), Image.SCALE_SMOOTH));
@@ -326,5 +332,10 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 				lblVacio.setText("Los datos no son validos");
 			}
 		}
+	}
+	public void actualizarFotoPerfil(ImageIcon imageIcon) {
+		Image image = imageIcon.getImage().getScaledInstance(lblFotoPerfil.getWidth(), lblFotoPerfil.getHeight(),
+				Image.SCALE_SMOOTH);
+		lblFotoPerfil.setIcon(new ImageIcon(image));
 	}
 }	

@@ -463,7 +463,7 @@ public class Modelo {
 
 	public boolean agregarDenuncia(String direccion, int codigo, String img, String nick, int categoria, int cp,
 			String descripcion) {
-		String query = "{CALL agregarDenuncia(?, ?, ?, ?, ?, ?, ?)}";
+		String query = "{CALL agregarDenuncia(?, ?, ?, ?, ?, ?, ?, ?)}";
 		try {
 			CallableStatement ctmt = conexion.prepareCall(query);
 			ctmt.setString(1, direccion);
@@ -490,6 +490,11 @@ public class Modelo {
 		ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
 		((_10_InfoPersonal) misVistas[10]).actualizarFotoPerfil(imageIcon);
 	}
+	
+	public void actualizarFotoDenuncia(File ficheroActual) {
+		ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
+		((_08_PublicarDenuncia) misVistas[8]).actualizarFotoPerfil(imageIcon);
+	}
 
 	public void actualizarFotoPerfilBD(byte[] imageBytes, String nick) {
 		String sql = "UPDATE usuario SET foto = ? WHERE nick = ?";
@@ -497,6 +502,18 @@ public class Modelo {
 		try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 			pstmt.setBytes(1, imageBytes);
 			pstmt.setString(2, nick);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void actualizarFotoDenunciaBD(byte[] imageBytes, String codigo) {
+		String sql = "UPDATE denuncia SET imagen = ? WHERE codigo = ?";
+
+		try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+			pstmt.setBytes(1, imageBytes);
+			pstmt.setString(2, codigo);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

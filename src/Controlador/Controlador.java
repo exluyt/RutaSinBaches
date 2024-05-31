@@ -288,7 +288,7 @@ public class Controlador extends JFrame {
 		String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
 		int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
 		int codigo = miModelo.ultimoCodigo() + 1;
-		if (miModelo.agregarDenuncia(direccion, codigo, null, nick, categoria, cp, descripcion)) {
+		if (miModelo.agregarDenuncia(direccion, codigo, imagen, nick, categoria, cp, descripcion)) {
 			if (comprobarAdmin()) {
 				cambiarPantalla(8, 7);
 			} else {
@@ -317,6 +317,28 @@ public class Controlador extends JFrame {
 				String nick = (((_00_Login) misVistas[0]).getNick());
 				miModelo.actualizarFotoPerfil(ficheroActual, nick);
 				miModelo.actualizarFotoPerfilBD(imageBytes, nick);
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+	}
+	public void abrirActualizarFotoDenuncia() {
+		JFileChooser fc = new JFileChooser();
+		fc.setMultiSelectionEnabled(false);
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+		// Filtro para permitir solo archivos .jpg, .jpeg y .png
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes (jpg, jpeg, png)", "jpg", "jpeg", "png");
+		fc.setFileFilter(filter);
+
+		int seleccion = fc.showOpenDialog(((_10_InfoPersonal) misVistas[10]).getContentPane());
+
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			File ficheroActual = fc.getSelectedFile();
+			try {
+				byte[] imageBytes = convertirImagenABytes(ficheroActual);
+				String nick = (((_00_Login) misVistas[0]).getNick());
+				miModelo.actualizarFotoDenuncia(ficheroActual);
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
