@@ -1,7 +1,7 @@
 (https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/nnNBUCuR)
 =======
 <p align="center">
-  <img src="src/vista/img/logo_peque.png" alt="Logo del Proyecto">
+  <img src="src/Vista/img/logo_peque.png" alt="Logo del Proyecto">
 </p>
 
 ## Descripción del Proyecto
