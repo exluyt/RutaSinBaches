@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/vista/img/logo_peque.png" alt="Logo del Proyecto">
+  <img src="src/Vista/img/logo_peque.png" alt="Logo del Proyecto">
 </p>
 
 ## Descripción del Proyecto
