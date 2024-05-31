@@ -5,6 +5,8 @@ import java.util.Date;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -289,6 +291,31 @@ public class Controlador extends JFrame {
      } else {
     	 ((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
      }
+	}
+
+	public DefaultTableModel filtrarTablas(DefaultTableModel tablaSolicitada, String cp, int categoria, int estado, int tablaActual) {
+		String usr= recuperarUsuario();
+		if (!comprobarCpFiltro(cp)) {
+			cp="";
+		}
+		List<Object[]> tabla =miModelo.tablasFiltro(usr,cp, categoria, estado,tablaActual);
+		DefaultTableModel tableModel =  new DefaultTableModel();
+        tableModel=((_06_PaginaPrincipal) misVistas[6]).getTableModel(tablaSolicitada);
+        tableModel.setRowCount(0);
+        int fila = 0;
+        for (Object[] lista : tabla){
+        	tableModel.insertRow(fila, lista);
+        	fila++;
+        }
+        fila=0;
+        return tableModel;
+	}
+
+	public boolean comprobarCpFiltro(String cp) {
+		String regex = "^(?:0[1-9]|[1-4]\\d|5[0-2])\\d{3}$";
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(cp);
+		return matcher.matches();
 	}
 }
 

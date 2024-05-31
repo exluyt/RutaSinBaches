@@ -20,6 +20,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -42,6 +44,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ListSelectionModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 /**
  * This class represents a GUI for the main page of the administrator. It
@@ -60,6 +64,7 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	private JLabel lblLogo, lblRSB, lblFotoPerfil, lblNewLabel;
 	private JTable table, table2, table3, table4;
 	private boolean esCodigoPostalClicado = false;
+	private boolean añadido=false;
 	private JComboBox comboBox_1, comboBox;
 	private JTextField txtCodigoPostal;
 	private JTabbedPane pestañas;
@@ -110,17 +115,27 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		ImageIcon sizeBusquedaLupa = new ImageIcon(imageBusquedaLupa.getImage()
 				.getScaledInstance(btnNewButton_2.getWidth(), btnNewButton_2.getHeight(), Image.SCALE_SMOOTH));
 		btnNewButton_2.setIcon(sizeBusquedaLupa);
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnNewButton_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnNewButton_2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		});
 
 		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(238, 182, 110, 28);
 		contentPane.add(comboBox_1);
 		comboBox_1.setModel(
-				new DefaultComboBoxModel(new String[] { "--Categoria--", "Iluminacion", "Alumbrado", "..." }));
+				new DefaultComboBoxModel(new String[] {"--Categoria--", "Iluminacion", "Edificios", "Pavimento", "Naturaleza", "Limpieza"}));
 
 		comboBox = new JComboBox();
 		comboBox.setBounds(358, 182, 112, 28);
 		contentPane.add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "--Estado--", "En proceso", "Resuelto" }));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"--Estado--", "Publicado", "En proceso", "Resuelto"}));
 
 		txtCodigoPostal = new JTextField();
 		txtCodigoPostal.addMouseListener(new MouseAdapter() {
@@ -229,7 +244,22 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		pestañas.setBackground(new Color(240, 240, 240));
 		pestañas.setLocation(20, 122);
 		pestañas.setSize(1044, 500);
-
+		pestañas.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int selectPestaña = pestañas.getSelectedIndex();
+				if ((selectPestaña==2 && !añadido)||( selectPestaña==3 && !añadido)) {
+					comboBox.addItem("Nueva");
+					comboBox.addItem("Rechazada");
+					añadido=true;
+					}
+				else if((selectPestaña==0 && añadido)||( selectPestaña==1 && añadido)) {
+					comboBox.removeItem("Nueva");
+					comboBox.removeItem("Rechazada");	
+					añadido=false;
+				}
+			}
+		});
 		denunciasFavoritas = new JPanel();
 		denunciasFavoritas.setBackground(new Color(36, 113, 61));
 		denunciasFavoritas.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
@@ -533,6 +563,39 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				table2.setModel(miControlador.crearTablaFav(modeloTabla2,2));
 				table3.setModel(miControlador.crearTablaFav(modeloTabla3,3));
 				table4.setModel(miControlador.crearTablaFav(modeloTabla4,4));
+			}
+		});
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnNewButton_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnNewButton_2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String cp=txtCodigoPostal.getText().trim();
+
+				int categoria = comboBox_1.getSelectedIndex();
+				int estado = comboBox.getSelectedIndex();
+				int tablaActu = pestañas.getSelectedIndex();
+				
+				switch (tablaActu) {
+				case 0: 
+					table.setModel(miControlador.filtrarTablas(modeloTabla1 ,cp, categoria, estado,tablaActu));
+					break;
+				case 1: 
+					table2.setModel(miControlador.filtrarTablas(modeloTabla2,cp, categoria, estado,tablaActu));
+					break;
+				case 2: 
+					table3.setModel(miControlador.filtrarTablas(modeloTabla3, cp, categoria, estado,tablaActu));
+					break;
+				case 3: 
+					table4.setModel(miControlador.filtrarTablas(modeloTabla4, cp, categoria, estado,tablaActu));
+					break;
+				}
 			}
 		});
 	}
