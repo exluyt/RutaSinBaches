@@ -175,24 +175,24 @@ public class Controlador extends JFrame {
 	 */
 	public String getNick() {
 		try (FileInputStream input = new FileInputStream("Datos.txt")) {
-            prop.load(input);
-            return prop.getProperty("User");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+			prop.load(input);
+			return prop.getProperty("User");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
-	
+
 	public int getCp() {
 		try (FileInputStream input = new FileInputStream("Datos.txt")) {
-            prop.load(input);
-            return Integer.parseInt(prop.getProperty("Cp"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+			prop.load(input);
+			return Integer.parseInt(prop.getProperty("Cp"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return -1;
 	}
-	
+
 	public void setCp(String cp) {
 		miModelo.guardarCp(cp);
 	}
@@ -226,24 +226,6 @@ public class Controlador extends JFrame {
 			System.out.println("Error al cambiar la contraseña");
 			return false;
 		}
-	}
-
-	public boolean actualizarDatosUsuario() {
-		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();
-		String apellidos = ((_10_InfoPersonal) misVistas[10]).getApellido();
-		int cp = ((_10_InfoPersonal) misVistas[10]).getCp();
-		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
-		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
-		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
-		String nick = ((_00_Login) misVistas[0]).getNick();
-		if (miModelo.actualizarDatosUsuario(nick, nombre, apellidos, cp, pass, pregunta, respuesta)) {
-			System.out.println("Datos actualizados con éxito.");
-			return true;
-		} else {
-			System.out.println("Error al actualizar los datos.");
-			return false;
-		}
-
 	}
 
 	public void agregarAdmin() {
@@ -311,30 +293,30 @@ public class Controlador extends JFrame {
 	}
 
 	public void agregarPublicacion() {
-	 String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
-	 String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
-	 String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
-	 String direccion = String.join(", ", calle, provincia, ciudad);
-	 String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
-	 int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
-	 int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
-     int codigo = miModelo.ultimoCodigo() + 1;
-     if(miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, getCp(), descripcion)) {
-    	 if(comprobarAdmin()) {
-    		 cambiarPantalla(8, 7);
-    	 } else {
-    		 cambiarPantalla(8, 6);
-    	 }
-     } else {
-    	 ((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
-     }
+		String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
+		String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
+		String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
+		String direccion = String.join(", ", calle, provincia, ciudad);
+		String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
+		int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
+		int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
+		int codigo = miModelo.ultimoCodigo() + 1;
+		if (miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, getCp(), descripcion)) {
+			if (comprobarAdmin()) {
+				cambiarPantalla(8, 7);
+			} else {
+				cambiarPantalla(8, 6);
+			}
+		} else {
+			((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
+		}
 	}
 
 	public boolean comprobarDenunciaSimilar() {
 		setCp(((_08_PublicarDenuncia) misVistas[8]).getCp());
 		int cp = getCp();
 		int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
-		if(miModelo.comprobarSimulitud(cp,categoria)) {
+		if (miModelo.comprobarSimulitud(cp, categoria)) {
 			return true;
 		} else {
 			return false;
@@ -364,6 +346,7 @@ public class Controlador extends JFrame {
 			}
 		}
 	}
+
 	public void abrirActualizarFotoDenuncia() {
 		JFileChooser fc = new JFileChooser();
 		fc.setMultiSelectionEnabled(false);
