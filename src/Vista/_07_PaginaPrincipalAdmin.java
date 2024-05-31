@@ -53,7 +53,7 @@ import javax.swing.ListSelectionModel;
 public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
-	private JButton btnPublicarDenuncia, btnEliminar, btnNewButton_10, btnNewButton_2, btnNewButton_3, btnModificar,
+	private JButton btnPublicarDenuncia, btnEliminar, btnNewButton_10, btnNewButton_2, btnEliminar1, btnModificar,
 			btnNewButton_4;
 	private JPanel contentPane, paraTi, denunciasFavoritas, misDenuncias, GestionarDenuncias;
 	private JScrollPane scrollPane, scrollPane2, scrollPane3, scrollPane4;
@@ -373,11 +373,6 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		scrollPane3.setViewportView(table3);
 
 		btnEliminar = new JButton("Eliminar denuncia");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eliminarDenuncia();
-			}
-		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setForeground(Color.BLACK);
 		btnEliminar.setBackground(Color.WHITE);
@@ -396,17 +391,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		scrollPane4.setBounds(10, 75, 1019, 330);
 		GestionarDenuncias.add(scrollPane4);
 
-		btnNewButton_3 = new JButton("Eliminar denuncia");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eliminarDenuncia();
-			}
-		});
-		btnNewButton_3.setEnabled(false);
-		btnNewButton_3.setForeground(Color.BLACK);
-		btnNewButton_3.setBackground(Color.WHITE);
-		btnNewButton_3.setBounds(481, 420, 150, 32);
-		GestionarDenuncias.add(btnNewButton_3);
+		btnEliminar1 = new JButton("Eliminar denuncia");
+		btnEliminar1.setEnabled(false);
+		btnEliminar1.setForeground(Color.BLACK);
+		btnEliminar1.setBackground(Color.WHITE);
+		btnEliminar1.setBounds(481, 420, 150, 32);
+		GestionarDenuncias.add(btnEliminar1);
 
 		table4 = new JTable();
 		table4.addMouseListener(new MouseAdapter() {
@@ -489,6 +479,26 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				table4.setModel(miControlador.crearTablaFav(modeloTabla4, 4));
 			}
 		});
+		
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
+				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
+                table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+                table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+                table4.setModel(miControlador.crearTablaFav(modeloTabla3, 4));
+			}
+		});
+		
+		btnEliminar1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
+				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
+                table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+                table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+                table4.setModel(miControlador.crearTablaFav(modeloTabla3, 4));
+			}
+		});
 	}
 
 	/**
@@ -510,10 +520,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	}
 	
 	public void updateEliminar() {
-		if (table3.getSelectedRow() == -1) {
+		if (table3.getSelectedRow() == -1 && table4.getSelectedRow() == -1) {
 			btnEliminar.setEnabled(false);
+			btnEliminar1.setEnabled(false);
 		} else {
 			btnEliminar.setEnabled(true);
+			btnEliminar1.setEnabled(true);
 		}
 	}
 	
@@ -527,9 +539,9 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 			Object dato = modelo.getValueAt(filaSeleccionada, 0);
 			miControlador.obtenerDenunciaEliminada(dato);
 		} else if (filaSeleccionada1 != 1) {
-			DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
-			Object dato = modelo.getValueAt(filaSeleccionada1, 0);
-			miControlador.obtenerDenunciaEliminada(dato);
+			DefaultTableModel modelo = (DefaultTableModel) table4.getModel();
+			Object dato1 = modelo.getValueAt(filaSeleccionada1, 0);
+			miControlador.obtenerDenunciaEliminada(dato1);
 		} else {
 			System.out.println("No se ha seleccionado ninguna fila.");
 		}

@@ -338,7 +338,6 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		table3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				int fila = table3.getSelectedRow();
 				updateEliminar();
 			}
 		});
@@ -380,11 +379,6 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		scrollPane3.setViewportView(table3);
 
 		btnEliminar = new JButton("Eliminar denuncia");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eliminarDenuncia();
-			}
-		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setForeground(Color.BLACK);
 		btnEliminar.setBackground(Color.WHITE);
@@ -397,6 +391,15 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
 				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
 				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+			}
+		});
+		
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarDenuncia();
+				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
+                table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+                table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
 			}
 		});
 	}
