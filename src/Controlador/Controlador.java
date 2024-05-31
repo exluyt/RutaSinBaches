@@ -377,4 +377,11 @@ public class Controlador extends JFrame {
 		fis.close();
 		return bytes;
 	}
+
+	public void obtenerFav(Object codigo, Object favorito) {
+        int codigoInt = Integer.parseInt(codigo.toString());
+        String fav = favorito.toString();
+        miModelo.marcarFavorito(getNick(), codigoInt, fav);
+    }
+
 }
