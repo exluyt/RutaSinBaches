@@ -99,21 +99,12 @@ public class _02_Registro2 extends JFrame implements Vista {
 		 * @param e The mouse event.
 		 */
 		lblInicioSesion2 = new JLabel("Inicia Sesión");
+		lblInicioSesion2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblInicioSesion2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				miControlador.cambiarPantalla(2, 0);
 				lblVacio.setText("");
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblInicioSesion2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblInicioSesion2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 		lblInicioSesion2.setFont(new Font("Dialog", Font.PLAIN, 13));
@@ -334,26 +325,11 @@ public class _02_Registro2 extends JFrame implements Vista {
 		 * @param e The mouse event.
 		 */
 		JButton btn1de2 = new JButton("1/2");
+		btn1de2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btn1de2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.cambiarPantalla(2, 1);
 				lblVacio.setText("");
-			}
-		});
-		btn1de2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				camposVacios();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn1de2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn1de2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 		btn1de2.setFont(new Font("Dialog", Font.PLAIN, 13));
