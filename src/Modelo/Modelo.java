@@ -59,34 +59,34 @@ public class Modelo {
 	public void setControlador(Vista[] misVistas) {
 		this.misVistas = misVistas;
 	}
-	
+
 	public String getUrl() {
 		try (FileInputStream input = new FileInputStream(BBDD)) {
-            prop.load(input);
-            return prop.getProperty("url");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+			prop.load(input);
+			return prop.getProperty("url");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
-	
+
 	public String getLogin() {
 		try (FileInputStream input = new FileInputStream(BBDD)) {
-            prop.load(input);
-            return prop.getProperty("login");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+			prop.load(input);
+			return prop.getProperty("login");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
-	
+
 	public String getPwd() {
 		try (FileInputStream input = new FileInputStream(BBDD)) {
-            prop.load(input);
-            return prop.getProperty("pwd");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+			prop.load(input);
+			return prop.getProperty("pwd");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
 
@@ -107,7 +107,7 @@ public class Modelo {
 			System.err.println("Error General: " + e.getMessage());
 			System.exit(2);
 		}
-		
+
 		datos = new Properties();
 		try {
 			miFichero = new File(FILE);
@@ -505,7 +505,7 @@ public class Modelo {
 
 	public boolean agregarDenuncia(String direccion, int codigo, String img, String nick, int categoria, int cp,
 			String descripcion) {
-		String query = "{CALL agregarDenuncia(?, ?, ?, ?, ?, ?, ?, ?)}";
+		String query = "{CALL agregarDenuncia(?, ?, ?, ?, ?, ?, ?)}";
 		try {
 			CallableStatement ctmt = conexion.prepareCall(query);
 			ctmt.setString(1, direccion);
@@ -532,7 +532,7 @@ public class Modelo {
 		ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
 		((_10_InfoPersonal) misVistas[10]).actualizarFotoPerfil(imageIcon);
 	}
-	
+
 	public void actualizarFotoDenuncia(File ficheroActual) {
 		ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
 		((_08_PublicarDenuncia) misVistas[8]).actualizarFotoPerfil(imageIcon);
@@ -549,7 +549,7 @@ public class Modelo {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void actualizarFotoDenunciaBD(byte[] imageBytes, String codigo) {
 		String sql = "UPDATE denuncia SET imagen = ? WHERE codigo = ?";
 
