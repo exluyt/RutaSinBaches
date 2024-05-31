@@ -217,21 +217,21 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		JButton btnPublicar = new JButton("Publicar denuncia");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				int response = JOptionPane.showConfirmDialog(frame,
-						"Se ha encontrado una denuncia parecida. ¿Desea publicarla igualemente?",
-						"Coincidencia encontrada", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-				if (response == JOptionPane.YES_OPTION) {
-					// Logic for when "Yes" is clicked
-					miControlador.cambiarPantalla(8, 6);
-					// Add your specific actions here
-				} else if (response == JOptionPane.NO_OPTION) {
-					// Logic for when "No" is clicked (optional)
-					System.out.println("No button clicked");
+				if (miControlador.comprobarDenunciaSimilar()) {
+					int response = JOptionPane.showConfirmDialog(frame,
+							"Se ha encontrado una denuncia parecida. ¿Desea publicarla igualemente?",
+							"Coincidencia encontrada", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (response == JOptionPane.YES_OPTION) {
+						// Logic for when "Yes" is clicked
+						miControlador.cambiarPantalla(8, 6);
+						camposVacios();
+						// Add your specific actions here
+					} else if (response == JOptionPane.NO_OPTION) {
+						lblVacio.setText("Denuncia no publicada");
+					}
+				} else {
+					camposVacios();
 				}
-				*/
-				camposVacios();
 			}
 		});
 		btnPublicar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -259,7 +259,7 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		JLabel lblFotoPerfil_1 = new JLabel("");
 		lblFotoPerfil_1.setBounds(52, 416, 253, 204);
 		contentPane.add(lblFotoPerfil_1);
-		
+
 		lblVacio = new JLabel("");
 		lblVacio.setForeground(new Color(255, 0, 0));
 		lblVacio.setBounds(666, 190, 253, 14);
@@ -284,50 +284,55 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
 	}
-	
+
 	public String getCp() {
 		return txtCp.getText();
 	}
-	
+
 	public String getProvincia() {
 		return txtProvincia.getText();
 	}
-	
+
 	public String getCiudad() {
 		return txtCiudad.getText();
 	}
-	
+
 	public String getCalle() {
 		return txtCalle.getText();
 	}
-	
+
 	public int getCategoria() {
 		return comboBox.getSelectedIndex() + 1;
 	}
-	
+
 	public String getDescripcion() {
 		return txtDescripcion.getText();
 	}
-	
+
 	public void setError(String mensaje) {
 		lblVacio.setText(mensaje);
 	}
-	
+
 	public void camposVacios() {
 		String cp = getCp();
+		miControlador.setCp(getCp());
 		String provincia = getProvincia();
 		String ciudad = getCiudad();
 		String calle = getCalle();
 		String descripcion = getDescripcion();
 		if (cp.isEmpty() || provincia.isEmpty() || ciudad.isEmpty() || calle.isEmpty()
-				|| descripcion.equals("Usuario")) {
+				|| descripcion.isEmpty()) {
 			lblVacio.setText("Rellena todos los campos");
 		} else {
 			try {
+				if(5 == cp.length()) {
 				Integer.parseInt(cp);
 				lblVacio.setText("");
 				miControlador.agregarPublicacion();
-			} catch(NumberFormatException e) {
+				} else {
+					lblVacio.setText("Introduzca un codigo postal valido");
+				}
+			} catch (NumberFormatException e) {
 				System.out.print("Los datos no son validos");
 				lblVacio.setText("Los datos no son validos");
 			}

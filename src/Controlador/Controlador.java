@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Controlador extends JFrame {
 	private Modelo miModelo; // Model reference
 	private Vista[] misVistas; // Array of views
 	private String[] datosRegistro = new String[3]; // Array to hold registration data
-	private String nick; // Variable to hold the username for password recovery
+	private Properties prop = new Properties();
 
 	/**
 	 * Sets the model reference.
@@ -74,14 +75,15 @@ public class Controlador extends JFrame {
 
 	public boolean comprobarUsuario() {
 		String nick = ((_00_Login) misVistas[0]).getNick();
-		this.nick = nick;
 		String password = ((_00_Login) misVistas[0]).getPassword();
 		String resultado = miModelo.comprobarUsuario(nick, password);
 		switch (resultado) {
 		case "trueAdm":
+			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 7);
 			return true;
 		case "trueUsr":
+			miModelo.guardarUsuario(nick);
 			cambiarPantalla(0, 6);
 			return true;
 		case "falso":
@@ -167,21 +169,32 @@ public class Controlador extends JFrame {
 	}
 
 	/**
-	 * Sets the username for password recovery.
-	 * 
-	 * @param nick the username to be set
-	 */
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
-
-	/**
 	 * Gets the username for password recovery.
 	 * 
 	 * @return the username for password recovery
 	 */
 	public String getNick() {
-		return nick;
+		try (FileInputStream input = new FileInputStream("Datos.txt")) {
+            prop.load(input);
+            return prop.getProperty("User");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return null;
+	}
+	
+	public int getCp() {
+		try (FileInputStream input = new FileInputStream("Datos.txt")) {
+            prop.load(input);
+            return Integer.parseInt(prop.getProperty("Cp"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return -1;
+	}
+	
+	public void setCp(String cp) {
+		miModelo.guardarCp(cp);
 	}
 
 	public boolean agregarUsuario() {
@@ -213,6 +226,24 @@ public class Controlador extends JFrame {
 			System.out.println("Error al cambiar la contraseña");
 			return false;
 		}
+	}
+
+	public boolean actualizarDatosUsuario() {
+		String nombre = ((_10_InfoPersonal) misVistas[10]).getNombre();
+		String apellidos = ((_10_InfoPersonal) misVistas[10]).getApellido();
+		int cp = ((_10_InfoPersonal) misVistas[10]).getCp();
+		String pass = ((_10_InfoPersonal) misVistas[10]).getPwd();
+		int pregunta = ((_10_InfoPersonal) misVistas[10]).getPregunta();
+		String respuesta = ((_10_InfoPersonal) misVistas[10]).getRespuesta();
+		String nick = ((_00_Login) misVistas[0]).getNick();
+		if (miModelo.actualizarDatosUsuario(nick, nombre, apellidos, cp, pass, pregunta, respuesta)) {
+			System.out.println("Datos actualizados con éxito.");
+			return true;
+		} else {
+			System.out.println("Error al actualizar los datos.");
+			return false;
+		}
+
 	}
 
 	public void agregarAdmin() {
@@ -280,22 +311,33 @@ public class Controlador extends JFrame {
 	}
 
 	public void agregarPublicacion() {
-		int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
-		String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
-		String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
-		String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
-		String direccion = String.join(", ", calle, provincia, ciudad);
-		String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
+	 String provincia = ((_08_PublicarDenuncia) misVistas[8]).getProvincia();
+	 String ciudad = ((_08_PublicarDenuncia) misVistas[8]).getCiudad();
+	 String calle = ((_08_PublicarDenuncia) misVistas[8]).getCalle();
+	 String direccion = String.join(", ", calle, provincia, ciudad);
+	 String descripcion = ((_08_PublicarDenuncia) misVistas[8]).getDescripcion();
+	 int cp = Integer.parseInt(((_08_PublicarDenuncia) misVistas[8]).getCp());
+	 int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
+     int codigo = miModelo.ultimoCodigo() + 1;
+     if(miModelo.agregarDenuncia(direccion, codigo, null, getNick(), categoria, getCp(), descripcion)) {
+    	 if(comprobarAdmin()) {
+    		 cambiarPantalla(8, 7);
+    	 } else {
+    		 cambiarPantalla(8, 6);
+    	 }
+     } else {
+    	 ((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
+     }
+	}
+
+	public boolean comprobarDenunciaSimilar() {
+		setCp(((_08_PublicarDenuncia) misVistas[8]).getCp());
+		int cp = getCp();
 		int categoria = ((_08_PublicarDenuncia) misVistas[8]).getCategoria();
-		int codigo = miModelo.ultimoCodigo() + 1;
-		if (miModelo.agregarDenuncia(direccion, codigo, imagen, nick, categoria, cp, descripcion)) {
-			if (comprobarAdmin()) {
-				cambiarPantalla(8, 7);
-			} else {
-				cambiarPantalla(8, 6);
-			}
+		if(miModelo.comprobarSimulitud(cp,categoria)) {
+			return true;
 		} else {
-			((_03_RegistroAdmin) misVistas[8]).setError("Datos incorrectos");
+			return false;
 		}
 	}
 
