@@ -89,20 +89,11 @@ public class _09_Estadisticas extends JFrame implements Vista {
 		lblRSB.setIcon(sizeRSB);
 
 		lblLogo = new JLabel("");
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				miControlador.cambiarPantalla(9, 7);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 		lblLogo.setBounds(10, 11, 77, 78);
@@ -112,21 +103,13 @@ public class _09_Estadisticas extends JFrame implements Vista {
 		lblLogo.setIcon(imageIcon1);
 
 		lblFotoPerfil = new JLabel("");
+		lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblFotoPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				miControlador.cambiarPantalla(9, 10);
 			}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblFotoPerfil.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
 		});
 		lblFotoPerfil.setBounds(984, 21, 60, 60);
 		panel.add(lblFotoPerfil);

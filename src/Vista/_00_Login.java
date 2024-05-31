@@ -80,21 +80,12 @@ public class _00_Login extends JFrame implements Vista {
 		 * @param e The mouse event.
 		 */
 		lblRegistrarse2 = new JLabel("Registrate");
+		lblRegistrarse2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblRegistrarse2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				miControlador.cambiarPantalla(0, 1);
 				lblVacio.setText("");
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblRegistrarse2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblRegistrarse2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 
@@ -170,21 +161,12 @@ public class _00_Login extends JFrame implements Vista {
 		 * @param e The mouse event.
 		 */
 		lblRecordar = new JLabel("Recordar");
+		lblRecordar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblRecordar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				miControlador.cambiarPantalla(0, 4);
 				lblVacio.setText("");
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblRecordar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblRecordar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 		lblRecordar.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -265,7 +247,7 @@ public class _00_Login extends JFrame implements Vista {
 				|| password.equals("Contraseña")) {
 			lblVacio.setText("Rellene todos los campos");
 		} else {
-			if(!miControlador.comprobarUsuario()) {
+			if (!miControlador.comprobarUsuario()) {
 				lblVacio.setText("Datos incorrectos");
 			}
 		}
