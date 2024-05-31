@@ -1,7 +1,7 @@
 #El nickname se ha guardado
-#Fri May 31 08:55:07 CEST 2024
+#Fri May 31 10:02:22 CEST 2024
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=origin/Nacho
 Cp=12312
-User=mariooseoanee
+User=hola12

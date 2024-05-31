@@ -117,6 +117,7 @@ public class Controlador extends JFrame {
 	public boolean comprobarUsuarioRegistro() {
 		String nick = ((_02_Registro2) misVistas[2]).getUsuario();
 		if (miModelo.comprobarUsuarioRegistro(nick)) {
+			agregarUsuario();
 			cambiarPantalla(2, 0);
 			return true;
 		} else {
