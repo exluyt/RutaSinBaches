@@ -1,4 +1,10 @@
 #El nickname se ha guardado
+<<<<<<< HEAD
 #Fri May 31 06:38:58 CEST 2024
 User=12
 Cp=12345
+=======
+#Fri May 31 06:35:58 CEST 2024
+Cp=12345
+User=mariooseoanee
+>>>>>>> origin/MarioRama6am

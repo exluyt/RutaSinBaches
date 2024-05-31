@@ -380,6 +380,13 @@ public class Controlador extends JFrame {
 		return bytes;
 	}
 
+	public void obtenerFav(Object codigo, Object favorito) {
+        int codigoInt = Integer.parseInt(codigo.toString());
+        String fav = favorito.toString();
+        miModelo.marcarFavorito(getNick(), codigoInt, fav);
+    }
+
+
 	public DefaultTableModel filtrarTablas(DefaultTableModel tablaSolicitada, String cp, int categoria, int estado, int tablaActual) {
 		String usr= recuperarUsuario();
 		if (!comprobarCpFiltro(cp)) {

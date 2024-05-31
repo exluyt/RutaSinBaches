@@ -20,6 +20,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.UIManager;
@@ -71,6 +73,7 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 
 	private Controlador miControlador;
 	private Modelo miModelo;
+	private JButton btnFav;
 
 	/**
 	 * Constructor for the _07_PaginaPrincipalAdmin class. Initializes the form and
@@ -189,12 +192,17 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		btnPublicarDenuncia.setBounds(883, 575, 154, 32);
 		contentPane.add(btnPublicarDenuncia);
 
-		JButton btnNewButton = new JButton("Favorito");
-		btnNewButton.setEnabled(false);
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setBounds(772, 575, 101, 32);
-		contentPane.add(btnNewButton);
+		btnFav = new JButton("Favorito");
+		btnFav.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filaSelect();
+			}
+		});
+		btnFav.setEnabled(false);
+		btnFav.setBackground(Color.WHITE);
+		btnFav.setForeground(Color.BLACK);
+		btnFav.setBounds(772, 575, 101, 32);
+		contentPane.add(btnFav);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -282,6 +290,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				new String[] { "C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n",
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table.setModel(modeloTabla1);
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                btnFav.setEnabled(table.getSelectedRow() != -1);
+                
+            }
+        });
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setMinWidth(50);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -329,6 +343,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				new String[] { "C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n",
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table2.setModel(modeloTabla2);
+		table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                btnFav.setEnabled(table2.getSelectedRow() != -1);
+                
+            }
+        });
 		table2.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table2.getColumnModel().getColumn(0).setMinWidth(50);
 		table2.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -377,6 +397,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				new String[] { "C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n",
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table3.setModel(modeloTabla3);
+		table3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                btnFav.setEnabled(table3.getSelectedRow() != -1);
+                
+            }
+        });
 		table3.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table3.getColumnModel().getColumn(0).setMinWidth(50);
 		table3.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -441,6 +467,12 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				new String[] { "C\u00F3digo", "Usuario", "Estado", "Direcci\u00F3n", "Fecha de publicaci\u00F3n",
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table4.setModel(modeloTabla4);
+		table4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                btnFav.setEnabled(table4.getSelectedRow() != -1);
+                
+            }
+        });
 		table4.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table4.getColumnModel().getColumn(0).setMinWidth(50);
 		table4.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -548,6 +580,31 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 	 */
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
+	}
+	
+	public void filaSelect() {
+	    int filaSeleccionadaT1 = table.getSelectedRow();
+	    int filaSeleccionadaT2 = table2.getSelectedRow();
+	    int filaSeleccionadaT3 = table3.getSelectedRow();
+	    
+	    if (filaSeleccionadaT1 != -1) {
+	        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+	        Object dato = modelo.getValueAt(filaSeleccionadaT1, 0);
+	        Object dato1 = modelo.getValueAt(filaSeleccionadaT1, 7); 
+	        miControlador.obtenerFav(dato, dato1);
+	    } else if (filaSeleccionadaT2 != -1) {
+	        DefaultTableModel modelo = (DefaultTableModel) table2.getModel();
+	        Object dato = modelo.getValueAt(filaSeleccionadaT2, 0);
+	        Object dato1 = modelo.getValueAt(filaSeleccionadaT2, 7);
+	        miControlador.obtenerFav(dato, dato1);
+	    } else if (filaSeleccionadaT3 != -1) {
+	        DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+	        Object dato = modelo.getValueAt(filaSeleccionadaT3, 0);
+	        Object dato1 = modelo.getValueAt(filaSeleccionadaT3, 7);
+	        miControlador.obtenerFav(dato, dato1);
+	    } else {
+	        System.out.println("No se ha seleccionado ninguna fila en la tabla.");
+	    }
 	}
 
 }

@@ -778,6 +778,39 @@ public class Modelo {
         ((_10_InfoPersonal) misVistas[10]).actualizarFotoPerfil(imageIcon);
     }
 
+	public void guardarCp(String cp) {
+		try {
+			datos.setProperty("Cp", cp);
+			salida = new FileOutputStream(miFichero);
+			datos.store(salida, "El codigo postal se ha guardado");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean marcarFavorito(String nick, int codigo, String favorito) {
+	    String query;
+	    try {
+	        if (favorito.equals("N")) {
+	            query = "INSERT INTO votar (usuario_nick, denuncia_codigo, favorito) VALUES (?, ?, 'Y') ON DUPLICATE KEY UPDATE favorito = ?";
+	            PreparedStatement pstmt = conexion.prepareStatement(query);
+	            pstmt.setString(1, nick);
+	            pstmt.setInt(2, codigo);
+	            pstmt.setString(3, favorito);
+	            pstmt.executeUpdate();
+	        } else {
+	            query = "UPDATE votar SET favorito = 'N' WHERE usuario_nick = ? AND denuncia_codigo = ?";
+	            PreparedStatement pstmt = conexion.prepareStatement(query);
+	            pstmt.setString(1, nick);
+	            pstmt.setInt(2, codigo);
+	            pstmt.executeUpdate();
+	        }
+	        return true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
     public void actualizarFotoDenuncia(File ficheroActual) {
         ImageIcon imageIcon = new ImageIcon(ficheroActual.getAbsolutePath());
         ((_08_PublicarDenuncia) misVistas[8]).actualizarFotoPerfil(imageIcon);
