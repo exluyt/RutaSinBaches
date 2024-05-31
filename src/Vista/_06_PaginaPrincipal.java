@@ -204,17 +204,8 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		lblRSB.setIcon(sizeRSB);
 
 		lblLogo = new JLabel("");
-		lblLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		});
 		lblLogo.setBounds(10, 11, 77, 78);
 		panel.add(lblLogo);
 		ImageIcon imageIcon1 = new ImageIcon(
@@ -222,20 +213,11 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		lblLogo.setIcon(imageIcon1);
 
 		lblFotoPerfil = new JLabel("");
+		lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblFotoPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				miControlador.cambiarPantalla(6, 10);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblFotoPerfil.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 

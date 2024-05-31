@@ -124,25 +124,15 @@ public class _08_PublicarDenuncia extends JFrame implements Vista {
 		lblRSB.setIcon(sizeRSB);
 
 		lblLogo = new JLabel("");
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		/**
+		 * Event handler for the lblLogo label. It calls the cambiarPantalla method of
+		 * the controller to change the screen to the main page (depending on whether it
+		 * is an admin user or not).
+		 * 
+		 * @param e The mouse event
+		 */
 		lblLogo.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			/**
-			 * Event handler for the lblLogo label. It calls the cambiarPantalla method of
-			 * the controller to change the screen to the main page (depending on whether it
-			 * is an admin user or not).
-			 * 
-			 * @param e The mouse event
-			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				miControlador.comprobarUsuarioPagina();

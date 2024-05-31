@@ -139,22 +139,13 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblRSB.setIcon(sizeRSB);
 
 		lblLogo = new JLabel("");
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblLogo.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblVacio.setText("");
 				miControlador.comprobarUsuarioPaginaInfo();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 		lblLogo.setBounds(10, 11, 77, 78);
