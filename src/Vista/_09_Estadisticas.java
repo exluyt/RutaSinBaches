@@ -36,6 +36,8 @@ import Modelo.*;
 import Controlador.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * This class represents a GUI for a statistics page. It extends JFrame and
@@ -88,6 +90,18 @@ public class _09_Estadisticas extends JFrame implements Vista {
 				imageRSB.getImage().getScaledInstance(lblRSB.getWidth(), lblRSB.getHeight(), Image.SCALE_SMOOTH));
 		lblRSB.setIcon(sizeRSB);
 
+		addWindowListener(new WindowAdapter() {
+			public void windowActivated(WindowEvent evt) {
+				byte[] imageData = miModelo.getImagen(miControlador.recuperarUsuario());
+				ImageIcon imageIcon = new ImageIcon(imageData);
+				Image image = imageIcon.getImage();
+				Image scaledImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+
+				// Mostrar la imagen en un JLabel
+				lblFotoPerfil.setIcon(new ImageIcon(scaledImage));
+			}
+		});
+
 		lblLogo = new JLabel("");
 		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblLogo.addMouseListener(new MouseAdapter() {
@@ -127,99 +141,81 @@ public class _09_Estadisticas extends JFrame implements Vista {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 33));
 		lblNewLabel.setBounds(447, 8, 180, 41);
 		panel_1.add(lblNewLabel);
-		
+
 		JPanel panel_Categorias = new JPanel();
 		panel_Categorias.setBounds(20, 60, 472, 228);
-		 panel_Categorias.setLayout(new BorderLayout()); // Usa BorderLayout para que el gráfico se ajuste al tamaño del panel
+		panel_Categorias.setLayout(new BorderLayout()); // Usa BorderLayout para que el gráfico se ajuste al tamaño del
+														// panel
 
 		panel_1.add(panel_Categorias);
-		
-		 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	        dataset.addValue(10, "Año 2024", "Iluminación");
-	        dataset.addValue(20, "Año 2024", "Edificios");
-	        dataset.addValue(30, "Año 2024", "Pavimento");
-	        dataset.addValue(15, "Año 2024", "Naturaleza");
-	        dataset.addValue(25, "Año 2024", "Limpieza");
 
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.addValue(10, "Año 2024", "Iluminación");
+		dataset.addValue(20, "Año 2024", "Edificios");
+		dataset.addValue(30, "Año 2024", "Pavimento");
+		dataset.addValue(15, "Año 2024", "Naturaleza");
+		dataset.addValue(25, "Año 2024", "Limpieza");
 
-	        // Crear el gráfico
-	        JFreeChart chart = ChartFactory.createBarChart(
-	                "Numero de denuncias por categoría",
-	                "Categoria",
-	                "Denuncias",
-	                dataset
-	        );
-	        ChartPanel chartPanel = new ChartPanel(chart);
-	        chartPanel.setMouseWheelEnabled(true);
-	        chartPanel.setMinimumDrawWidth(200);
-	        chartPanel.setMaximumDrawWidth(500);
-	        chartPanel.setMaximumDrawHeight(500);
+		// Crear el gráfico
+		JFreeChart chart = ChartFactory.createBarChart("Numero de denuncias por categoría", "Categoria", "Denuncias",
+				dataset);
+		ChartPanel chartPanel = new ChartPanel(chart);
+		chartPanel.setMouseWheelEnabled(true);
+		chartPanel.setMinimumDrawWidth(200);
+		chartPanel.setMaximumDrawWidth(500);
+		chartPanel.setMaximumDrawHeight(500);
 
-	        panel_Categorias.add(chartPanel,BorderLayout.CENTER);
-			JPanel panel_DenunciasTotalesdelMes = new JPanel();
-			panel_DenunciasTotalesdelMes.setBounds(550, 60, 472, 228);
-			 panel_DenunciasTotalesdelMes.setLayout(new BorderLayout()); // Usa BorderLayout para que el gráfico se ajuste al tamaño del panel
+		panel_Categorias.add(chartPanel, BorderLayout.CENTER);
+		JPanel panel_DenunciasTotalesdelMes = new JPanel();
+		panel_DenunciasTotalesdelMes.setBounds(550, 60, 472, 228);
+		panel_DenunciasTotalesdelMes.setLayout(new BorderLayout()); // Usa BorderLayout para que el gráfico se ajuste al
+																	// tamaño del panel
 
-			panel_1.add(panel_DenunciasTotalesdelMes);
-			
-			 DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
-		        dataset2.addValue(10, "Enero", "");
-		        dataset2.addValue(20, "Febrero", "");
-		        dataset2.addValue(30, "Marzo", "");
-		        dataset2.addValue(15, "Abril", "");
-		        dataset2.addValue(3, "Mayo", "");
-		        dataset2.addValue(17, "Junio", "");
-		        dataset2.addValue(7, "Julio", "");
-		        dataset2.addValue(15, "Agosto", "");
-		        dataset2.addValue(5, "Septiembre", "");
-		        dataset2.addValue(20, "Octubre", "");
-		        dataset2.addValue(50, "Noviembre", "");
-		        dataset2.addValue(15, "Diciembre", "");
+		panel_1.add(panel_DenunciasTotalesdelMes);
 
+		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+		dataset2.addValue(10, "Enero", "");
+		dataset2.addValue(20, "Febrero", "");
+		dataset2.addValue(30, "Marzo", "");
+		dataset2.addValue(15, "Abril", "");
+		dataset2.addValue(3, "Mayo", "");
+		dataset2.addValue(17, "Junio", "");
+		dataset2.addValue(7, "Julio", "");
+		dataset2.addValue(15, "Agosto", "");
+		dataset2.addValue(5, "Septiembre", "");
+		dataset2.addValue(20, "Octubre", "");
+		dataset2.addValue(50, "Noviembre", "");
+		dataset2.addValue(15, "Diciembre", "");
 
-		        // Crear el gráfico
-		        JFreeChart chart2 = ChartFactory.createBarChart(
-		                "Numero de denuncias Mensuales",
-		                "Mes",
-		                "Denuncias",
-		                dataset2
-		        );
-		        ChartPanel chartPanel2 = new ChartPanel(chart2);
-		        chartPanel2.setMouseWheelEnabled(true);
-		        chartPanel2.setMinimumDrawWidth(200);
-		        chartPanel2.setMaximumDrawWidth(500);
-		        chartPanel2.setMaximumDrawHeight(500);
+		// Crear el gráfico
+		JFreeChart chart2 = ChartFactory.createBarChart("Numero de denuncias Mensuales", "Mes", "Denuncias", dataset2);
+		ChartPanel chartPanel2 = new ChartPanel(chart2);
+		chartPanel2.setMouseWheelEnabled(true);
+		chartPanel2.setMinimumDrawWidth(200);
+		chartPanel2.setMaximumDrawWidth(500);
+		chartPanel2.setMaximumDrawHeight(500);
 
-		        panel_DenunciasTotalesdelMes.add(chartPanel2,BorderLayout.CENTER);
-		        
-		        JPanel panel_Montaña = new JPanel();
-		        panel_Montaña.setBounds(20, 299, 1004, 215);
-		        panel_Montaña.setLayout(new BorderLayout());
-		        panel_1.add(panel_Montaña);
-		        
+		panel_DenunciasTotalesdelMes.add(chartPanel2, BorderLayout.CENTER);
 
+		JPanel panel_Montaña = new JPanel();
+		panel_Montaña.setBounds(20, 299, 1004, 215);
+		panel_Montaña.setLayout(new BorderLayout());
+		panel_1.add(panel_Montaña);
 
-		        // Crear el conjunto de datos para el histograma
-		        HistogramDataset histogramDataset = new HistogramDataset();
-		        double[] values = {50, 100, 50, 15, 15}; // Aquí deberías usar tus datos reales
-		        histogramDataset.addSeries("Incidencias", values, 5);
-		        // Crear el gráfico de histograma
-		        JFreeChart histogramChart = ChartFactory.createHistogram(
-		                "Histograma de incidencias",
-		                "Frecuencia",
-		                "Incidencias",
-		                histogramDataset,
-		                PlotOrientation.HORIZONTAL,
-		                true, // Include legend
-		                true,
-		                false
-		        );
-		        ChartPanel histogramChartPanel = new ChartPanel(histogramChart);
-		        histogramChartPanel.setHorizontalAxisTrace(true);
-		        histogramChartPanel.setMouseZoomable(false);
+		// Crear el conjunto de datos para el histograma
+		HistogramDataset histogramDataset = new HistogramDataset();
+		double[] values = { 50, 100, 50, 15, 15 }; // Aquí deberías usar tus datos reales
+		histogramDataset.addSeries("Incidencias", values, 5);
+		// Crear el gráfico de histograma
+		JFreeChart histogramChart = ChartFactory.createHistogram("Histograma de incidencias", "Frecuencia",
+				"Incidencias", histogramDataset, PlotOrientation.HORIZONTAL, true, // Include legend
+				true, false);
+		ChartPanel histogramChartPanel = new ChartPanel(histogramChart);
+		histogramChartPanel.setHorizontalAxisTrace(true);
+		histogramChartPanel.setMouseZoomable(false);
 
-		        // Añadir los gráficos al panel
-		        panel_Montaña.add(histogramChartPanel, BorderLayout.CENTER);
+		// Añadir los gráficos al panel
+		panel_Montaña.add(histogramChartPanel, BorderLayout.CENTER);
 	}
 
 	/**
