@@ -1,50 +1,15 @@
 package Vista;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import Controlador.Controlador;
 import Modelo.Modelo;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Window;
-import java.awt.font.TextAttribute;
-import java.util.Map;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import Controlador.*;
-import Modelo.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.UIManager;
-
-/**
- * This class represents a GUI for a form to publish a complaint. It extends
- * `JFrame` and implements the `Vista` interface. It contains various Swing
- * components like JLabel, JTextField, JButton, and JComboBo.
- * 
- * @author Arpad Kiss
- */
 public class _10_InfoPersonal extends JFrame implements Vista {
 
 	private static final long serialVersionUID = 1L;
@@ -64,15 +29,13 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	private JLabel lblArrobaPerfil;
 	private JLabel lblNombreapellido;
 	private JPanel panel_1;
-	private JComboBox comboBoxSeguridad;
+	private JComboBox<String> comboBoxSeguridad;
 	private JLabel lblVacio;
 	private JLabel lblNick;
 
 	/**
 	 * Constructor for the _10_InfoPersonal class. Initializes the form and its
 	 * components.
-	 * 
-	 * @param miControlador The controller for the view.
 	 */
 	public _10_InfoPersonal() {
 		setIconImage(new ImageIcon(getClass().getResource("img/Logo_peque.png")).getImage());
@@ -82,7 +45,6 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -94,21 +56,27 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon imageCiudad = new ImageIcon(getClass().getResource("img/Ciudad.png"));
 		ImageIcon imageMontana = new ImageIcon(getClass().getResource("img/montana2.png"));
 		ImageIcon imageUpload = new ImageIcon(getClass().getResource("img/Drawing.png"));
-		
+
 		addWindowListener(new WindowAdapter() {
-            public void windowActivated(WindowEvent evt) {
-                miControlador.obtenerDatosUsuario();
-                lblNick.setText(miModelo.getNick());
-                txtNombre.setText(miModelo.getNombre());
-                txtApellidos.setText(miModelo.getApellido());
-                txtCP.setText(String.valueOf(miModelo.getCp()));
-                passwordField.setText(miModelo.getPass());
-                comboBoxSeguridad.setSelectedIndex(miModelo.getPregunta() - 1);
-                txtRespuesta.setText(miModelo.getRespuesta());
-                
-            }
-        });
-		
+			public void windowActivated(WindowEvent evt) {
+				miControlador.obtenerDatosUsuario();
+				lblNick.setText(miModelo.getNick());
+				txtNombre.setText(miModelo.getNombre());
+				txtApellidos.setText(miModelo.getApellido());
+				txtCP.setText(String.valueOf(miModelo.getCp()));
+				passwordField.setText(miModelo.getPass());
+				comboBoxSeguridad.setSelectedIndex(miModelo.getPregunta() - 1);
+				txtRespuesta.setText(miModelo.getRespuesta());
+				byte[] imageData = miModelo.getImagen(miModelo.getNick());
+				ImageIcon imageIcon = new ImageIcon(imageData);
+				Image image = imageIcon.getImage();
+				Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+
+				// Mostrar la imagen en un JLabel
+				lblFotoPerfil.setIcon(new ImageIcon(scaledImage));
+			}
+		});
+
 		lblNick = new JLabel("");
 		lblNick.setForeground(Color.BLACK);
 		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -121,6 +89,13 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
 				lblUpload.getHeight(), Image.SCALE_SMOOTH));
 		lblUpload.setIcon(sizeUpload);
+
+		lblUpload.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				miControlador.abrirActualizarFotoPerfil();
+			}
+		});
 
 		lblMontana = new JLabel("");
 		lblMontana.setBounds(0, 94, 358, 232);
@@ -166,18 +141,18 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblLogo = new JLabel("");
 		lblLogo.addMouseListener(new MouseAdapter() {
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		lblVacio.setText("");
-		miControlador.comprobarUsuarioPaginaInfo();
-	}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblVacio.setText("");
+				miControlador.comprobarUsuarioPaginaInfo();
+			}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
-	@Override
+			@Override
 			public void mouseExited(MouseEvent e) {
 				lblLogo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
@@ -216,14 +191,14 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		JButton btnModificarUsuario = new JButton("Modificar");
 		btnModificarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (miControlador.actualizarDatosUsuario()){
+				if (miControlador.actualizarDatosUsuario()) {
 					lblVacio.setText("¡Datos actualizados correctamente!");
 				} else {
 					lblVacio.setText("Error al actualizar los datos");
 				}
 			}
 		});
-		
+
 		btnModificarUsuario.setBounds(139, 428, 141, 37);
 		panel_1.add(btnModificarUsuario);
 		btnModificarUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -245,10 +220,10 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblPreguntasDeSeguridad.setForeground(new Color(58, 182, 98));
 		lblPreguntasDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-		comboBoxSeguridad = new JComboBox();
+		comboBoxSeguridad = new JComboBox<>();
 		comboBoxSeguridad.setBounds(219, 322, 182, 25);
 		panel_1.add(comboBoxSeguridad);
-		comboBoxSeguridad.setModel(new DefaultComboBoxModel(new String[] { "¿Cuál tu nombre de pila?",
+		comboBoxSeguridad.setModel(new DefaultComboBoxModel<>(new String[] { "¿Cuál tu nombre de pila?",
 				"¿Cuál es tu primera escuela?", "¿Cuál es tu primera mascota?" }));
 
 		lblContrasea = new JLabel("Contraseña:");
@@ -305,18 +280,17 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		panel_1.add(lblInfo);
 		lblInfo.setForeground(new Color(58, 182, 98));
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
+
 		lblVacio = new JLabel("");
 		lblVacio.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblVacio.setForeground(new Color(58, 182, 98));
 		lblVacio.setBounds(101, 479, 228, 17);
 		panel_1.add(lblVacio);
-
 	}
 
 	/**
 	 * This method sets the controller for the view.
-	 * 
+	 *
 	 * @param miControlador The Controller to be set.
 	 */
 	public void setControlador(Controlador miControlador) {
@@ -325,7 +299,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 
 	/**
 	 * This method sets the model for the view.
-	 * 
+	 *
 	 * @param miModelo The Model to be set.
 	 */
 	public void setModelo(Modelo miModelo) {
@@ -354,5 +328,11 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 
 	public String getRespuesta() {
 		return txtRespuesta.getText();
+	}
+
+	public void actualizarFotoPerfil(ImageIcon imageIcon) {
+		Image image = imageIcon.getImage().getScaledInstance(lblFotoPerfil.getWidth(), lblFotoPerfil.getHeight(),
+				Image.SCALE_SMOOTH);
+		lblFotoPerfil.setIcon(new ImageIcon(image));
 	}
 }
