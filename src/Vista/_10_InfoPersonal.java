@@ -89,7 +89,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
 				lblUpload.getHeight(), Image.SCALE_SMOOTH));
 		lblUpload.setIcon(sizeUpload);
-
+		lblUpload.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblUpload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
