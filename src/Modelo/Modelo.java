@@ -778,15 +778,6 @@ public class Modelo {
         ((_10_InfoPersonal) misVistas[10]).actualizarFotoPerfil(imageIcon);
     }
 
-	public void guardarCp(String cp) {
-		try {
-			datos.setProperty("Cp", cp);
-			salida = new FileOutputStream(miFichero);
-			datos.store(salida, "El codigo postal se ha guardado");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public boolean marcarFavorito(String nick, int codigo, String favorito) {
 	    String query;
