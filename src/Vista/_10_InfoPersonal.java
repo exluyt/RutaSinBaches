@@ -170,7 +170,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblNombreapellido = new JLabel("Hola");
 		lblNombreapellido.setForeground(Color.BLACK);
 		lblNombreapellido.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNombreapellido.setBounds(798, 327, 50, 37);
+		lblNombreapellido.setBounds(810, 327, 50, 37);
 		contentPane.add(lblNombreapellido);
 
 		panel_1 = new JPanel();
