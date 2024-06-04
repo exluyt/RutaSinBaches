@@ -72,7 +72,8 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 	private Controlador miControlador;
 	private JButton btnFav;
 
-	private boolean añadido=false;
+	private boolean añadido = false;
+
 	/**
 	 * Constructor for the _06_PaginaPrincipal class. Initializes the form and its
 	 * components.
@@ -92,6 +93,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		ImageIcon imageRSB = new ImageIcon(getClass().getResource("img/LogoGrande.png"));
 		ImageIcon imageFotoPerfil = new ImageIcon(getClass().getResource("img/fotoPerfil.png"));
 		ImageIcon imageBusquedaLupa = new ImageIcon(getClass().getResource("img/Busquedapng.png"));
+		ImageIcon imageMarco = new ImageIcon(getClass().getResource("img/marcoPerfil2.png"));
 
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent evt) {
@@ -124,7 +126,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		contentPane.add(btnResuelta);
 
 		btnNewButton_2 = new JButton("");
-		
+
 		btnNewButton_2.setBounds(480, 182, 42, 28);
 		contentPane.add(btnNewButton_2);
 		btnNewButton_2.setContentAreaFilled(false);
@@ -139,13 +141,14 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(238, 182, 110, 28);
 		contentPane.add(comboBox_1);
-		comboBox_1.setModel(
-				new DefaultComboBoxModel(new String[] {"--Categoria--", "Iluminacion", "Edificios", "Pavimento", "Naturaleza", "Limpieza"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(
+				new String[] { "--Categoria--", "Iluminacion", "Edificios", "Pavimento", "Naturaleza", "Limpieza" }));
 
 		comboBox = new JComboBox();
 		comboBox.setBounds(358, 182, 112, 28);
 		contentPane.add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"--Estado--", "Publicado", "En proceso", "Finalizada"}));
+		comboBox.setModel(
+				new DefaultComboBoxModel(new String[] { "--Estado--", "Publicado", "En proceso", "Finalizada" }));
 
 		txtCodigoPostal = new JTextField();
 		txtCodigoPostal.addMouseListener(new MouseAdapter() {
@@ -203,6 +206,14 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
+		JLabel lblMarco = new JLabel("");
+		lblMarco.setBounds(970, 12, 80, 77);
+		panel.add(lblMarco);
+		ImageIcon sizeMarco = new ImageIcon(
+				imageMarco.getImage().getScaledInstance(lblMarco.getWidth(), lblMarco.getHeight(), Image.SCALE_SMOOTH));
+		lblMarco.setIcon(sizeMarco);
+		lblMarco.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		lblRSB = new JLabel("");
 		lblRSB.setBounds(379, 21, 296, 68);
 		panel.add(lblRSB);
@@ -220,7 +231,6 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		lblLogo.setIcon(imageIcon1);
 
 		lblFotoPerfil = new JLabel("");
-		lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblFotoPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -228,7 +238,7 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 			}
 		});
 
-		lblFotoPerfil.setBounds(984, 21, 60, 60);
+		lblFotoPerfil.setBounds(980, 21, 60, 60);
 		panel.add(lblFotoPerfil);
 		ImageIcon sizeFotoPerfil = new ImageIcon(imageFotoPerfil.getImage().getScaledInstance(lblFotoPerfil.getWidth(),
 				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
@@ -242,15 +252,15 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				int selectPestaña = pestañas.getSelectedIndex();
-				if (selectPestaña==2 || selectPestaña==3 &&!añadido) {
+				if (selectPestaña == 2 || selectPestaña == 3 && !añadido) {
 					comboBox.addItem("Nueva");
 					comboBox.addItem("Rechazada");
-					añadido=true;
-					}
-				if(selectPestaña==0 || selectPestaña==1 && añadido) {
+					añadido = true;
+				}
+				if (selectPestaña == 0 || selectPestaña == 1 && añadido) {
 					comboBox.removeItem("Nueva");
-					comboBox.removeItem("Rechazada");	
-					añadido=false;
+					comboBox.removeItem("Rechazada");
+					añadido = false;
 				}
 			}
 		});
@@ -284,10 +294,10 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table.setModel(modeloTabla1);
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                btnFav.setEnabled(table.getSelectedRow() != -1);
-            }
-        });
+			public void valueChanged(ListSelectionEvent event) {
+				btnFav.setEnabled(table.getSelectedRow() != -1);
+			}
+		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(0).setMinWidth(50);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -337,11 +347,11 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table2.setModel(modeloTabla2);
 		table2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                btnFav.setEnabled(table2.getSelectedRow() != -1);
-                
-            }
-        });
+			public void valueChanged(ListSelectionEvent event) {
+				btnFav.setEnabled(table2.getSelectedRow() != -1);
+
+			}
+		});
 		table2.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table2.getColumnModel().getColumn(0).setMinWidth(50);
 		table2.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -370,7 +380,6 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		scrollPane3.setBounds(10, 75, 1019, 330);
 		misDenuncias.add(scrollPane3);
 
-
 		table3 = new JTable();
 		table3.addMouseListener(new MouseAdapter() {
 			@Override
@@ -397,10 +406,10 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 						"Categoria", "Descripci\u00F3n", "\u2605" });
 		table3.setModel(modeloTabla3);
 		table3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                btnFav.setEnabled(table3.getSelectedRow() != -1);
-            }
-        });
+			public void valueChanged(ListSelectionEvent event) {
+				btnFav.setEnabled(table3.getSelectedRow() != -1);
+			}
+		});
 		table3.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table3.getColumnModel().getColumn(0).setMinWidth(50);
 		table3.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -435,14 +444,14 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
 			}
 		});
-		
+
 		btnFav.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filaSelect();
 				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
 				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
 				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
-				
+
 			}
 		});
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
@@ -450,38 +459,40 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 			public void mouseEntered(MouseEvent e) {
 				btnNewButton_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnNewButton_2.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String cp=txtCodigoPostal.getText().trim();
+				String cp = txtCodigoPostal.getText().trim();
 
 				int categoria = comboBox_1.getSelectedIndex();
 				int estado = comboBox.getSelectedIndex();
 				int tablaActu = pestañas.getSelectedIndex();
-				
+
 				switch (tablaActu) {
-				case 0: 
-					table.setModel(miControlador.filtrarTablas(modeloTabla1 ,cp, categoria, estado,tablaActu));
+				case 0:
+					table.setModel(miControlador.filtrarTablas(modeloTabla1, cp, categoria, estado, tablaActu));
 					break;
-				case 1: 
-					table2.setModel(miControlador.filtrarTablas(modeloTabla2,cp, categoria, estado,tablaActu));
+				case 1:
+					table2.setModel(miControlador.filtrarTablas(modeloTabla2, cp, categoria, estado, tablaActu));
 					break;
-				case 2: 
-					table3.setModel(miControlador.filtrarTablas(modeloTabla3, cp, categoria, estado,tablaActu));
+				case 2:
+					table3.setModel(miControlador.filtrarTablas(modeloTabla3, cp, categoria, estado, tablaActu));
 					break;
 				}
 			}
 		});
-		
+
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eliminarDenuncia();
 				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
-                table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
-                table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
+				table2.setModel(miControlador.crearTablaFav(modeloTabla2, 2));
+				table3.setModel(miControlador.crearTablaFav(modeloTabla3, 3));
 			}
 		});
 	}
@@ -508,30 +519,30 @@ public class _06_PaginaPrincipal extends JFrame implements Vista {
 		return dtm;
 
 	};
-	
+
 	public void filaSelect() {
-	    int filaSeleccionadaT1 = table.getSelectedRow();
-	    int filaSeleccionadaT2 = table2.getSelectedRow();
-	    int filaSeleccionadaT3 = table3.getSelectedRow();
-	    
-	    if (filaSeleccionadaT1 != -1) {
-	        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-	        Object dato = modelo.getValueAt(filaSeleccionadaT1, 0);
-	        Object dato1 = modelo.getValueAt(filaSeleccionadaT1, 7); 
-	        miControlador.obtenerFav(dato, dato1);
-	    } else if (filaSeleccionadaT2 != -1) {
-	        DefaultTableModel modelo = (DefaultTableModel) table2.getModel();
-	        Object dato = modelo.getValueAt(filaSeleccionadaT2, 0);
-	        Object dato1 = modelo.getValueAt(filaSeleccionadaT2, 7);
-	        miControlador.obtenerFav(dato, dato1);
-	    } else if (filaSeleccionadaT3 != -1) {
-	        DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
-	        Object dato = modelo.getValueAt(filaSeleccionadaT3, 0);
-	        Object dato1 = modelo.getValueAt(filaSeleccionadaT3, 7);
-	        miControlador.obtenerFav(dato, dato1);
-	    } else {
-	        System.out.println("No se ha seleccionado ninguna fila en la tabla.");
-	    }
+		int filaSeleccionadaT1 = table.getSelectedRow();
+		int filaSeleccionadaT2 = table2.getSelectedRow();
+		int filaSeleccionadaT3 = table3.getSelectedRow();
+
+		if (filaSeleccionadaT1 != -1) {
+			DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+			Object dato = modelo.getValueAt(filaSeleccionadaT1, 0);
+			Object dato1 = modelo.getValueAt(filaSeleccionadaT1, 7);
+			miControlador.obtenerFav(dato, dato1);
+		} else if (filaSeleccionadaT2 != -1) {
+			DefaultTableModel modelo = (DefaultTableModel) table2.getModel();
+			Object dato = modelo.getValueAt(filaSeleccionadaT2, 0);
+			Object dato1 = modelo.getValueAt(filaSeleccionadaT2, 7);
+			miControlador.obtenerFav(dato, dato1);
+		} else if (filaSeleccionadaT3 != -1) {
+			DefaultTableModel modelo = (DefaultTableModel) table3.getModel();
+			Object dato = modelo.getValueAt(filaSeleccionadaT3, 0);
+			Object dato1 = modelo.getValueAt(filaSeleccionadaT3, 7);
+			miControlador.obtenerFav(dato, dato1);
+		} else {
+			System.out.println("No se ha seleccionado ninguna fila en la tabla.");
+		}
 	}
 
 	public void updateEliminar() {

@@ -25,7 +25,7 @@ public class Main {
 		}
 		Controlador miControlador = new Controlador();
 		Modelo miModelo = new Modelo();
-		Vista[] misVistas = new Vista[11];
+		Vista[] misVistas = new Vista[12];
 
 		misVistas[0] = new _00_Login();
 		misVistas[1] = new _01_Registro();
@@ -38,6 +38,7 @@ public class Main {
 		misVistas[8] = new _08_PublicarDenuncia();
 		misVistas[9] = new _09_Estadisticas();
 		misVistas[10] = new _10_InfoPersonal();
+		misVistas[11] = new _11_ModificarDenuncia();
 
 		miControlador.setModelo(miModelo);
 		miControlador.setVistas(misVistas);
