@@ -32,6 +32,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 	private JComboBox<String> comboBoxSeguridad;
 	private JLabel lblVacio;
 	private JLabel lblNick;
+	private JLabel lblMarco;
 
 	/**
 	 * Constructor for the _10_InfoPersonal class. Initializes the form and its
@@ -56,6 +57,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		ImageIcon imageCiudad = new ImageIcon(getClass().getResource("img/Ciudad.png"));
 		ImageIcon imageMontana = new ImageIcon(getClass().getResource("img/montana2.png"));
 		ImageIcon imageUpload = new ImageIcon(getClass().getResource("img/Drawing.png"));
+		ImageIcon imageMarco = new ImageIcon(getClass().getResource("img/marcoPerfil2.png"));
 
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent evt) {
@@ -76,26 +78,33 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 				lblFotoPerfil.setIcon(new ImageIcon(scaledImage));
 			}
 		});
+		
+				lblUpload = new JLabel("");
+				lblUpload.setBounds(963, 330, 50, 50);
+				contentPane.add(lblUpload);
+				ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
+						lblUpload.getHeight(), Image.SCALE_SMOOTH));
+				lblUpload.setIcon(sizeUpload);
+				lblUpload.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				lblUpload.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						miControlador.abrirActualizarFotoPerfil();
+					}
+				});
+		
+		lblMarco = new JLabel("");
+		lblMarco.setBounds(782, 135, 261, 255);
+		contentPane.add(lblMarco);
+		ImageIcon sizeMarco = new ImageIcon(imageMarco.getImage().getScaledInstance(lblMarco.getWidth(),
+				lblMarco.getHeight(), Image.SCALE_SMOOTH));
+		lblMarco.setIcon(sizeMarco);
 
 		lblNick = new JLabel("");
 		lblNick.setForeground(Color.BLACK);
 		lblNick.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNick.setBounds(879, 327, 180, 37);
+		lblNick.setBounds(871, 398, 180, 37);
 		contentPane.add(lblNick);
-
-		lblUpload = new JLabel("");
-		lblUpload.setBounds(948, 266, 50, 50);
-		contentPane.add(lblUpload);
-		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
-				lblUpload.getHeight(), Image.SCALE_SMOOTH));
-		lblUpload.setIcon(sizeUpload);
-		lblUpload.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblUpload.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				miControlador.abrirActualizarFotoPerfil();
-			}
-		});
 
 		lblMontana = new JLabel("");
 		lblMontana.setBounds(0, 94, 358, 232);
@@ -105,14 +114,14 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblMontana.setIcon(sizeMontana);
 
 		lblCiudad = new JLabel("");
-		lblCiudad.setBounds(843, 466, 203, 155);
+		lblCiudad.setBounds(848, 516, 203, 155);
 		contentPane.add(lblCiudad);
 		ImageIcon sizeCiudad = new ImageIcon(imageCiudad.getImage().getScaledInstance(lblCiudad.getWidth(),
 				lblCiudad.getHeight(), Image.SCALE_SMOOTH));
 		lblCiudad.setIcon(sizeCiudad);
 
 		lblCamino = new JLabel("");
-		lblCamino.setBounds(835, 311, 334, 237);
+		lblCamino.setBounds(840, 361, 334, 237);
 		contentPane.add(lblCamino);
 		ImageIcon sizeCamino = new ImageIcon(imageCamino.getImage().getScaledInstance(lblCamino.getWidth(),
 				lblCamino.getHeight(), Image.SCALE_SMOOTH));
@@ -155,7 +164,7 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblLogo.setIcon(imageIcon1);
 
 		lblFotoPerfil = new JLabel("");
-		lblFotoPerfil.setBounds(806, 133, 206, 198);
+		lblFotoPerfil.setBounds(811, 166, 206, 198);
 		contentPane.add(lblFotoPerfil);
 		ImageIcon sizeFotoPerfil = new ImageIcon(imageFotoPerfil.getImage().getScaledInstance(lblFotoPerfil.getWidth(),
 				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
@@ -164,13 +173,13 @@ public class _10_InfoPersonal extends JFrame implements Vista {
 		lblArrobaPerfil = new JLabel("@");
 		lblArrobaPerfil.setForeground(new Color(58, 182, 98));
 		lblArrobaPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblArrobaPerfil.setBounds(858, 327, 26, 37);
+		lblArrobaPerfil.setBounds(850, 398, 26, 37);
 		contentPane.add(lblArrobaPerfil);
 
 		lblNombreapellido = new JLabel("Hola");
 		lblNombreapellido.setForeground(Color.BLACK);
 		lblNombreapellido.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNombreapellido.setBounds(810, 327, 50, 37);
+		lblNombreapellido.setBounds(802, 398, 50, 37);
 		contentPane.add(lblNombreapellido);
 
 		panel_1 = new JPanel();

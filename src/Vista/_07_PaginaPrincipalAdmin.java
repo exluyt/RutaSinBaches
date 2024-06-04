@@ -95,6 +95,7 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		ImageIcon imageFotoPerfil = new ImageIcon(getClass().getResource("img/fotoPerfil.png"));
 		ImageIcon imageBusquedaLupa = new ImageIcon(getClass().getResource("img/Busquedapng.png"));
 		ImageIcon imageEstadisticas = new ImageIcon(getClass().getResource("img/Estadisticas.png"));
+		ImageIcon imageMarco = new ImageIcon(getClass().getResource("img/marcoPerfil2.png"));
 
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent evt) {
@@ -107,6 +108,49 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 				lblFotoPerfil.setIcon(new ImageIcon(scaledImage));
 			}
 		});
+
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panel.setBounds(10, 11, 1054, 100);
+		contentPane.add(panel);
+		panel.setLayout(null);
+
+		JLabel lblMarco = new JLabel("");
+		lblMarco.setBounds(970, 12, 80, 77);
+		panel.add(lblMarco);
+		ImageIcon sizeMarco = new ImageIcon(
+				imageMarco.getImage().getScaledInstance(lblMarco.getWidth(), lblMarco.getHeight(), Image.SCALE_SMOOTH));
+		lblMarco.setIcon(sizeMarco);
+		lblMarco.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		lblRSB = new JLabel("");
+		lblRSB.setBounds(379, 21, 296, 68);
+		panel.add(lblRSB);
+		ImageIcon sizeRSB = new ImageIcon(
+				imageRSB.getImage().getScaledInstance(lblRSB.getWidth(), lblRSB.getHeight(), Image.SCALE_SMOOTH));
+		lblRSB.setIcon(sizeRSB);
+
+		lblLogo = new JLabel("");
+		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lblLogo.setBounds(10, 11, 77, 78);
+		panel.add(lblLogo);
+		ImageIcon imageIcon1 = new ImageIcon(
+				imageIcon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
+		lblLogo.setIcon(imageIcon1);
+
+		lblFotoPerfil = new JLabel("");
+		
+		lblFotoPerfil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.cambiarPantalla(7, 10);
+			}
+		});
+		lblFotoPerfil.setBounds(980, 21, 60, 60);
+		panel.add(lblFotoPerfil);
+		ImageIcon sizeFotoPerfil = new ImageIcon(imageFotoPerfil.getImage().getScaledInstance(lblFotoPerfil.getWidth(),
+				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
+		lblFotoPerfil.setIcon(sizeFotoPerfil);
 		btnNewButton_10 = new JButton("Ver imagen");
 		btnNewButton_10.setForeground(Color.BLACK);
 		btnNewButton_10.setEnabled(false);
@@ -197,41 +241,6 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		btnFav.setForeground(Color.BLACK);
 		btnFav.setBounds(772, 575, 101, 32);
 		contentPane.add(btnFav);
-
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel.setBounds(10, 11, 1054, 100);
-		contentPane.add(panel);
-		panel.setLayout(null);
-
-		lblRSB = new JLabel("");
-		lblRSB.setBounds(379, 21, 296, 68);
-		panel.add(lblRSB);
-		ImageIcon sizeRSB = new ImageIcon(
-				imageRSB.getImage().getScaledInstance(lblRSB.getWidth(), lblRSB.getHeight(), Image.SCALE_SMOOTH));
-		lblRSB.setIcon(sizeRSB);
-
-		lblLogo = new JLabel("");
-		lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblLogo.setBounds(10, 11, 77, 78);
-		panel.add(lblLogo);
-		ImageIcon imageIcon1 = new ImageIcon(
-				imageIcon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
-		lblLogo.setIcon(imageIcon1);
-
-		lblFotoPerfil = new JLabel("");
-		lblFotoPerfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lblFotoPerfil.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miControlador.cambiarPantalla(7, 10);
-			}
-		});
-		lblFotoPerfil.setBounds(984, 21, 60, 60);
-		panel.add(lblFotoPerfil);
-		ImageIcon sizeFotoPerfil = new ImageIcon(imageFotoPerfil.getImage().getScaledInstance(lblFotoPerfil.getWidth(),
-				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
-		lblFotoPerfil.setIcon(sizeFotoPerfil);
 
 		pestañas = new JTabbedPane();
 		pestañas.setBorder(null);
@@ -526,6 +535,15 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 		ImageIcon sizeEstadisticas = new ImageIcon(imageEstadisticas.getImage().getScaledInstance(
 				btnNewButton_4.getWidth() - 120, btnNewButton_4.getHeight() - 110, Image.SCALE_SMOOTH));
 		btnNewButton_4.setIcon(sizeEstadisticas);
+
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.cambiarPantalla(7, 11);
+			}
+		});
+		btnNewButton.setBounds(297, 637, 89, 23);
+		contentPane.add(btnNewButton);
 		addWindowListener(new WindowAdapter() {
 			public void windowActivated(WindowEvent evt) {
 				table.setModel(miControlador.crearTablaFav(modeloTabla1, 1));
@@ -677,5 +695,4 @@ public class _07_PaginaPrincipalAdmin extends JFrame implements Vista {
 			System.out.println("No se ha seleccionado ninguna fila en la tabla.");
 		}
 	}
-
 }
