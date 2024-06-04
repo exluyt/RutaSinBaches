@@ -59,6 +59,8 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 	private JLabel lblLapiz;
 	private JComboBox comboBox;
 	private JLabel lblVacio;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Constructor for the _08_PublicarDenuncia class. Initializes the form and its
@@ -84,14 +86,14 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 		ImageIcon imageLapiz = new ImageIcon(getClass().getResource("img/modificar.png"));
 
 		lblCamino = new JLabel("");
-		lblCamino.setBounds(-260, 491, 439, 275);
+		lblCamino.setBounds(811, 370, 439, 275);
 		contentPane.add(lblCamino);
 		ImageIcon sizeCamino = new ImageIcon(imageCamino.getImage().getScaledInstance(lblCamino.getWidth(),
 				lblCamino.getHeight(), Image.SCALE_SMOOTH));
 		lblCamino.setIcon(sizeCamino);
 
 		lblLapiz = new JLabel("");
-		lblLapiz.setBounds(72, 364, 253, 204);
+		lblLapiz.setBounds(669, 411, 253, 204);
 		contentPane.add(lblLapiz);
 		ImageIcon sizeLapiz = new ImageIcon(
 				imageLapiz.getImage().getScaledInstance(lblLapiz.getWidth(), lblLapiz.getHeight(), Image.SCALE_SMOOTH));
@@ -104,7 +106,7 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 				miControlador.abrirActualizarFotoDenuncia();
 			}
 		});
-		lblUpload.setBounds(32, 308, 50, 43);
+		lblUpload.setBounds(953, 300, 50, 43);
 		ImageIcon sizeUpload = new ImageIcon(imageUpload.getImage().getScaledInstance(lblUpload.getWidth(),
 				lblUpload.getHeight(), Image.SCALE_SMOOTH));
 		lblUpload.setIcon(sizeUpload);
@@ -115,7 +117,7 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInfo.setForeground(new Color(0, 0, 0));
 		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblInfo.setBounds(485, 136, 275, 49);
+		lblInfo.setBounds(242, 136, 275, 49);
 		contentPane.add(lblInfo);
 
 		JPanel panel = new JPanel();
@@ -154,7 +156,7 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 		lblLogo.setIcon(imageIcon1);
 
 		lblFotoPerfil = new JLabel("");
-		lblFotoPerfil.setBounds(36, 136, 253, 204);
+		lblFotoPerfil.setBounds(750, 136, 253, 204);
 		contentPane.add(lblFotoPerfil);
 		ImageIcon sizeFotoPerfil = new ImageIcon(imageFotoPerfil.getImage().getScaledInstance(lblFotoPerfil.getWidth(),
 				lblFotoPerfil.getHeight(), Image.SCALE_SMOOTH));
@@ -163,61 +165,61 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 		JLabel lblUsuario = new JLabel("Codigo postal:");
 		lblUsuario.setForeground(new Color(58, 182, 98));
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUsuario.setBounds(476, 214, 100, 37);
+		lblUsuario.setBounds(138, 214, 100, 37);
 		contentPane.add(lblUsuario);
 
 		JLabel lblUsuario_1 = new JLabel("Provincia:");
 		lblUsuario_1.setForeground(new Color(58, 182, 98));
 		lblUsuario_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUsuario_1.setBounds(476, 261, 87, 37);
+		lblUsuario_1.setBounds(138, 261, 87, 37);
 		contentPane.add(lblUsuario_1);
 
 		JLabel lblUsuario_2 = new JLabel("Ciudad:");
 		lblUsuario_2.setForeground(new Color(58, 182, 98));
 		lblUsuario_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUsuario_2.setBounds(476, 308, 69, 37);
+		lblUsuario_2.setBounds(138, 308, 69, 37);
 		contentPane.add(lblUsuario_2);
 
 		lblCdigoPostal = new JLabel("Calle:");
 		lblCdigoPostal.setForeground(new Color(58, 182, 98));
 		lblCdigoPostal.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCdigoPostal.setBounds(476, 355, 100, 37);
+		lblCdigoPostal.setBounds(138, 355, 100, 37);
 		contentPane.add(lblCdigoPostal);
 
 		lblContrasea = new JLabel("Categoria:");
 		lblContrasea.setForeground(new Color(58, 182, 98));
 		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblContrasea.setBounds(476, 402, 87, 37);
+		lblContrasea.setBounds(138, 402, 87, 37);
 		contentPane.add(lblContrasea);
 
 		lblPreguntasDeSeguridad = new JLabel("Descripción:");
 		lblPreguntasDeSeguridad.setForeground(new Color(58, 182, 98));
 		lblPreguntasDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPreguntasDeSeguridad.setBounds(476, 461, 158, 37);
+		lblPreguntasDeSeguridad.setBounds(138, 461, 158, 37);
 		contentPane.add(lblPreguntasDeSeguridad);
 
 		txtProvincia = new JTextField();
 		txtProvincia.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtProvincia.setBounds(666, 266, 253, 28);
+		txtProvincia.setBounds(333, 266, 253, 28);
 		contentPane.add(txtProvincia);
 		txtProvincia.setColumns(10);
 
 		txtCp = new JTextField();
 		txtCp.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtCp.setColumns(10);
-		txtCp.setBounds(666, 219, 253, 28);
+		txtCp.setBounds(333, 219, 253, 28);
 		contentPane.add(txtCp);
 
 		txtCiudad = new JTextField();
 		txtCiudad.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtCiudad.setColumns(10);
-		txtCiudad.setBounds(666, 312, 253, 28);
+		txtCiudad.setBounds(333, 312, 253, 28);
 		contentPane.add(txtCiudad);
 
 		txtCalle = new JTextField();
 		txtCalle.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtCalle.setColumns(10);
-		txtCalle.setBounds(666, 360, 253, 28);
+		txtCalle.setBounds(333, 360, 253, 28);
 		contentPane.add(txtCalle);
 
 		JButton btnPublicar = new JButton("Modificar denuncia");
@@ -241,11 +243,11 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 			}
 		});
 		btnPublicar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnPublicar.setBounds(581, 579, 230, 28);
+		btnPublicar.setBounds(290, 579, 230, 28);
 		contentPane.add(btnPublicar);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(666, 461, 253, 69);
+		scrollPane.setBounds(333, 461, 253, 69);
 		contentPane.add(scrollPane);
 
 		txtDescripcion = new JTextArea();
@@ -256,13 +258,13 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		comboBox.setModel(new DefaultComboBoxModel(
 				new String[] { "Iluminación", "Edificios", "Pavimiento", "Naturaleza", "Limpieza" }));
-		comboBox.setBounds(666, 407, 253, 28);
+		comboBox.setBounds(333, 407, 253, 28);
 		contentPane.add(comboBox);
 
 		JLabel lblNewLabel = new JLabel("denuncia");
 		lblNewLabel.setForeground(new Color(58, 182, 98));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblNewLabel.setBounds(718, 143, 127, 34);
+		lblNewLabel.setBounds(480, 143, 127, 34);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblFotoPerfil_1 = new JLabel("");
@@ -271,8 +273,19 @@ public class _11_ModificarDenuncia extends JFrame implements Vista {
 
 		lblVacio = new JLabel("");
 		lblVacio.setForeground(new Color(255, 0, 0));
-		lblVacio.setBounds(666, 190, 253, 14);
+		lblVacio.setBounds(333, 190, 253, 14);
 		contentPane.add(lblVacio);
+		
+		lblNewLabel_1 = new JLabel("#");
+		lblNewLabel_1.setForeground(new Color(58, 182, 98));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(760, 351, 46, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("1234123");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(777, 347, 110, 20);
+		contentPane.add(lblNewLabel_2);
 
 	}
 
